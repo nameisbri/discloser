@@ -6,7 +6,7 @@
 
 ### Problem Space
 
-Why is your app needed? Give any background information around any pain points or other reasons.
+Sexual health conversations and STI status sharing can be awkward, inconsistent, and sometimes avoided altogether. Current methods of sharing test results often involve showing private medical documents that contain sensitive personal information beyond what's necessary. Additionally, many people struggle with maintaining regular testing schedules and notifying previous partners when necessary.
 
 ### User Profile
 
