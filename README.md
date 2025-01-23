@@ -2,7 +2,7 @@
 
 ## Overview
 
-What is your app? Give a brief description in a couple of sentences.
+**_discloser_** is a web application designed to help users manage and share their sexual health information securely. It enables users to track STI test results, share anonymized health information with partners, and receive automated testing reminders, all while maintaining privacy and promoting informed consent.
 
 ### Problem Space
 
