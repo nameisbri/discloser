@@ -36,15 +36,12 @@ User Management:
 
 - Create secure personal accounts
 - Upload and store test results securely
-- Set testing schedule reminders
-- Manage sharing preferences and permissions
 
 Result Management:
 
 - Upload test results via file or manual entry
 - Automatic anonymization of sensitive information
 - Generate shareable versions of results
-- Create public and private sharing versions
 
 Partner Notification:
 
@@ -55,9 +52,6 @@ Partner Notification:
 
 Education & Health Resources:
 
-- Sexual health resource library
-- Evidence-based health information
-- Consent education resources
 - Testing guidelines and recommendations
 - Healthcare access information
 - Local clinic directories
@@ -96,4 +90,24 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 ## Future Implementations
 
-Your project will be marked based on what you committed to in the above document. Here, you can list any additional features you may complete after the MVP of your application is built, or if you have extra time before the Capstone due date.
+User Management:
+
+- Set testing schedule reminders
+- Manage sharing preferences and permissions
+
+Result Management:
+
+- Create public and private sharing versions
+
+Partner Notification:
+
+- Anonymous partner notification system
+- Secure sharing links with expiration dates
+- QR code generation for quick sharing
+- Revocable access management
+
+Education & Health Resources:
+
+- Sexual health resource library
+- Evidence-based health information
+- Consent education resources
