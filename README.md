@@ -25,9 +25,42 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 - Users needing reminders for regular STI testing
 - Individuals looking for discreet ways to notify partners
 
+**Special considerations:**
+
+- Compliance with Ontario privacy laws and PHIPA regulations
+- Data handling aligned with Canadian federal and provincial requirements
+
 ### Features
 
-List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented.
+User Management:
+
+- Create secure personal accounts
+- Upload and store test results securely
+- Set testing schedule reminders
+- Manage sharing preferences and permissions
+
+Result Management:
+
+- Upload test results via file or manual entry
+- Automatic anonymization of sensitive information
+- Generate shareable versions of results
+- Create public and private sharing versions
+
+Partner Notification:
+
+- Anonymous partner notification system
+- Secure sharing links with expiration dates
+- QR code generation for quick sharing
+- Revocable access management
+
+Education & Health Resources:
+
+- Sexual health resource library
+- Evidence-based health information
+- Consent education resources
+- Testing guidelines and recommendations
+- Healthcare access information
+- Local clinic directories
 
 ## Implementation
 
