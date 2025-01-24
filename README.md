@@ -8,9 +8,22 @@
 
 Sexual health conversations and STI status sharing can be awkward, inconsistent, and sometimes avoided altogether. Current methods of sharing test results often involve showing private medical documents that contain sensitive personal information beyond what's necessary. Additionally, many people struggle with maintaining regular testing schedules and notifying previous partners when necessary.
 
+**Key issues:**
+
+- Difficulty in sharing STI test results while protecting privacy
+- Lack of streamlined partner notification systems
+- Inconsistent testing schedules
+- Need for secure storage of sensitive health information
+- Limited accessibility to sexual health education resources
+
 ### User Profile
 
-Who will use your app? How will they use it? Add any special considerations that your app must take into account.
+**Primary users include:**
+
+- Sexually active adults seeking to manage their sexual health information
+- People wanting to share test results with potential partners
+- Users needing reminders for regular STI testing
+- Individuals looking for discreet ways to notify partners
 
 ### Features
 
