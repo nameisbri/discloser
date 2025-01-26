@@ -1,4 +1,4 @@
-# Project Title
+# _discloser_
 
 ## Overview
 
@@ -29,20 +29,16 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 ### User Management
 
-- As a user, I want to create a secure personal account so I can safely store my health information
-- As a user, I want to log in securely to access my stored test results and information
+- As a user, I want to create a secure account
+- As a user, I want to log in securely
 
 ### Result Management
 
-- As a user, I want to upload my test results by file or manual entry so I can store them digitally
-- As a user, I want sensitive information automatically anonymized when I share results so my privacy is protected
-- As a user, I want to generate PDFs of my results so I can share them
+- As a user, I want to upload test results (file/manual)
+- As a user, I want to share results with basic anonymization
+- As a user, I want to generate PDFs of results
 
-### Education & Resources
-
-- As a user, I want to view testing guidelines so I know when to get tested
-- As a user, I want to find information about healthcare access in my area so I can get care when needed
-- As a user, I want to search a directory of local clinics so I can find testing locations near me
+- Basic educational content (static, no search/directory features)
 
 ## Implementation
 
@@ -50,7 +46,6 @@ Frontend:
 
 - React
 - TypeScript
-- Radix UI
 - Libraries:
   - react-hook-form + zod
   - pdf-lib
@@ -72,7 +67,23 @@ No external APIs will be used for the first sprint
 
 ### Sitemap
 
-List the pages of your app with brief descriptions. You can show this visually, or write it out.
+**Public**
+
+- Landing (/)
+- Login (/login)
+- Signup (/signup)
+
+**Protected**
+
+- Dashboard (/dashboard)
+  - Recent results
+  - Upload new results
+- Result View (/results/:id)
+  - View details
+  - Generate PDF
+  - Basic sharing
+- Share Page (/share/:token)
+  - Public view of shared result
 
 ### Mockups
 
