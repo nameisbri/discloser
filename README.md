@@ -25,11 +25,6 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 - Users needing reminders for regular STI testing
 - Individuals looking for discreet ways to notify partners
 
-**Special considerations:**
-
-- Compliance with Ontario privacy laws and PHIPA regulations
-- Data handling aligned with Canadian federal and provincial requirements
-
 ### Features
 
 ### User Management
@@ -41,8 +36,7 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 - As a user, I want to upload my test results by file or manual entry so I can store them digitally
 - As a user, I want sensitive information automatically anonymized when I share results so my privacy is protected
-- As a user, I want to generate PDFs of my results so I can share them with healthcare providers
-- As a user, I want to add my results to Apple Wallet so I can access them conveniently
+- As a user, I want to generate PDFs of my results so I can share them
 
 ### Education & Resources
 
@@ -52,13 +46,29 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 ## Implementation
 
-### Tech Stack
+Frontend:
 
-List technologies that will be used in your app, including any libraries to save time or provide more functionality. Be sure to research any potential limitations.
+- React
+- TypeScript
+- Radix UI
+- Libraries:
+  - react-hook-form + zod
+  - pdf-lib
+
+Backend:
+
+- Node.js
+- Express
+- MongoDB
+- Libraries:
+  - multer (file uploads)
+  - bcrypt + JWT (authentication)
+  - helmet (security headers)
+  - mongoose (MongoDB ODM)
 
 ### APIs
 
-List any external sources of data that will be used in your app.
+No external APIs will be used for the first sprint
 
 ### Sitemap
 
@@ -84,16 +94,17 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 ## Future Implementations
 
-User Management:
+### User Management:
 
 - Set testing schedule reminders
 - Manage sharing preferences and permissions
 
-Result Management:
+### Result Management:
 
 - Create public and private sharing versions
+- Apple Wallet integration
 
-Partner Notification:
+### Partner Notification:
 
 - Anonymous partner notification system
 - Secure sharing links with expiration dates
@@ -101,7 +112,7 @@ Partner Notification:
 - Revocable access management
 - Anonymous partner notification system
 
-Education & Health Resources:
+### Education & Health Resources:
 
 - Sexual health resource library
 - Evidence-based health information
