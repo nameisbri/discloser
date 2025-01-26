@@ -32,22 +32,23 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 ### Features
 
-User Management:
+### User Management
 
-- Create secure personal accounts
-- Upload and store test results securely
+- As a user, I want to create a secure personal account so I can safely store my health information
+- As a user, I want to log in securely to access my stored test results and information
 
-Result Management:
+### Result Management
 
-- Upload test results via file or manual entry
-- Automatic anonymization of sensitive information
-- Generate shareable versions of results (PDF and Apple Wallet)
+- As a user, I want to upload my test results by file or manual entry so I can store them digitally
+- As a user, I want sensitive information automatically anonymized when I share results so my privacy is protected
+- As a user, I want to generate PDFs of my results so I can share them with healthcare providers
+- As a user, I want to add my results to Apple Wallet so I can access them conveniently
 
-Education & Health Resources:
+### Education & Resources
 
-- Testing guidelines and recommendations
-- Healthcare access information
-- Local clinic directories
+- As a user, I want to view testing guidelines so I know when to get tested
+- As a user, I want to find information about healthcare access in my area so I can get care when needed
+- As a user, I want to search a directory of local clinics so I can find testing locations near me
 
 ## Implementation
 
