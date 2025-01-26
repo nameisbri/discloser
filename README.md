@@ -41,14 +41,7 @@ Result Management:
 
 - Upload test results via file or manual entry
 - Automatic anonymization of sensitive information
-- Generate shareable versions of results
-
-Partner Notification:
-
-- Anonymous partner notification system
-- Secure sharing links with expiration dates
-- QR code generation for quick sharing
-- Revocable access management
+- Generate shareable versions of results (PDF and Apple Wallet)
 
 Education & Health Resources:
 
@@ -105,6 +98,7 @@ Partner Notification:
 - Secure sharing links with expiration dates
 - QR code generation for quick sharing
 - Revocable access management
+- Anonymous partner notification system
 
 Education & Health Resources:
 
