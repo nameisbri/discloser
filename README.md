@@ -54,12 +54,11 @@ Backend:
 
 - Node.js
 - Express
-- MongoDB
+- MySQL
 - Libraries:
   - multer (file uploads)
   - bcrypt + JWT (authentication)
   - helmet (security headers)
-  - mongoose (MongoDB ODM)
 
 ### APIs
 
