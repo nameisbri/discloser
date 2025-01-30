@@ -85,8 +85,12 @@ No external APIs will be used for the first sprint
   - Public view of shared result
 
 ### Mockups
-
-Provide visuals of your app's screens. You can use pictures of hand-drawn sketches, or wireframing tools like Figma.
+![landing-page](https://github.com/user-attachments/assets/829ae193-c1d0-4208-aa64-90f376c301d0)
+![authentication](https://github.com/user-attachments/assets/d0dbce9a-eabc-46fc-ab66-86f350975872)
+![dashboard](https://github.com/user-attachments/assets/6bd29320-b3b3-487c-9171-3ae0cff1e783)
+![single-test-detail](https://github.com/user-attachments/assets/91fc94d7-f2e6-4269-b828-f9137fe7b625)
+![share-results](https://github.com/user-attachments/assets/ce474fd3-01d0-4962-8cca-fab85c6e8e13)
+![education-content](https://github.com/user-attachments/assets/6ce82f61-fc53-45c8-8186-237013fb7365)
 
 ### Data
 
