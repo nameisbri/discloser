@@ -85,12 +85,14 @@ No external APIs will be used for the first sprint
   - Public view of shared result
 
 ### Mockups
-![landing-page](https://github.com/user-attachments/assets/829ae193-c1d0-4208-aa64-90f376c301d0)
-![authentication](https://github.com/user-attachments/assets/d0dbce9a-eabc-46fc-ab66-86f350975872)
-![dashboard](https://github.com/user-attachments/assets/6bd29320-b3b3-487c-9171-3ae0cff1e783)
-![single-test-detail](https://github.com/user-attachments/assets/91fc94d7-f2e6-4269-b828-f9137fe7b625)
-![share-results](https://github.com/user-attachments/assets/ce474fd3-01d0-4962-8cca-fab85c6e8e13)
-![education-content](https://github.com/user-attachments/assets/6ce82f61-fc53-45c8-8186-237013fb7365)
+
+![single-test-detail](https://github.com/user-attachments/assets/d24dd61b-dd2b-4a15-8653-56fcfaad8b43)
+![share-results](https://github.com/user-attachments/assets/c949854b-68cb-4d9e-b371-e98d68504d75)
+![landing-page](https://github.com/user-attachments/assets/e48e9f8a-d2a2-49e0-9708-186c7315ac09)
+![education-content](https://github.com/user-attachments/assets/ff57bb25-33b4-48ae-a3b8-f898cb0c0939)
+![dashboard](https://github.com/user-attachments/assets/12ac61b7-404b-4904-b0a7-ac5acfc3260c)
+![authentication](https://github.com/user-attachments/assets/cc2447f6-ba11-4c37-811f-1246534374ed)
+
 
 ### Data
 
@@ -105,6 +107,7 @@ List endpoints that your server will implement, including HTTP methods, paramete
 Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation working back from the capstone due date.
 
 ---
+
 
 ## Future Implementations
 
