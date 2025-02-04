@@ -81,7 +81,7 @@ No external APIs will be used for the first sprint
   - View details
   - Generate PDF
   - Basic sharing
-- Share Page (/share/:token)
+- Share Page (/share/)
   - Public view of shared result
 
 ### Mockups
@@ -102,7 +102,28 @@ Describe your data and the relationships between the data points. You can show t
 
 ### Endpoints
 
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
+#### **User Management**
+1.  **POST /signup**
+    -   Create a new user account.
+        
+2.  **POST /login**
+    -   Authenticate a user and return a token.
+        
+
+#### **Test Record Management**
+3.  **POST /upload**
+    -   Upload a test record (file or manual entry).
+        
+4.  **GET /results**
+    -   Retrieve all test records for the authenticated user.
+        
+5.  **GET /results/:id**
+    -   Retrieve details of a specific test record.
+        
+
+#### **Sharing**
+6.  **GET /share/:id**
+    -   Retrieve a public view of a test record (if time permits).
 
 ## Roadmap
 
