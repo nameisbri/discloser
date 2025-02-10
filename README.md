@@ -45,24 +45,31 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 Frontend:
 
 - React
-- TypeScript
-- Libraries:
-  - react-hook-form + zod
-  - pdf-lib
+- JavaScript
+
+Key Libraries
+- react-hook-form
+- axios
+- html2canvas
 
 Backend:
 
-- Node.js
+-Node.js
 - Express
-- MySQL
-- Libraries:
-  - multer (file uploads)
-  - bcrypt + JWT (authentication)
-  - helmet (security headers)
+- MySQ
+- MinIO
+
+Key Libraries
+- Knex.js
+- multer
+- pdf-parse
+- Better Auth
+- AWS SDK
+- helmet
 
 ### APIs
 
-No external APIs will be used for the first sprint
+No external APIs will be used for this MVP
 
 ### Sitemap
 
