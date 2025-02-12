@@ -4,8 +4,6 @@
 > • [Technical Documentation](./DOCUMENTATION.md) - Detailed project implementation, installation guide, and technical specifications  
 > • [Sample Test Files](./sample-files/) - Example files for testing the upload functionality
 
-```
-
 ## Overview
 
 **_discloser_** is a web application designed to help users manage and share their sexual health information securely. It enables users to track STI test results, set automated testing reminders, and access basic educational resources, all while maintaining privacy and promoting informed consent.
@@ -114,7 +112,12 @@ No external APIs will be used for this MVP
 ### Data
 
 #### **Entities**
+
+<<<<<<< HEAD
+
+1. # **User**:
 1. **User**:
+   > > > > > > > c16baee (Update README.md)
    - `id` (PK)
    - `name`
    - `screen_name` (unique)
@@ -125,36 +128,49 @@ No external APIs will be used for this MVP
    - `created_at`
    - `updated_at`
 
-2. **TestRecord**:
-   - `id` (PK)
-   - `user_id` (FK)
-   - `test_date`
-   - `file_path` (MinIO file URL or key)
-   - `is_active`
-   - `created_at`
-   - `updated_at`
+<<<<<<< HEAD 2. **TestRecord**:
+======= 2. **TestRecord**:
 
-3. **TestResult**:
-   - `id` (PK)
-   - `test_record_id` (FK)
-   - `test_type`
-   - `result`
-   - `notes`
-   - `is_active`
-   - `created_at`
-   - `updated_at`
+> > > > > > > c16baee (Update README.md)
 
-4. **TestingReminders**:
-   - `id` (PK)
-   - `user_id` (FK)
-   - `frequency`
-   - `next_test_date`
-   - `last_notified_date`
-   - `is_active`
-   - `created_at`
-   - `updated_at`
+- `id` (PK)
+- `user_id` (FK)
+- `test_date`
+- `file_path` (MinIO file URL or key)
+- `is_active`
+- `created_at`
+- `updated_at`
+
+<<<<<<< HEAD 3. **TestResult**:
+======= 3. **TestResult**:
+
+> > > > > > > c16baee (Update README.md)
+
+- `id` (PK)
+- `test_record_id` (FK)
+- `test_type`
+- `result`
+- `notes`
+- `is_active`
+- `created_at`
+- `updated_at`
+
+<<<<<<< HEAD 4. **TestingReminders**:
+======= 4. **TestingReminders**:
+
+> > > > > > > c16baee (Update README.md)
+
+- `id` (PK)
+- `user_id` (FK)
+- `frequency`
+- `next_test_date`
+- `last_notified_date`
+- `is_active`
+- `created_at`
+- `updated_at`
 
 #### **Relationships**
+
 - **User** → **TestRecord** (One-to-Many)
   - One user can have multiple test records
 - **TestRecord** → **TestResult** (One-to-Many)
@@ -228,6 +244,7 @@ No external APIs will be used for this MVP
 ## Future Implementations
 
 ### User Management:
+
 - User authentication
 - Manage sharing preferences and permissions
 
@@ -249,4 +266,7 @@ No external APIs will be used for this MVP
 - Sexual health resource library
 - Evidence-based health information
 - Consent education resources
+
+```
+
 ```
