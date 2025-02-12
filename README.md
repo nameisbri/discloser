@@ -100,8 +100,6 @@ No external APIs will be used for this MVP
 
 ### Mockups
 
-![landing-page](https://github.com/user-attachments/assets/e48e9f8a-d2a2-49e0-9708-186c7315ac09)
-![authentication](https://github.com/user-attachments/assets/cc2447f6-ba11-4c37-811f-1246534374ed)
 ![dashboard](https://github.com/user-attachments/assets/12ac61b7-404b-4904-b0a7-ac5acfc3260c)
 ![single-test-detail](https://github.com/user-attachments/assets/d24dd61b-dd2b-4a15-8653-56fcfaad8b43)
 ![share-results](https://github.com/user-attachments/assets/c949854b-68cb-4d9e-b371-e98d68504d75)
@@ -198,7 +196,7 @@ No external APIs will be used for this MVP
 ## Future Implementations
 
 ### User Management:
-
+- User authentication
 - Manage sharing preferences and permissions
 
 ### Result Management:
