@@ -108,27 +108,53 @@ No external APIs will be used for this MVP
 ### Data
 
 #### **Entities**
+1. **User**:  
+   - `id` (PK)
+   - `name`
+   - `screen_name` (unique)
+   - `email` (unique)
+   - `birth_date`
+   - `bio`
+   - `is_active`
+   - `created_at`
+   - `updated_at`
 
-1. **User**:
+2. **TestRecord**:  
+   - `id` (PK)
+   - `user_id` (FK)
+   - `test_date`
+   - `file_path` (MinIO file URL or key)
+   - `is_active`
+   - `created_at`
+   - `updated_at`
 
-   - `id`, `email`, `created_at`, `updated_at`.
+3. **TestResult**:  
+   - `id` (PK)
+   - `test_record_id` (FK)
+   - `test_type`
+   - `result`
+   - `notes`
+   - `is_active`
+   - `created_at`
+   - `updated_at`
 
-2. **TestRecord**:
-
-   - `id`, `user_id`, `test_date`, `file_path` (MinIO file URL or key), `created_at`, `updated_at`.
-
-3. **TestResult**:
-
-   - `id`, `test_record_id`, `test_type`, `result`, `notes`, `created_at`, `updated_at`.
-
-4. **TestingReminders**:
-   - `id`, `user_id`, `frequency`, `next_test_date`, `last_notified_date`, `created_at`, `updated_at`.
+4. **TestingReminders**:  
+   - `id` (PK)
+   - `user_id` (FK)
+   - `frequency`
+   - `next_test_date`
+   - `last_notified_date`
+   - `is_active`
+   - `created_at`
+   - `updated_at`
 
 #### **Relationships**
-
-- **User** → **TestRecord** (One-to-Many).
-- **TestRecord** → **TestResult** (One-to-Many).
-- **User** → **TestingReminders** (One-to-One).
+- **User** → **TestRecord** (One-to-Many)
+  - One user can have multiple test records
+- **TestRecord** → **TestResult** (One-to-Many)
+  - One test record can have multiple test results
+- **User** → **TestingReminders** (One-to-One)
+  - Each user has one testing reminder schedule
 
 ### Endpoints
 
