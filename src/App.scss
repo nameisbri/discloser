@@ -1,0 +1,11 @@
+@use "../src/styles/partials/globals" as *;
+@use "../src/styles/partials/variables" as *;
+@use "../src/styles/partials/mixins" as *;
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: map-get($colors, "primary-light");
+  min-height: 100vh;
+  padding: map-get($spacing, "md");
+}

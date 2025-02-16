@@ -1,0 +1,7 @@
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.dashboard {
+  @include flex(column, flex-start, stretch, map-get($spacing, "lg"));
+}

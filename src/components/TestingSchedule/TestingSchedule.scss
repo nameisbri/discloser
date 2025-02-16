@@ -1,0 +1,62 @@
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.schedule {
+  @include card;
+
+  &__title {
+    color: map-get($colors, "text");
+    font-size: map-get($font-sizes, "xl");
+    font-weight: map-get($font-weights, "semibold");
+    margin-bottom: map-get($spacing, "lg");
+  }
+
+  &__next-test {
+    @include flex(row, space-between, center);
+    margin-bottom: map-get($spacing, "md");
+  }
+
+  &__label {
+    color: map-get($colors, "text-light");
+    font-size: map-get($font-sizes, "sm");
+    margin-bottom: map-get($spacing, "xxs");
+  }
+
+  &__date {
+    color: map-get($colors, "primary");
+    font-size: map-get($font-sizes, "xl");
+    font-weight: map-get($font-weights, "semibold");
+  }
+
+  &__reminder {
+    @include flex(row, flex-start, center, map-get($spacing, "sm"));
+    background-color: map-get($colors, "primary-light");
+    padding: map-get($spacing, "sm") map-get($spacing, "md");
+    border-radius: map-get($border-radius, "md");
+    margin-bottom: map-get($spacing, "lg");
+
+    &-icon {
+      color: map-get($colors, "primary");
+    }
+
+    &-text {
+      color: map-get($colors, "primary");
+      font-size: map-get($font-sizes, "sm");
+    }
+  }
+
+  &__modify {
+    width: 100%;
+    padding: map-get($spacing, "md");
+    border: 1px solid map-get($colors, "border");
+    border-radius: map-get($border-radius, "md");
+    color: map-get($colors, "text");
+    font-weight: map-get($font-weights, "medium");
+
+    &:hover {
+      background-color: map-get($colors, "primary-light");
+      border-color: map-get($colors, "primary");
+    }
+  }
+}

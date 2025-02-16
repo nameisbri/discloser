@@ -1,0 +1,38 @@
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: map-get($colors, "background");
+  border-top: 1px solid map-get($colors, "border");
+  padding: map-get($spacing, "sm") 0;
+
+  &__list {
+    @include flex(row, space-around, center);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    @include flex(column, center, center, map-get($spacing, "xxs"));
+    color: map-get($colors, "secondary");
+
+    &--active {
+      color: map-get($colors, "primary");
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__text {
+    font-size: map-get($font-sizes, "sm");
+    font-weight: map-get($font-weights, "medium");
+  }
+}
