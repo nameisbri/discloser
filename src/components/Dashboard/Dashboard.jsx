@@ -9,6 +9,7 @@ import TestingSchedule from "../TestingSchedule/TestingSchedule";
 function Dashboard() {
   const [user, setUser] = useState(null);
   const [records, setRecords] = useState([]);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseUrl = import.meta.env.VITE_APP_URL;
@@ -28,6 +29,11 @@ function Dashboard() {
             `${baseUrl}/records?user_id=${userResponse.data.id}`
           );
           setRecords(recordsResponse.data || []);
+
+          const resultsResponse = await axios.get(
+            `${baseUrl}/share/${userResponse.data.id}`
+          );
+          setResults(resultsResponse.data || []);
         }
       } catch (error) {
         console.error("API Error:", {
@@ -59,7 +65,7 @@ function Dashboard() {
       <ActionButtons className="dashboard__actions" />
       <div className="dashboard__content">
         <section className="dashboard__section">
-          <RecentResults records={records} />
+          <RecentResults results={results} />
         </section>
         <section className="dashboard__section">
           <TestingSchedule userId={user?.id} />

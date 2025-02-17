@@ -9,7 +9,7 @@
   &__title {
     color: map.get($colors, "text");
     font-size: map.get($font-sizes, "xl");
-    font-weight: map.get($font-weights, "semibold");
+    font-weight: $font-weight-semi-bold;
     margin-bottom: map.get($spacing, "lg");
   }
 
@@ -20,7 +20,7 @@
 
   &__date-text {
     color: map.get($colors, "text");
-    font-weight: map.get($font-weights, "medium");
+    font-weight: $font-weight-medium;
   }
 
   &__status {
@@ -28,6 +28,13 @@
       @include status-badge(
         map.get($colors, "success-light"),
         map.get($colors, "success")
+      );
+    }
+
+    &--outdated {
+      @include status-badge(
+        map.get($colors, "warning-light"),
+        map.get($colors, "warning")
       );
     }
   }
@@ -49,14 +56,37 @@
   &__title {
     color: map.get($colors, "primary");
     font-size: map.get($font-sizes, "lg");
-    font-weight: map.get($font-weights, "medium");
+    font-weight: $font-weight-medium;
   }
 
   &__status {
-    @include status-badge(
-      map.get($colors, "success-light"),
-      map.get($colors, "success")
-    );
+    &--positive {
+      @include status-badge(
+        map.get($colors, "danger-light"),
+        map.get($colors, "danger")
+      );
+    }
+
+    &--negative {
+      @include status-badge(
+        map.get($colors, "success-light"),
+        map.get($colors, "success")
+      );
+    }
+
+    &--indeterminate {
+      @include status-badge(
+        map.get($colors, "warning-light"),
+        map.get($colors, "warning")
+      );
+    }
+
+    &--numeric {
+      @include status-badge(
+        map.get($colors, "info-light"),
+        map.get($colors, "info")
+      );
+    }
   }
 
   &__collection {
@@ -72,9 +102,11 @@
   background-color: map.get($colors, "primary");
   color: white;
   border-radius: map.get($border-radius, "md");
-  font-weight: map.get($font-weights, "medium");
+  font-weight: $font-weight-medium;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: map.get($colors, "primary");
+    background-color: map.get($colors, "primary-dark");
+    cursor: pointer;
   }
 }
