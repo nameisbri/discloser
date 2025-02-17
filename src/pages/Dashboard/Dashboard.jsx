@@ -1,10 +1,10 @@
 import "./Dashboard.scss";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import UserHeader from "../UserHeader/UserHeader";
-import ActionButtons from "../ActionButtons/ActionButtons";
-import RecentResults from "../RecentResults/RecentResults";
-import TestingSchedule from "../TestingSchedule/TestingSchedule";
+import UserHeader from "../../components/UserHeader/UserHeader";
+import ActionButtons from "../../components/ActionButtons/ActionButtons";
+import RecentResults from "../../components/RecentResults/RecentResults";
+import TestingSchedule from "../../components/TestingSchedule/TestingSchedule";
 
 function Dashboard() {
   const [user, setUser] = useState(null);
