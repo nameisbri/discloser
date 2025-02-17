@@ -2,7 +2,6 @@ import "./TestingSchedule.scss";
 import { CalendarDays, Clock } from "lucide-react";
 
 const TestingSchedule = ({ reminder }) => {
-  // Function to format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "long",
@@ -11,20 +10,20 @@ const TestingSchedule = ({ reminder }) => {
     });
   };
 
-  // Function to format frequency
   const formatFrequency = (frequencyString) => {
     if (!frequencyString) return "";
-
     const [number, unit] = frequencyString.split("_");
     return `${number} ${unit}`;
   };
 
-  // Get the first active reminder (assuming array is sorted)
-  const activeReminder = Array.isArray(reminder)
+  const recentReminders = reminder
+    .sort((a, b) => new Date(b.next_test_date) - new Date(a.next_test_date))
+    .slice(0, 3);
+
+  const activeReminder = Array.isArray(recentReminders)
     ? reminder.find((r) => r.is_active)
     : null;
 
-  // Calculate reminder notification date (2 weeks before next test)
   const getReminderDate = (nextTestDate) => {
     if (!nextTestDate) return null;
     const reminderDate = new Date(nextTestDate);
