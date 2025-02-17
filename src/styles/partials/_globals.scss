@@ -1,6 +1,6 @@
-@use "variables" as *;
-@use "typography" as *;
-@use "mixins" as *;
+@use "sass:map";
+@use "variables" as vars;
+@use "typography" as type;
 
 *,
 *::before,
@@ -11,11 +11,11 @@
 }
 
 body {
-  font-family: $font-family-inter;
-  font-size: map-get($font-sizes, "base");
+  font-family: vars.$font-family-inter;
+  font-size: map.get(type.$font-sizes, "base");
   line-height: 1.5;
-  color: map-get($colors, "text");
-  background-color: map-get($colors, "primary-light");
+  color: map.get(vars.$colors, "text");
+  background-color: map.get(vars.$colors, "primary-light");
 }
 
 button {

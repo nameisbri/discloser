@@ -1,15 +1,21 @@
-import { useState } from "react";
-import "./App.scss";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Navigation from "./components/Navigation/Navigation";
+import "./App.scss";
 
-const App = () => {
+function App() {
   return (
-    <div className="app">
-      <Dashboard />
-      <Navigation />
-    </div>
+    <Router>
+      <div className="app">
+        <Navigation />
+        <main className="app__main">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
-};
+}
 
 export default App;

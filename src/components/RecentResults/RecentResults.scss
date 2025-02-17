@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "/src/styles/partials/variables" as *;
 @use "/src/styles/partials/mixins" as *;
 @use "/src/styles/partials/typography" as *;
@@ -6,35 +7,35 @@
   @include card;
 
   &__title {
-    color: map-get($colors, "text");
-    font-size: map-get($font-sizes, "xl");
-    font-weight: map-get($font-weights, "semibold");
-    margin-bottom: map-get($spacing, "lg");
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "xl");
+    font-weight: map.get($font-weights, "semibold");
+    margin-bottom: map.get($spacing, "lg");
   }
 
   &__date {
     @include flex(row, space-between, center);
-    margin-bottom: map-get($spacing, "md");
+    margin-bottom: map.get($spacing, "md");
   }
 
   &__date-text {
-    color: map-get($colors, "text");
-    font-weight: map-get($font-weights, "medium");
+    color: map.get($colors, "text");
+    font-weight: map.get($font-weights, "medium");
   }
 
   &__status {
     &--current {
       @include status-badge(
-        map-get($colors, "success-light"),
-        map-get($colors, "success")
+        map.get($colors, "success-light"),
+        map.get($colors, "success")
       );
     }
   }
 }
 
 .result-item {
-  padding: map-get($spacing, "md") 0;
-  border-bottom: 1px solid map-get($colors, "border");
+  padding: map.get($spacing, "md") 0;
+  border-bottom: 1px solid map.get($colors, "border");
 
   &:last-child {
     border-bottom: none;
@@ -42,38 +43,38 @@
 
   &__header {
     @include flex(row, space-between, center);
-    margin-bottom: map-get($spacing, "xxs");
+    margin-bottom: map.get($spacing, "xxs");
   }
 
   &__title {
-    color: map-get($colors, "primary");
-    font-size: map-get($font-sizes, "lg");
-    font-weight: map-get($font-weights, "medium");
+    color: map.get($colors, "primary");
+    font-size: map.get($font-sizes, "lg");
+    font-weight: map.get($font-weights, "medium");
   }
 
   &__status {
     @include status-badge(
-      map-get($colors, "success-light"),
-      map-get($colors, "success")
+      map.get($colors, "success-light"),
+      map.get($colors, "success")
     );
   }
 
   &__collection {
-    color: map-get($colors, "text-light");
-    font-size: map-get($font-sizes, "sm");
+    color: map.get($colors, "text-light");
+    font-size: map.get($font-sizes, "sm");
   }
 }
 
 .results__view-all {
   width: 100%;
-  padding: map-get($spacing, "md");
-  margin-top: map-get($spacing, "lg");
-  background-color: map-get($colors, "primary");
+  padding: map.get($spacing, "md");
+  margin-top: map.get($spacing, "lg");
+  background-color: map.get($colors, "primary");
   color: white;
-  border-radius: map-get($border-radius, "md");
-  font-weight: map-get($font-weights, "medium");
+  border-radius: map.get($border-radius, "md");
+  font-weight: map.get($font-weights, "medium");
 
   &:hover {
-    background-color: darken(map-get($colors, "primary"), 5%);
+    background-color: map.get($colors, "primary");
   }
 }

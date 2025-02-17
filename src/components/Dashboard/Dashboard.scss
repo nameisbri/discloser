@@ -1,7 +1,59 @@
-@use "/src/styles/partials/variables" as *;
-@use "/src/styles/partials/mixins" as *;
-@use "/src/styles/partials/typography" as *;
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
 
 .dashboard {
-  @include flex(column, flex-start, stretch, map-get($spacing, "lg"));
+  @include mix.flex(column, flex-start, stretch, map.get(vars.$spacing, "lg"));
+  min-height: 100vh;
+  padding: map.get(vars.$spacing, "xs");
+  background-color: map.get(vars.$colors, "primary-light");
+
+  &__loading {
+    @include mix.flex(row, center, center);
+    min-height: 100vh;
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__actions {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: map.get(vars.$spacing, "md") 0;
+  }
+
+  &__content {
+    flex: 1;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "lg")
+    );
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__section {
+    flex: 1;
+    min-width: 300px;
+    @include mix.card(map.get(vars.$spacing, "lg"));
+    transition: all 0.2s ease;
+
+    @media (min-width: 768px) {
+      min-width: calc(50% - #{map.get(vars.$spacing, "lg")});
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
 }

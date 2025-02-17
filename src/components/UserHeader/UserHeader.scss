@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "/src/styles/partials/variables" as *;
 @use "/src/styles/partials/mixins" as *;
 @use "/src/styles/partials/typography" as *;
@@ -5,10 +6,10 @@
 .user-header {
   @include card;
   @include flex(row, space-between, center);
-  padding: map-get($spacing, "md");
+  padding: map.get($spacing, "md");
 
   &__profile {
-    @include flex(row, flex-start, center, map-get($spacing, "md"));
+    @include flex(row, flex-start, center, map.get($spacing, "md"));
   }
 
   &__avatar {
@@ -23,18 +24,18 @@
   }
 
   &__name {
-    color: map-get($colors, "primary");
-    font-size: map-get($font-sizes, "lg");
-    font-weight: map-get($font-weights, "semibold");
+    color: map.get($colors, "primary");
+    font-size: map.get($font-sizes, "lg");
+    font-weight: map.get($font-weights, "semibold");
   }
 
   &__last-update {
-    color: map-get($colors, "text-light");
-    font-size: map-get($font-sizes, "sm");
+    color: map.get($colors, "text-light");
+    font-size: map.get($font-sizes, "sm");
   }
 
   &__notifications {
-    @include flex(row, flex-end, center, map-get($spacing, "sm"));
+    @include flex(row, flex-end, center, map.get($spacing, "sm"));
   }
 
   &__icon-button {
