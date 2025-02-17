@@ -4,11 +4,10 @@
 @use "sass:map";
 
 .dashboard {
-  @include mix.flex(column, flex-start, stretch, map.get(vars.$spacing, "lg"));
-  min-height: 100vh;
-  padding: map.get(vars.$spacing, "xs");
+  @include mix.flex(column, flex-start, stretch);
   background-color: map.get(vars.$colors, "primary-light");
-
+  min-height: 100vh;
+  padding-bottom: map.get(vars.$spacing, "xl") * 3;
   &__loading {
     @include mix.flex(row, center, center);
     min-height: 100vh;
@@ -24,12 +23,13 @@
   }
 
   &__content {
+    padding: 0 map.get(vars.$spacing, "md");
     flex: 1;
     @include mix.flex(
       column,
       flex-start,
       stretch,
-      map.get(vars.$spacing, "lg")
+      map.get(vars.$spacing, "sm")
     );
     width: 100%;
     max-width: 1200px;
@@ -49,6 +49,13 @@
 
     @media (min-width: 768px) {
       min-width: calc(50% - #{map.get(vars.$spacing, "lg")});
+    }
+
+    &-title {
+      font-size: map.get(type.$font-sizes, "lg");
+      color: map.get(vars.$colors, "secondary-dark");
+      font-weight: vars.$font-weight-semi-bold;
+      margin-top: map.get(vars.$spacing, "sm");
     }
 
     &:hover {

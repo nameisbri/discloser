@@ -4,8 +4,6 @@
 @use "/src/styles/partials/typography" as *;
 
 .results {
-  @include card;
-
   &__title {
     color: map.get($colors, "text");
     font-size: map.get($font-sizes, "xl");
@@ -20,7 +18,7 @@
 
   &__date-text {
     color: map.get($colors, "text");
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-regular;
   }
 
   &__status {
@@ -41,7 +39,7 @@
 }
 
 .result-item {
-  padding: map.get($spacing, "md") 0;
+  padding: map.get($spacing, "sm") 0;
   border-bottom: 1px solid map.get($colors, "border");
 
   &:last-child {
@@ -102,8 +100,9 @@
   background-color: map.get($colors, "primary");
   color: white;
   border-radius: map.get($border-radius, "md");
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-regular;
   transition: background-color 0.2s ease;
+  font-size: map.get($font-sizes, "sm");
 
   &:hover {
     background-color: map.get($colors, "primary-dark");

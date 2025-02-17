@@ -9,7 +9,6 @@ const RecentResults = ({ results }) => {
 
   const mostRecentDate = recentResults[0]?.test_date;
 
-  // Check if user is up to date with testing
   const isUpToDate = () => {
     if (!mostRecentDate) return false;
 
@@ -52,7 +51,6 @@ const RecentResults = ({ results }) => {
 
   return (
     <div className="results">
-      <h3 className="results__title">Recent Results</h3>
       {mostRecentDate && (
         <div className="results__date">
           <span className="results__date-text">

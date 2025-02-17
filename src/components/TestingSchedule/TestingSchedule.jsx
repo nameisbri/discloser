@@ -33,7 +33,6 @@ const TestingSchedule = ({ reminder }) => {
 
   return (
     <div className="schedule">
-      <h3 className="schedule__title">Testing Schedule</h3>
       {activeReminder ? (
         <>
           <div className="schedule__next-test">

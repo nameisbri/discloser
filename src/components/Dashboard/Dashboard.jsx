@@ -70,9 +70,11 @@ function Dashboard() {
       <UserHeader user={user} records={records} />
       <ActionButtons className="dashboard__actions" />
       <div className="dashboard__content">
+        <h3 className="dashboard__section-title">Recent Results</h3>
         <section className="dashboard__section">
           <RecentResults results={results} />
         </section>
+        <h3 className="dashboard__section-title">Testing Schedule</h3>
         <section className="dashboard__section">
           <TestingSchedule reminder={reminder} />
         </section>

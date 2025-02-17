@@ -4,8 +4,6 @@
 @use "/src/styles/partials/typography" as *;
 
 .schedule {
-  @include card;
-
   &__title {
     color: map.get($colors, "text");
     font-size: map.get($font-sizes, "xl");
@@ -48,16 +46,17 @@
   }
 
   &__reminder {
-    @include flex(row, flex-start, center);
+    @include flex(row, flex-start, flex-start);
     gap: map.get($spacing, "xs");
     margin-bottom: map.get($spacing, "md");
     padding: map.get($spacing, "sm");
-    background-color: map.get($colors, "success-light");
+    background-color: map.get($colors, "secondary-light");
     border-radius: map.get($border-radius, "sm");
   }
 
   &__reminder-icon {
-    color: map.get($colors, "success");
+    color: map.get($colors, "primary");
+    height: map.get($spacing, "md");
   }
 
   &__reminder-text {

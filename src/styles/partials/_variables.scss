@@ -6,6 +6,8 @@ $colors: (
   "primary-light": #eac4ce,
   "primary-dark": color.scale(#923d5c, $lightness: -10%),
   "secondary": #757575,
+  "secondary-dark": #43344f,
+  "secondary-light": rgba(234, 196, 206, 0.3),
   "success": #28a745,
   "success-light": #e8f5e9,
   "danger": #dc3545,
@@ -16,8 +18,8 @@ $colors: (
   "info-light": #d1ecf1,
   "background": #ffffff,
   "border": #e0e0e0,
-  "text": #333333,
-  "text-light": #666666,
+  "text": #374151,
+  "text-light": #6b7280,
 );
 
 $spacing: (

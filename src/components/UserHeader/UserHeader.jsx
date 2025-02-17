@@ -37,11 +37,11 @@ const UserHeader = ({ user, records }) => {
           }}
         />
         <div className="user-header__info">
-          <h2 className="user-header__name">{user.name}</h2>
-          <p className="user-header__last-update">
-            Last update: {lastLogged}
+          <h2 className="user-header__name">
+            {user.name}&nbsp;
             <BadgeCheck />
-          </p>
+          </h2>
+          <p className="user-header__last-update">Last update: {lastLogged}</p>
         </div>
       </div>
     </div>
