@@ -1,0 +1,66 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+
+.dashboard {
+  @include mix.flex(column, flex-start, stretch);
+  background-color: map.get(vars.$colors, "primary-light");
+  min-height: 100vh;
+  padding-bottom: map.get(vars.$spacing, "xl") * 3;
+  &__loading {
+    @include mix.flex(row, center, center);
+    min-height: 100vh;
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__actions {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: map.get(vars.$spacing, "md") 0;
+  }
+
+  &__content {
+    padding: 0 map.get(vars.$spacing, "md");
+    flex: 1;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "sm")
+    );
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__section {
+    flex: 1;
+    min-width: 300px;
+    @include mix.card(map.get(vars.$spacing, "lg"));
+    transition: all 0.2s ease;
+
+    @media (min-width: 768px) {
+      min-width: calc(50% - #{map.get(vars.$spacing, "lg")});
+    }
+
+    &-title {
+      font-size: map.get(type.$font-sizes, "lg");
+      color: map.get(vars.$colors, "secondary-dark");
+      font-weight: vars.$font-weight-semi-bold;
+      margin-top: map.get(vars.$spacing, "sm");
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

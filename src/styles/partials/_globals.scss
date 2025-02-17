@@ -1,0 +1,26 @@
+@use "sass:map";
+@use "variables" as vars;
+@use "typography" as type;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: vars.$font-family-inter;
+  font-size: map.get(type.$font-sizes, "base");
+  line-height: 1.5;
+  color: map.get(vars.$colors, "text");
+  background-color: map.get(vars.$colors, "primary-light");
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}

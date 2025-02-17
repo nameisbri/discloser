@@ -1,0 +1,11 @@
+@use "sass:map";
+@use "./styles/partials/variables" as vars;
+@use "./styles/partials/mixins" as mix;
+@use "./styles/partials/globals";
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: map.get(vars.$colors, "primary-light");
+  min-height: 100vh;
+}

@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "variables" as vars;
+@use "typography" as type;
+
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+@mixin card($padding: map.get(vars.$spacing, "lg")) {
+  background-color: map.get(vars.$colors, "background");
+  border-radius: map.get(vars.$border-radius, "xl");
+  padding: $padding;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@mixin status-badge($background, $color) {
+  padding: map.get(vars.$spacing, "xxs") map.get(vars.$spacing, "xs");
+  background-color: $background;
+  color: $color;
+  border-radius: map.get(vars.$border-radius, "pill");
+  font-size: map.get(type.$font-sizes, "xs");
+  font-weight: map.get(type.$font-weights, "medium");
+}
+
+@mixin icon-button {
+  @include flex(row, center, center);
+  width: 40px;
+  height: 40px;
+  border-radius: map.get(vars.$border-radius, "pill");
+  border: 1px solid map.get(vars.$colors, "border");
+  background: transparent;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: map.get(vars.$colors, "primary-light");
+    border-color: map.get(vars.$colors, "primary");
+  }
+}

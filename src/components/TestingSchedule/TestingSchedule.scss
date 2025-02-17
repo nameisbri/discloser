@@ -1,0 +1,101 @@
+@use "sass:map";
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.schedule {
+  &__title {
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "xl");
+    font-weight: $font-weight-semi-bold;
+    margin-bottom: map.get($spacing, "lg");
+  }
+
+  &__next-test {
+    @include flex(row, space-between, center);
+    margin-bottom: map.get($spacing, "md");
+  }
+
+  &__date-info {
+    @include flex(column, flex-start, flex-start);
+    gap: map.get($spacing, "xxs");
+  }
+
+  &__label {
+    color: map.get($colors, "text-light");
+    font-size: map.get($font-sizes, "sm");
+    font-weight: $font-weight-medium;
+  }
+
+  &__date {
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "lg");
+    font-weight: $font-weight-semi-bold;
+  }
+
+  &__calendar-icon {
+    color: map.get($colors, "primary");
+    background: map.get($colors, "primary-light");
+    padding: map.get($spacing, "xs");
+    border-radius: map.get($border-radius, "sm");
+    cursor: pointer;
+
+    &:hover {
+      background: darken(map.get($colors, "primary-light"), 5%);
+    }
+  }
+
+  &__reminder {
+    @include flex(row, flex-start, flex-start);
+    gap: map.get($spacing, "xs");
+    margin-bottom: map.get($spacing, "md");
+    padding: map.get($spacing, "sm");
+    background-color: map.get($colors, "secondary-light");
+    border-radius: map.get($border-radius, "sm");
+  }
+
+  &__reminder-icon {
+    color: map.get($colors, "primary");
+    height: map.get($spacing, "md");
+  }
+
+  &__reminder-text {
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "sm");
+    font-weight: $font-weight-medium;
+  }
+
+  &__frequency {
+    margin-bottom: map.get($spacing, "lg");
+
+    &-text {
+      color: map.get($colors, "text-light");
+      font-size: map.get($font-sizes, "sm");
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: map.get($spacing, "lg") 0;
+
+    &-text {
+      color: map.get($colors, "text-light");
+      font-size: map.get($font-sizes, "md");
+    }
+  }
+
+  &__modify {
+    width: 100%;
+    padding: map.get($spacing, "md");
+    background-color: map.get($colors, "primary");
+    color: white;
+    border-radius: map.get($border-radius, "md");
+    font-weight: $font-weight-medium;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: map.get($colors, "primary-dark");
+      cursor: pointer;
+    }
+  }
+}

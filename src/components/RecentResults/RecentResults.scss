@@ -1,0 +1,111 @@
+@use "sass:map";
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.results {
+  &__title {
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "xl");
+    font-weight: $font-weight-semi-bold;
+    margin-bottom: map.get($spacing, "lg");
+  }
+
+  &__date {
+    @include flex(row, space-between, center);
+    margin-bottom: map.get($spacing, "md");
+  }
+
+  &__date-text {
+    color: map.get($colors, "text");
+    font-weight: $font-weight-regular;
+  }
+
+  &__status {
+    &--current {
+      @include status-badge(
+        map.get($colors, "success-light"),
+        map.get($colors, "success")
+      );
+    }
+
+    &--outdated {
+      @include status-badge(
+        map.get($colors, "warning-light"),
+        map.get($colors, "warning")
+      );
+    }
+  }
+}
+
+.result-item {
+  padding: map.get($spacing, "sm") 0;
+  border-bottom: 1px solid map.get($colors, "border");
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__header {
+    @include flex(row, space-between, center);
+    margin-bottom: map.get($spacing, "xxs");
+  }
+
+  &__title {
+    color: map.get($colors, "primary");
+    font-size: map.get($font-sizes, "lg");
+    font-weight: $font-weight-medium;
+  }
+
+  &__status {
+    &--positive {
+      @include status-badge(
+        map.get($colors, "danger-light"),
+        map.get($colors, "danger")
+      );
+    }
+
+    &--negative {
+      @include status-badge(
+        map.get($colors, "success-light"),
+        map.get($colors, "success")
+      );
+    }
+
+    &--indeterminate {
+      @include status-badge(
+        map.get($colors, "warning-light"),
+        map.get($colors, "warning")
+      );
+    }
+
+    &--numeric {
+      @include status-badge(
+        map.get($colors, "info-light"),
+        map.get($colors, "info")
+      );
+    }
+  }
+
+  &__collection {
+    color: map.get($colors, "text-light");
+    font-size: map.get($font-sizes, "sm");
+  }
+}
+
+.results__view-all {
+  width: 100%;
+  padding: map.get($spacing, "md");
+  margin-top: map.get($spacing, "lg");
+  background-color: map.get($colors, "primary");
+  color: white;
+  border-radius: map.get($border-radius, "md");
+  font-weight: $font-weight-regular;
+  transition: background-color 0.2s ease;
+  font-size: map.get($font-sizes, "sm");
+
+  &:hover {
+    background-color: map.get($colors, "primary-dark");
+    cursor: pointer;
+  }
+}

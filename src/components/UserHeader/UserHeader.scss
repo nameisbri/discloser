@@ -1,0 +1,47 @@
+@use "sass:map";
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.user-header {
+  @include card;
+  @include flex(row, space-between, center);
+  padding: map.get($spacing, "md");
+  border-radius: 0;
+
+  &__profile {
+    @include flex(row, flex-start, center, map.get($spacing, "md"));
+  }
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__info {
+    @include flex(column, flex-start, flex-start, 2px);
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    color: map.get($colors, "primary");
+    font-size: map.get($font-sizes, "lg");
+    font-weight: map.get($font-weights, "semibold");
+  }
+
+  &__last-update {
+    color: map.get($colors, "text-light");
+    font-size: map.get($font-sizes, "sm");
+  }
+
+  &__notifications {
+    @include flex(row, flex-end, center, map.get($spacing, "sm"));
+  }
+
+  &__icon-button {
+    @include icon-button;
+  }
+}
