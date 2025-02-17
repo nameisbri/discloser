@@ -10,6 +10,7 @@ function Dashboard() {
   const [user, setUser] = useState(null);
   const [records, setRecords] = useState([]);
   const [results, setResults] = useState([]);
+  const [reminder, setReminder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseUrl = import.meta.env.VITE_APP_URL;
@@ -34,6 +35,11 @@ function Dashboard() {
             `${baseUrl}/share/${userResponse.data.id}`
           );
           setResults(resultsResponse.data || []);
+
+          const reminderResponse = await axios.get(
+            `${baseUrl}/reminders/${userResponse.data.id}/reminders`
+          );
+          setReminder(reminderResponse.data || []);
         }
       } catch (error) {
         console.error("API Error:", {
@@ -68,7 +74,7 @@ function Dashboard() {
           <RecentResults results={results} />
         </section>
         <section className="dashboard__section">
-          <TestingSchedule userId={user?.id} />
+          <TestingSchedule reminder={reminder} />
         </section>
       </div>
     </div>

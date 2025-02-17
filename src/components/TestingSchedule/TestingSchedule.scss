@@ -9,7 +9,7 @@
   &__title {
     color: map.get($colors, "text");
     font-size: map.get($font-sizes, "xl");
-    font-weight: map.get($font-weights, "semibold");
+    font-weight: $font-weight-semi-bold;
     margin-bottom: map.get($spacing, "lg");
   }
 
@@ -18,46 +18,85 @@
     margin-bottom: map.get($spacing, "md");
   }
 
+  &__date-info {
+    @include flex(column, flex-start, flex-start);
+    gap: map.get($spacing, "xxs");
+  }
+
   &__label {
     color: map.get($colors, "text-light");
     font-size: map.get($font-sizes, "sm");
-    margin-bottom: map.get($spacing, "xxs");
+    font-weight: $font-weight-medium;
   }
 
   &__date {
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "lg");
+    font-weight: $font-weight-semi-bold;
+  }
+
+  &__calendar-icon {
     color: map.get($colors, "primary");
-    font-size: map.get($font-sizes, "xl");
-    font-weight: map.get($font-weights, "semibold");
+    background: map.get($colors, "primary-light");
+    padding: map.get($spacing, "xs");
+    border-radius: map.get($border-radius, "sm");
+    cursor: pointer;
+
+    &:hover {
+      background: darken(map.get($colors, "primary-light"), 5%);
+    }
   }
 
   &__reminder {
-    @include flex(row, flex-start, center, map.get($spacing, "sm"));
-    background-color: map.get($colors, "primary-light");
-    padding: map.get($spacing, "sm") map.get($spacing, "md");
-    border-radius: map.get($border-radius, "md");
+    @include flex(row, flex-start, center);
+    gap: map.get($spacing, "xs");
+    margin-bottom: map.get($spacing, "md");
+    padding: map.get($spacing, "sm");
+    background-color: map.get($colors, "success-light");
+    border-radius: map.get($border-radius, "sm");
+  }
+
+  &__reminder-icon {
+    color: map.get($colors, "success");
+  }
+
+  &__reminder-text {
+    color: map.get($colors, "text");
+    font-size: map.get($font-sizes, "sm");
+    font-weight: $font-weight-medium;
+  }
+
+  &__frequency {
     margin-bottom: map.get($spacing, "lg");
 
-    &-icon {
-      color: map.get($colors, "primary");
+    &-text {
+      color: map.get($colors, "text-light");
+      font-size: map.get($font-sizes, "sm");
     }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: map.get($spacing, "lg") 0;
 
     &-text {
-      color: map.get($colors, "primary");
-      font-size: map.get($font-sizes, "sm");
+      color: map.get($colors, "text-light");
+      font-size: map.get($font-sizes, "md");
     }
   }
 
   &__modify {
     width: 100%;
     padding: map.get($spacing, "md");
-    border: 1px solid map.get($colors, "border");
+    background-color: map.get($colors, "primary");
+    color: white;
     border-radius: map.get($border-radius, "md");
-    color: map.get($colors, "text");
-    font-weight: map.get($font-weights, "medium");
+    font-weight: $font-weight-medium;
+    transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: map.get($colors, "primary-light");
-      border-color: map.get($colors, "primary");
+      background-color: map.get($colors, "primary-dark");
+      cursor: pointer;
     }
   }
 }
