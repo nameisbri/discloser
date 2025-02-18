@@ -19,12 +19,17 @@
   }
 
   &__item {
-    @include flex(column, center, center, map.get($spacing, "xxs"));
+    @include flex(row, center, center, map.get($spacing, "xxs"));
     color: map.get($colors, "secondary");
 
     &--active {
       color: map.get($colors, "primary");
     }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
   }
 
   &__icon {

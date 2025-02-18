@@ -14,7 +14,10 @@ const ActionButtons = () => {
         <Upload className="action-buttons__icon" />
         <span className="action-buttons__text">Upload Results</span>
       </button>
-      <button className="action-buttons__button">
+      <button
+        className="action-buttons__button"
+        onClick={() => navigate("/reminders")}
+      >
         <Calendar className="action-buttons__icon" />
         <span className="action-buttons__text">Set Reminder</span>
       </button>
