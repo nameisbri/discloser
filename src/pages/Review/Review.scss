@@ -1,0 +1,190 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+
+.review {
+  min-height: 100vh;
+  background-color: map.get(vars.$colors, "primary-light");
+  padding: map.get(vars.$spacing, "lg");
+
+  &__container {
+    @include mix.card;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: map.get(vars.$spacing, "lg");
+  }
+
+  &__header {
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+    padding-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__back-button {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+
+    &:hover {
+      color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+
+  &__content {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "xl")
+    );
+  }
+
+  &__file-status {
+    @include mix.card(map.get(vars.$spacing, "md"));
+    @include mix.flex(row, space-between, center);
+  }
+
+  &__file-info {
+    @include mix.flex(
+      column,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "xxs")
+    );
+  }
+
+  &__upload-date {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__filename {
+    font-size: map.get(type.$font-sizes, "base");
+    font-weight: map.get(type.$font-weights, "medium");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__status {
+    @include mix.status-badge(
+      map.get(vars.$colors, "info-light"),
+      map.get(vars.$colors, "info")
+    );
+
+    &--processing {
+      @include mix.status-badge(
+        map.get(vars.$colors, "info-light"),
+        map.get(vars.$colors, "info")
+      );
+    }
+
+    &--verified {
+      @include mix.status-badge(
+        map.get(vars.$colors, "success-light"),
+        map.get(vars.$colors, "success")
+      );
+    }
+  }
+
+  &__results {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__result-card {
+    @include mix.card(map.get(vars.$spacing, "lg"));
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__result-header {
+    @include mix.flex(row, space-between, center);
+    margin-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__test-name {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "primary");
+  }
+
+  &__verification-badge {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+  }
+
+  &__result-details {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "sm")
+    );
+  }
+
+  &__detail-row {
+    @include mix.flex(row, space-between, center);
+    padding: map.get(vars.$spacing, "xs") 0;
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__detail-label {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__detail-value {
+    font-weight: map.get(type.$font-weights, "medium");
+
+    &--status {
+      color: map.get(vars.$colors, "success");
+    }
+  }
+
+  &__actions {
+    @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "md"));
+    border-top: 1px solid map.get(vars.$colors, "border");
+    padding-top: map.get(vars.$spacing, "lg");
+  }
+
+  &__button {
+    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "lg");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-weight: map.get(type.$font-weights, "medium");
+    transition: all 0.2s ease;
+
+    &--primary {
+      background-color: map.get(vars.$colors, "primary");
+      color: white;
+
+      &:hover {
+        background-color: map.get(vars.$colors, "primary-dark");
+      }
+    }
+
+    &--secondary {
+      border: 1px solid map.get(vars.$colors, "primary");
+      color: map.get(vars.$colors, "primary");
+      background-color: transparent;
+
+      &:hover {
+        background-color: map.get(vars.$colors, "primary-light");
+      }
+    }
+  }
+}
