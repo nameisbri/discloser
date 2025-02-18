@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
+import StatusBadge from "../StatusBadge/StatusBadge";
 
-const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
+const EditableTestResult = ({
+  test,
+  recordDate,
+  onDelete,
+  disabled,
+  recordIndex,
+}) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
+  const baseUrl = import.meta.env.VITE_APP_URL;
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to remove this test result?")) {
@@ -15,9 +23,12 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
     setError("");
 
     try {
-      const baseUrl = import.meta.env.VITE_APP_URL;
-      await axios.delete(`${baseUrl}/results/${test.id}`);
-      onDelete(test.id);
+      if (typeof recordIndex !== "undefined") {
+        onDelete(recordIndex, test.id);
+      } else {
+        await axios.delete(`${baseUrl}/results/${test.id}`);
+        onDelete(test.id);
+      }
     } catch (err) {
       setError("Failed to delete result");
       console.error("Delete error:", err);
@@ -39,12 +50,13 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
       <div className="review__result-header">
         <h3 className="review__test-name">{test.test_type}</h3>
         <div className="review__header-actions">
-          <span className="review__verification-badge">Verified</span>
+          {/* <StatusBadge status="Verified" type="validity" /> */}
           {!disabled && (
             <button
               className="review__delete-button"
               onClick={handleDelete}
               disabled={isDeleting}
+              aria-label="Delete result"
             >
               <Trash2 size={18} />
             </button>
@@ -60,9 +72,7 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
 
         <div className="review__detail-row">
           <span className="review__detail-label">Result:</span>
-          <span className="review__detail-value review__detail-value--status">
-            {test.result}
-          </span>
+          <StatusBadge status={test.result} type="result" />
         </div>
 
         {test.notes && (
