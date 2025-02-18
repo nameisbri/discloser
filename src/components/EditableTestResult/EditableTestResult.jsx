@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
 
-const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
+const EditableTestResult = ({
+  test,
+  recordDate,
+  onDelete,
+  disabled,
+  recordIndex,
+}) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
+  const baseUrl = import.meta.env.VITE_APP_URL;
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to remove this test result?")) {
@@ -15,9 +22,14 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
     setError("");
 
     try {
-      const baseUrl = import.meta.env.VITE_APP_URL;
-      await axios.delete(`${baseUrl}/results/${test.id}`);
-      onDelete(test.id);
+      // If we're in the Review context (recordIndex is defined), just call onDelete
+      if (typeof recordIndex !== "undefined") {
+        onDelete(recordIndex, test.id);
+      } else {
+        // If we're in the Results context, make the API call and then call onDelete
+        await axios.delete(`${baseUrl}/results/${test.id}`);
+        onDelete(test.id);
+      }
     } catch (err) {
       setError("Failed to delete result");
       console.error("Delete error:", err);
@@ -34,6 +46,27 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
     });
   };
 
+  const getStatusClass = (result) => {
+    switch (result) {
+      case "Positive":
+      case "Detected":
+        return "positive";
+      case "Negative":
+      case "Not Detected":
+        return "negative";
+      case "Immune":
+        return "positive";
+      case "Not Immune":
+        return "negative";
+      case "Indeterminate":
+        return "indeterminate";
+      case "Numeric":
+        return "numeric";
+      default:
+        return "indeterminate";
+    }
+  };
+
   return (
     <div className="review__result-card">
       <div className="review__result-header">
@@ -45,6 +78,7 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
               className="review__delete-button"
               onClick={handleDelete}
               disabled={isDeleting}
+              aria-label="Delete result"
             >
               <Trash2 size={18} />
             </button>
@@ -60,7 +94,11 @@ const EditableTestResult = ({ test, recordDate, onDelete, disabled }) => {
 
         <div className="review__detail-row">
           <span className="review__detail-label">Result:</span>
-          <span className="review__detail-value review__detail-value--status">
+          <span
+            className={`review__detail-value review__detail-value--${getStatusClass(
+              test.result
+            )}`}
+          >
             {test.result}
           </span>
         </div>

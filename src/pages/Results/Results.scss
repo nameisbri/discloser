@@ -1,0 +1,137 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+
+.results-page {
+  min-height: calc(100vh - 56px);
+  background-color: map.get(vars.$colors, "primary-light");
+  padding: map.get(vars.$spacing, "lg");
+  padding-bottom: calc(#{map.get(vars.$spacing, "xl")} * 4);
+
+  &__header {
+    @include mix.card;
+    margin-bottom: map.get(vars.$spacing, "lg");
+    padding: map.get(vars.$spacing, "lg");
+  }
+
+  &__back-button {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+
+    &:hover {
+      color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+
+  &__title {
+    color: map.get(vars.$colors, "primary");
+    font-size: map.get(type.$font-sizes, "2xl");
+    font-weight: map.get(type.$font-weights, "semibold");
+    margin-bottom: map.get(vars.$spacing, "xs");
+  }
+
+  &__subtitle {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__content {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+    margin-bottom: map.get(vars.$spacing, "xl");
+  }
+
+  &__empty {
+    @include mix.card;
+    padding: map.get(vars.$spacing, "xl");
+    text-align: center;
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__loading,
+  &__error {
+    @include mix.card;
+    padding: map.get(vars.$spacing, "xl");
+    text-align: center;
+  }
+
+  &__error {
+    color: map.get(vars.$colors, "danger");
+  }
+
+  &__loading {
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__pagination {
+    @include mix.card;
+    @include mix.flex(row, space-between, center);
+    padding: map.get(vars.$spacing, "md");
+    position: fixed;
+    bottom: 72px; // Position above nav bar
+    left: map.get(vars.$spacing, "lg");
+    right: map.get(vars.$spacing, "lg");
+    max-width: calc(600px - #{map.get(vars.$spacing, "lg")} * 2);
+    margin: 0 auto;
+    z-index: 10;
+  }
+
+  &__pagination-button {
+    @include mix.flex(row, center, center, map.get(vars.$spacing, "xs"));
+    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "md");
+    border-radius: map.get(vars.$border-radius, "md");
+    background-color: map.get(vars.$colors, "primary");
+    color: white;
+    font-weight: map.get(type.$font-weights, "medium");
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: map.get(vars.$colors, "primary-dark");
+    }
+
+    &:disabled {
+      background-color: map.get(vars.$colors, "secondary");
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  &__pagination-info {
+    color: map.get(vars.$colors, "text");
+    font-size: map.get(type.$font-sizes, "sm");
+    font-weight: map.get(type.$font-weights, "medium");
+  }
+}
+
+.review__header-actions {
+  @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "sm"));
+}
+
+.review__delete-button {
+  color: map.get(vars.$colors, "danger");
+  padding: map.get(vars.$spacing, "xxs");
+  border-radius: 50%;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: map.get(vars.$colors, "danger-light");
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.review__error {
+  color: map.get(vars.$colors, "danger");
+  font-size: map.get(type.$font-sizes, "sm");
+  margin-top: map.get(vars.$spacing, "sm");
+  text-align: center;
+}
