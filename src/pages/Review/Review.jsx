@@ -7,46 +7,33 @@ const Review = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get file details from navigation state or use defaults
-  const fileDetails = location.state || {
-    fileName: "Unknown File",
-    uploadDate: new Date().toLocaleDateString(),
-    status: "processing",
-  };
-
-  // Redirect to upload if accessed directly without file data
   useEffect(() => {
     if (!location.state) {
       navigate("/upload", { replace: true });
     }
   }, [location.state, navigate]);
 
-  const testResults = [
-    {
-      name: "HIV Antibody Test",
-      collectionDate: "Jan 15, 2025",
-      status: "Non-reactive",
-      method: "4th Gen ELISA",
-      laboratory: "Quest Diagnostics",
-      verified: true,
-    },
-    {
-      name: "Hepatitis B Surface Antigen",
-      collectionDate: "Jan 15, 2025",
-      status: "Non-reactive",
-      method: "CMIA",
-      laboratory: "Quest Diagnostics",
-      verified: true,
-    },
-  ];
+  const {
+    files = [],
+    uploadDate,
+    status,
+    results = [],
+    message,
+  } = location.state || {};
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   const handleEditClick = () => {
     navigate("/upload");
   };
 
   const handleConfirmClick = () => {
-    // Here you would typically save the results
-    // Then navigate to the results page or dashboard
     navigate("/results");
   };
 
@@ -64,60 +51,71 @@ const Review = () => {
         </header>
 
         <div className="review__content">
-          <div className="review__file-status">
-            <div className="review__file-info">
-              <span className="review__upload-date">
-                Uploaded {fileDetails.uploadDate}
-              </span>
-              <h3 className="review__filename">{fileDetails.fileName}</h3>
-            </div>
-            <span
-              className={`review__status review__status--${fileDetails.status}`}
-            >
-              Processing
-            </span>
-          </div>
+          {message && <div className="review__message">{message}</div>}
 
-          <div className="review__results">
-            {testResults.map((test, index) => (
-              <div key={index} className="review__result-card">
-                <div className="review__result-header">
-                  <h3 className="review__test-name">{test.name}</h3>
-                  <span className="review__verification-badge">Verified</span>
+          {results.map((record, index) => (
+            <div key={index} className="review__file-section">
+              <div className="review__file-status">
+                <div className="review__file-info">
+                  <span className="review__upload-date">
+                    Uploaded {uploadDate}
+                  </span>
+                  <h3 className="review__filename">
+                    {files[index]?.fileName || `File ${index + 1}`}
+                  </h3>
                 </div>
-
-                <div className="review__result-details">
-                  <div className="review__detail-row">
-                    <span className="review__detail-label">Collection:</span>
-                    <span className="review__detail-value">
-                      {test.collectionDate}
-                    </span>
-                  </div>
-
-                  <div className="review__detail-row">
-                    <span className="review__detail-label">Result Status:</span>
-                    <span className="review__detail-value review__detail-value--status">
-                      {test.status}
-                    </span>
-                  </div>
-
-                  <div className="review__detail-row">
-                    <span className="review__detail-label">
-                      Testing Method:
-                    </span>
-                    <span className="review__detail-value">{test.method}</span>
-                  </div>
-
-                  <div className="review__detail-row">
-                    <span className="review__detail-label">Laboratory:</span>
-                    <span className="review__detail-value">
-                      {test.laboratory}
-                    </span>
-                  </div>
-                </div>
+                <span className={`review__status review__status--${status}`}>
+                  {status}
+                </span>
               </div>
-            ))}
-          </div>
+
+              <div className="review__results">
+                {record.results && record.results.length > 0 ? (
+                  record.results.map((test, testIndex) => (
+                    <div key={testIndex} className="review__result-card">
+                      <div className="review__result-header">
+                        <h3 className="review__test-name">{test.test_type}</h3>
+                        <span className="review__verification-badge">
+                          Verified
+                        </span>
+                      </div>
+
+                      <div className="review__result-details">
+                        <div className="review__detail-row">
+                          <span className="review__detail-label">
+                            Collection:
+                          </span>
+                          <span className="review__detail-value">
+                            {formatDate(record.test_date)}
+                          </span>
+                        </div>
+
+                        <div className="review__detail-row">
+                          <span className="review__detail-label">Result:</span>
+                          <span className="review__detail-value review__detail-value--status">
+                            {test.result}
+                          </span>
+                        </div>
+
+                        {test.notes && (
+                          <div className="review__detail-row">
+                            <span className="review__detail-label">Notes:</span>
+                            <span className="review__detail-value review__detail-value--notes">
+                              {test.notes}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="review__no-results">
+                    No test results found for this file
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="review__actions">

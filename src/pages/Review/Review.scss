@@ -154,6 +154,14 @@
     &--status {
       color: map.get(vars.$colors, "success");
     }
+
+    &--notes {
+      color: map.get(vars.$colors, "text-light");
+      font-size: map.get(type.$font-sizes, "sm");
+      line-height: 1.4;
+      max-width: 60%;
+      text-align: right;
+    }
   }
 
   &__actions {
@@ -186,5 +194,31 @@
         background-color: map.get(vars.$colors, "primary-light");
       }
     }
+  }
+
+  &__message {
+    padding: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "lg");
+    background-color: map.get(vars.$colors, "info-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    color: map.get(vars.$colors, "info");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__file-section {
+    margin-bottom: map.get(vars.$spacing, "xl");
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__no-results {
+    padding: map.get(vars.$spacing, "lg");
+    text-align: center;
+    color: map.get(vars.$colors, "text-light");
+    background-color: map.get(vars.$colors, "secondary-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-size: map.get(type.$font-sizes, "sm");
   }
 }
