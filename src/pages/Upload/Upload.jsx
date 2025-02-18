@@ -87,32 +87,40 @@ const Upload = () => {
     try {
       const formData = new FormData();
 
-      // Add each file to formData with "files" as the field name
+      // Add each file to formData
       uploadedFiles.forEach((file) => {
         formData.append("files", file);
       });
 
-      formData.append("user_id", "54"); // Should come from auth context
+      // Add other required fields
+      formData.append("user_id", "54"); // Hardcoded for MVP - should come from auth context
       formData.append("test_date", new Date().toISOString());
 
+      // Log formData contents for debugging
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
       const response = await axios.post(`${baseUrl}/records/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      // The response will now include results for each file
-      const { message, results } = response.data;
+      console.log("Upload Response:", response.data);
 
       // Check if there were any errors
-      const errors = results.filter((result) => result.error);
+      const successfulUploads = response.data.results.filter(
+        (result) => result.record
+      );
+      const errors = response.data.results.filter((result) => result.error);
+
       if (errors.length > 0) {
         const errorMessages = errors
           .map((error) => `${error.originalName}: ${error.error}`)
           .join("\n");
         setError(`Some files failed to upload:\n${errorMessages}`);
       }
-
-      // Get successful uploads
-      const successfulUploads = results.filter((result) => result.record);
 
       if (successfulUploads.length > 0) {
         // Navigate to review page with the successful results
@@ -125,7 +133,7 @@ const Upload = () => {
             uploadDate: new Date().toLocaleDateString(),
             status: "processing",
             results: successfulUploads.map((upload) => upload.record),
-            message: message, // Include the overall upload message
+            message: response.data.message,
           },
         });
       }
