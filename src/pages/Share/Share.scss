@@ -1,0 +1,196 @@
+@use "sass:map";
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+
+.share {
+  @include mix.flex(column, flex-start, stretch, map.get(vars.$spacing, "lg"));
+  padding: map.get(vars.$spacing, "lg");
+
+  &__header {
+    @include mix.card;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__user {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "sm"));
+  }
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: map.get(vars.$colors, "primary-light");
+  }
+
+  &__info {
+    @include mix.flex(
+      column,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "xxs")
+    );
+  }
+
+  &__username {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__date,
+  &__frequency {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__badge {
+    padding: map.get(vars.$spacing, "xxs") map.get(vars.$spacing, "xs");
+    border-radius: map.get(vars.$border-radius, "pill");
+    font-size: map.get(type.$font-sizes, "xs");
+    font-weight: map.get(type.$font-weights, "medium");
+
+    &--valid {
+      background-color: map.get(vars.$colors, "success-light");
+      color: map.get(vars.$colors, "success");
+    }
+
+    &--success {
+      background-color: map.get(vars.$colors, "success-light");
+      color: map.get(vars.$colors, "success");
+    }
+  }
+
+  &__results {
+    @include mix.card;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__results-header {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "xs")
+    );
+    padding-bottom: map.get(vars.$spacing, "md");
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+  }
+
+  &__results-date {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
+  &__results-validity {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__tests {
+    @include mix.flex(column, flex-start, stretch);
+  }
+
+  &__test {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "xs")
+    );
+    padding: map.get(vars.$spacing, "md");
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__test-info {
+    @include mix.flex(row, space-between, center);
+  }
+
+  &__test-name {
+    font-weight: map.get(type.$font-weights, "medium");
+  }
+
+  &__test-type {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__actions {
+    @include mix.card;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__link {
+    @include mix.flex(row, space-between, center, map.get(vars.$spacing, "sm"));
+  }
+
+  &__input {
+    flex: 1;
+    padding: map.get(vars.$spacing, "sm");
+    border: 1px solid map.get(vars.$colors, "border");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__expiry {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__downloads {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "sm")
+    );
+  }
+
+  &__button {
+    @include mix.flex(row, center, center);
+    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "md");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-weight: map.get(type.$font-weights, "medium");
+    transition: all 0.2s ease;
+
+    &--primary {
+      background-color: map.get(vars.$colors, "primary");
+      color: white;
+
+      &:hover {
+        background-color: map.get(vars.$colors, "primary-dark");
+      }
+    }
+
+    &--secondary {
+      border: 1px solid map.get(vars.$colors, "border");
+      background-color: white;
+      color: map.get(vars.$colors, "text");
+
+      &:hover {
+        background-color: map.get(vars.$colors, "primary-light");
+        border-color: map.get(vars.$colors, "primary");
+      }
+    }
+  }
+}

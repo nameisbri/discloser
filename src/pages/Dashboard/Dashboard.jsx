@@ -1,5 +1,6 @@
 import "./Dashboard.scss";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import UserHeader from "../../components/UserHeader/UserHeader";
 import ActionButtons from "../../components/ActionButtons/ActionButtons";
@@ -7,6 +8,7 @@ import RecentResults from "../../components/RecentResults/RecentResults";
 import TestingSchedule from "../../components/TestingSchedule/TestingSchedule";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [records, setRecords] = useState([]);
   const [results, setResults] = useState([]);
