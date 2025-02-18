@@ -19,7 +19,7 @@ function Dashboard() {
     const fetchUserData = async () => {
       try {
         // Get user data
-        const userResponse = await axios.get(`${baseUrl}/users/54`);
+        const userResponse = await axios.get(`${baseUrl}/users/54`); // user hardcoded for MVP - should come from auth later on
         if (!userResponse.data) {
           throw new Error("No user data received");
         }

@@ -85,37 +85,57 @@ const Upload = () => {
     setError("");
 
     try {
-      const uploadPromises = uploadedFiles.map(async (file) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("user_id", "54"); // Should come from auth context
-        formData.append("test_date", new Date().toISOString());
+      const formData = new FormData();
 
-        return axios.post(`${baseUrl}/records/upload`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+      // Add each file to formData with "files" as the field name
+      uploadedFiles.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      formData.append("user_id", "54"); // Should come from auth context
+      formData.append("test_date", new Date().toISOString());
+
+      const response = await axios.post(`${baseUrl}/records/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      // The response will now include results for each file
+      const { message, results } = response.data;
+
+      // Check if there were any errors
+      const errors = results.filter((result) => result.error);
+      if (errors.length > 0) {
+        const errorMessages = errors
+          .map((error) => `${error.originalName}: ${error.error}`)
+          .join("\n");
+        setError(`Some files failed to upload:\n${errorMessages}`);
+      }
+
+      // Get successful uploads
+      const successfulUploads = results.filter((result) => result.record);
+
+      if (successfulUploads.length > 0) {
+        // Navigate to review page with the successful results
+        navigate("/review", {
+          state: {
+            files: uploadedFiles.map((file) => ({
+              fileName: file.name,
+              fileSize: file.size,
+            })),
+            uploadDate: new Date().toLocaleDateString(),
+            status: "processing",
+            results: successfulUploads.map((upload) => upload.record),
+            message: message, // Include the overall upload message
+          },
         });
-      });
-
-      const responses = await Promise.all(uploadPromises);
-      const allResults = responses.map((response) => response.data.record);
-
-      navigate("/review", {
-        state: {
-          files: uploadedFiles.map((file) => ({
-            fileName: file.name,
-            fileSize: file.size,
-          })),
-          uploadDate: new Date().toLocaleDateString(),
-          status: "processing",
-          results: allResults,
-        },
-      });
+      }
     } catch (error) {
       console.error("Upload error:", error);
       setError(
         error.response?.data?.error ||
           "An error occurred while uploading your files. Please try again."
       );
+    } finally {
       setIsProcessing(false);
     }
   };
