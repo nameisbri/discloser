@@ -1,6 +1,8 @@
 import "./RecentResults.scss";
+import { useNavigate } from "react-router-dom";
 
 const RecentResults = ({ results }) => {
+  const navigate = useNavigate();
   const resultsArray = results?.results || [];
 
   const recentResults = resultsArray
@@ -86,7 +88,12 @@ const RecentResults = ({ results }) => {
         ))}
       </div>
 
-      <button className="results__view-all">View All Results</button>
+      <button
+        className="results__view-all"
+        onClick={() => navigate("/results")}
+      >
+        View All Results
+      </button>
     </div>
   );
 };

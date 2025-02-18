@@ -1,16 +1,41 @@
 import "./Navigation.scss";
+import { useNavigate } from "react-router-dom";
+
+import { House, ListCheck, Send } from "lucide-react";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   return (
     <nav className="nav">
       <ul className="nav__list">
         <li className="nav__item nav__item--active">
-          <a href="#" className="nav__link">
-            <span className="nav__icon">{/* Home icon */}</span>
+          <button href="#" className="nav__link" onClick={() => navigate("/")}>
+            <span className="nav__icon">
+              <House />
+            </span>
             Home
-          </a>
+          </button>
+          <button
+            href="#"
+            className="nav__link"
+            onClick={() => navigate("/results")}
+          >
+            <span className="nav__icon">
+              <ListCheck />
+            </span>
+            History
+          </button>
+          <button
+            href="#"
+            className="nav__link"
+            onClick={() => navigate("/share")}
+          >
+            <span className="nav__icon">
+              <Send />
+            </span>
+            Share
+          </button>
         </li>
-        {/* Other nav items */}
       </ul>
     </nav>
   );

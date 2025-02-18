@@ -1,7 +1,9 @@
 import "./TestingSchedule.scss";
 import { CalendarDays, Clock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const TestingSchedule = ({ reminder }) => {
+  const navigate = useNavigate();
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "long",
@@ -69,7 +71,10 @@ const TestingSchedule = ({ reminder }) => {
         </div>
       )}
 
-      <button className="schedule__modify">
+      <button
+        className="schedule__modify"
+        onClick={() => navigate("/reminders")}
+      >
         {activeReminder ? "Modify Schedule" : "Set Schedule"}
       </button>
     </div>
