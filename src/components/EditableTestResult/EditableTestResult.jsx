@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
+import StatusBadge from "../StatusBadge/StatusBadge";
 
 const EditableTestResult = ({
   test,
@@ -22,11 +23,9 @@ const EditableTestResult = ({
     setError("");
 
     try {
-      // If we're in the Review context (recordIndex is defined), just call onDelete
       if (typeof recordIndex !== "undefined") {
         onDelete(recordIndex, test.id);
       } else {
-        // If we're in the Results context, make the API call and then call onDelete
         await axios.delete(`${baseUrl}/results/${test.id}`);
         onDelete(test.id);
       }
@@ -46,33 +45,12 @@ const EditableTestResult = ({
     });
   };
 
-  const getStatusClass = (result) => {
-    switch (result) {
-      case "Positive":
-      case "Detected":
-        return "positive";
-      case "Negative":
-      case "Not Detected":
-        return "negative";
-      case "Immune":
-        return "positive";
-      case "Not Immune":
-        return "negative";
-      case "Indeterminate":
-        return "indeterminate";
-      case "Numeric":
-        return "numeric";
-      default:
-        return "indeterminate";
-    }
-  };
-
   return (
     <div className="review__result-card">
       <div className="review__result-header">
         <h3 className="review__test-name">{test.test_type}</h3>
         <div className="review__header-actions">
-          <span className="review__verification-badge">Verified</span>
+          {/* <StatusBadge status="Verified" type="validity" /> */}
           {!disabled && (
             <button
               className="review__delete-button"
@@ -94,13 +72,7 @@ const EditableTestResult = ({
 
         <div className="review__detail-row">
           <span className="review__detail-label">Result:</span>
-          <span
-            className={`review__detail-value review__detail-value--${getStatusClass(
-              test.result
-            )}`}
-          >
-            {test.result}
-          </span>
+          <StatusBadge status={test.result} type="result" />
         </div>
 
         {test.notes && (

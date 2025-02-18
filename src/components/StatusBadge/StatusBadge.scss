@@ -1,0 +1,49 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "sass:map";
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+
+  &--verified {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+  }
+
+  &--positive {
+    @include mix.status-badge(
+      map.get(vars.$colors, "danger-light"),
+      map.get(vars.$colors, "danger")
+    );
+  }
+
+  &--negative {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+  }
+
+  &--indeterminate {
+    @include mix.status-badge(
+      map.get(vars.$colors, "warning-light"),
+      map.get(vars.$colors, "warning")
+    );
+  }
+
+  &--numeric {
+    @include mix.status-badge(
+      map.get(vars.$colors, "info-light"),
+      map.get(vars.$colors, "info")
+    );
+  }
+}

@@ -20,22 +20,6 @@
     color: map.get($colors, "text");
     font-weight: $font-weight-regular;
   }
-
-  &__status {
-    &--current {
-      @include status-badge(
-        map.get($colors, "success-light"),
-        map.get($colors, "success")
-      );
-    }
-
-    &--outdated {
-      @include status-badge(
-        map.get($colors, "warning-light"),
-        map.get($colors, "warning")
-      );
-    }
-  }
 }
 
 .result-item {
@@ -55,36 +39,6 @@
     color: map.get($colors, "primary");
     font-size: map.get($font-sizes, "lg");
     font-weight: $font-weight-medium;
-  }
-
-  &__status {
-    &--positive {
-      @include status-badge(
-        map.get($colors, "danger-light"),
-        map.get($colors, "danger")
-      );
-    }
-
-    &--negative {
-      @include status-badge(
-        map.get($colors, "success-light"),
-        map.get($colors, "success")
-      );
-    }
-
-    &--indeterminate {
-      @include status-badge(
-        map.get($colors, "warning-light"),
-        map.get($colors, "warning")
-      );
-    }
-
-    &--numeric {
-      @include status-badge(
-        map.get($colors, "info-light"),
-        map.get($colors, "info")
-      );
-    }
   }
 
   &__collection {

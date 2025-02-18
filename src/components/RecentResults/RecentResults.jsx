@@ -1,5 +1,6 @@
 import "./RecentResults.scss";
 import { useNavigate } from "react-router-dom";
+import StatusBadge from "../StatusBadge/StatusBadge";
 
 const RecentResults = ({ results }) => {
   const navigate = useNavigate();
@@ -30,27 +31,6 @@ const RecentResults = ({ results }) => {
     });
   };
 
-  const getStatusClass = (result) => {
-    switch (result) {
-      case "Positive":
-      case "Detected":
-        return "positive";
-      case "Negative":
-      case "Not Detected":
-        return "negative";
-      case "Immune":
-        return "positive";
-      case "Not Immune":
-        return "negative";
-      case "Indeterminate":
-        return "indeterminate";
-      case "Numeric":
-        return "numeric";
-      default:
-        return "indeterminate";
-    }
-  };
-
   return (
     <div className="results">
       {mostRecentDate && (
@@ -58,13 +38,10 @@ const RecentResults = ({ results }) => {
           <span className="results__date-text">
             {formatDate(mostRecentDate)}
           </span>
-          <span
-            className={`results__status results__status--${
-              isUpToDate() ? "current" : "outdated"
-            }`}
-          >
-            {isUpToDate() ? "Up to date" : "Testing recommended"}
-          </span>
+          {/* <StatusBadge
+            status={isUpToDate() ? "Up to date" : "Testing recommended"}
+            type="validity"
+          /> */}
         </div>
       )}
 
@@ -73,13 +50,7 @@ const RecentResults = ({ results }) => {
           <div key={index} className="result-item">
             <div className="result-item__header">
               <h4 className="result-item__title">{result.test_type}</h4>
-              <span
-                className={`result-item__status result-item__status--${getStatusClass(
-                  result.result
-                )}`}
-              >
-                {result.result}
-              </span>
+              <StatusBadge status={result.result} type="result" />
             </div>
             <p className="result-item__collection">
               Collection: {formatDate(result.test_date)}
