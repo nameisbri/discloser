@@ -221,4 +221,49 @@
     border-radius: map.get(vars.$border-radius, "md");
     font-size: map.get(type.$font-sizes, "sm");
   }
+
+  &__header-actions {
+    @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "sm"));
+  }
+
+  &__delete-button {
+    @include mix.flex(row, center, center);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: map.get(vars.$colors, "danger");
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: map.get(vars.$colors, "danger-light");
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__error {
+    margin-top: map.get(vars.$spacing, "sm");
+    padding: map.get(vars.$spacing, "xs") map.get(vars.$spacing, "sm");
+    background-color: map.get(vars.$colors, "danger-light");
+    color: map.get(vars.$colors, "danger");
+    border-radius: map.get(vars.$border-radius, "sm");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__save-error {
+    flex: 1;
+    padding: map.get(vars.$spacing, "sm");
+    background-color: map.get(vars.$colors, "danger-light");
+    color: map.get(vars.$colors, "danger");
+    border-radius: map.get(vars.$border-radius, "sm");
+    margin-right: map.get(vars.$spacing, "md");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__buttons {
+    @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "md"));
+  }
 }

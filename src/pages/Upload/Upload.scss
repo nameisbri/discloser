@@ -218,4 +218,60 @@
       opacity: 0.7;
     }
   }
+
+  &__processing {
+    margin-top: map.get(vars.$spacing, "lg");
+    padding: map.get(vars.$spacing, "md");
+    background-color: map.get(vars.$colors, "background");
+    border-radius: map.get(vars.$border-radius, "md");
+    border: 1px solid map.get(vars.$colors, "border");
+  }
+
+  &__processing-status {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
+    margin-bottom: map.get(vars.$spacing, "sm");
+  }
+
+  &__processing-spinner {
+    color: map.get(vars.$colors, "primary");
+    animation: spin 1s linear infinite;
+  }
+
+  &__processing-info {
+    flex: 1;
+  }
+
+  &__processing-stage {
+    color: map.get(vars.$colors, "text");
+    font-weight: map.get(type.$font-weights, "medium");
+    margin-bottom: map.get(vars.$spacing, "xxs");
+  }
+
+  &__processing-details {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: map.get(vars.$colors, "secondary-light");
+    border-radius: map.get(vars.$border-radius, "pill");
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background-color: map.get(vars.$colors, "primary");
+    transition: width 0.3s ease;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
