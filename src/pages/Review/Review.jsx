@@ -1,40 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import EditableTestResult from "../../components/EditableTestResult/EditableTestResult";
+import axios from "axios";
 import "./Review.scss";
 
 const Review = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedResults, setEditedResults] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const baseUrl = import.meta.env.VITE_APP_URL;
 
   useEffect(() => {
     if (!location.state) {
       navigate("/upload", { replace: true });
+      return;
     }
+    setEditedResults(location.state.results);
   }, [location.state, navigate]);
 
-  const {
-    files = [],
-    uploadDate,
-    status,
-    results = [],
-    message,
-  } = location.state || {};
+  const { files = [], uploadDate, status, message } = location.state || {};
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+  const handleDelete = (recordIndex, resultId) => {
+    setEditedResults((prevResults) => {
+      const newResults = [...prevResults];
+      const record = { ...newResults[recordIndex] };
+      record.results = record.results.filter(
+        (result) => result.id !== resultId
+      );
+      newResults[recordIndex] = record;
+      return newResults;
     });
   };
 
   const handleEditClick = () => {
-    navigate("/upload");
+    setIsEditing(true);
   };
 
-  const handleConfirmClick = () => {
-    navigate("/results");
+  const handleConfirmClick = async () => {
+    setIsSaving(true);
+    try {
+      const updatedRecords = editedResults.map((record) => ({
+        id: record.id,
+        results: record.results,
+      }));
+
+      await axios.post(`${baseUrl}/records/update`, {
+        records: updatedRecords,
+      });
+      navigate("/results");
+    } catch (error) {
+      console.error("Error saving results:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -53,7 +75,7 @@ const Review = () => {
         <div className="review__content">
           {message && <div className="review__message">{message}</div>}
 
-          {results.map((record, index) => (
+          {editedResults.map((record, index) => (
             <div key={index} className="review__file-section">
               <div className="review__file-status">
                 <div className="review__file-info">
@@ -71,42 +93,14 @@ const Review = () => {
 
               <div className="review__results">
                 {record.results && record.results.length > 0 ? (
-                  record.results.map((test, testIndex) => (
-                    <div key={testIndex} className="review__result-card">
-                      <div className="review__result-header">
-                        <h3 className="review__test-name">{test.test_type}</h3>
-                        <span className="review__verification-badge">
-                          Verified
-                        </span>
-                      </div>
-
-                      <div className="review__result-details">
-                        <div className="review__detail-row">
-                          <span className="review__detail-label">
-                            Collection:
-                          </span>
-                          <span className="review__detail-value">
-                            {formatDate(record.test_date)}
-                          </span>
-                        </div>
-
-                        <div className="review__detail-row">
-                          <span className="review__detail-label">Result:</span>
-                          <span className="review__detail-value review__detail-value--status">
-                            {test.result}
-                          </span>
-                        </div>
-
-                        {test.notes && (
-                          <div className="review__detail-row">
-                            <span className="review__detail-label">Notes:</span>
-                            <span className="review__detail-value review__detail-value--notes">
-                              {test.notes}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                  record.results.map((test) => (
+                    <EditableTestResult
+                      key={test.id}
+                      test={test}
+                      recordDate={record.test_date}
+                      onDelete={(resultId) => handleDelete(index, resultId)}
+                      disabled={!isEditing}
+                    />
                   ))
                 ) : (
                   <div className="review__no-results">
@@ -119,17 +113,27 @@ const Review = () => {
         </div>
 
         <div className="review__actions">
-          <button
-            className="review__button review__button--secondary"
-            onClick={handleEditClick}
-          >
-            Edit Results
-          </button>
+          {!isEditing ? (
+            <button
+              className="review__button review__button--secondary"
+              onClick={handleEditClick}
+            >
+              Edit Results
+            </button>
+          ) : (
+            <button
+              className="review__button review__button--secondary"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel Edit
+            </button>
+          )}
           <button
             className="review__button review__button--primary"
             onClick={handleConfirmClick}
+            disabled={isSaving}
           >
-            Confirm & Save
+            {isSaving ? "Saving..." : "Confirm & Save"}
           </button>
         </div>
       </div>

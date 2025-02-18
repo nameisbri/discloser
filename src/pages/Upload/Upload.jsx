@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Upload as UploadIcon } from "lucide-react";
+import { ArrowLeft, Upload as UploadIcon, Loader2 } from "lucide-react";
 import axios from "axios";
 import "./Upload.scss";
 
@@ -10,6 +10,12 @@ const Upload = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
+  const [uploadStatus, setUploadStatus] = useState({
+    stage: "idle", // idle, uploading, processing, complete, error
+    progress: 0,
+    currentFile: null,
+    processedFiles: [],
+  });
   const fileInputRef = useRef(null);
   const baseUrl = import.meta.env.VITE_APP_URL;
 
@@ -79,37 +85,72 @@ const Upload = () => {
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
   };
 
+  const handleDropzoneClick = (e) => {
+    // Only trigger file input if clicking the dropzone area or its immediate children
+    const dropzoneEl = e.currentTarget;
+    const clickedEl = e.target;
+
+    // Don't trigger if clicking a button or interactive element
+    if (clickedEl.tagName.toLowerCase() === "button") return;
+
+    // Don't trigger if clicking outside the dropzone area
+    if (!dropzoneEl.contains(clickedEl)) return;
+
+    fileInputRef.current?.click();
+  };
+
   const handleSubmit = async () => {
     if (uploadedFiles.length === 0) return;
     setIsProcessing(true);
     setError("");
 
+    setUploadStatus({
+      stage: "uploading",
+      progress: 0,
+      currentFile: uploadedFiles[0].name,
+      processedFiles: [],
+    });
+
     try {
       const formData = new FormData();
+      const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
+      let uploadedSize = 0;
 
-      // Add each file to formData
       uploadedFiles.forEach((file) => {
         formData.append("files", file);
       });
-
-      // Add other required fields
-      formData.append("user_id", "54"); // Hardcoded for MVP - should come from auth context
+      formData.append("user_id", "54");
       formData.append("test_date", new Date().toISOString());
-
-      // Log formData contents for debugging
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
 
       const response = await axios.post(`${baseUrl}/records/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        onUploadProgress: (progressEvent) => {
+          // Calculate progress based on the total size of all files
+          const loaded = progressEvent.loaded;
+          uploadedSize = loaded;
+
+          // Add artificial delay for very small files
+          const percentCompleted = Math.min(
+            Math.round((uploadedSize * 100) / totalSize),
+            99 // Cap at 99% until fully complete
+          );
+
+          setUploadStatus((prev) => ({
+            ...prev,
+            stage: "uploading",
+            progress: percentCompleted,
+          }));
+        },
       });
 
-      console.log("Upload Response:", response.data);
+      setUploadStatus((prev) => ({
+        ...prev,
+        stage: "processing",
+        progress: 100,
+      }));
 
-      // Check if there were any errors
       const successfulUploads = response.data.results.filter(
         (result) => result.record
       );
@@ -120,10 +161,17 @@ const Upload = () => {
           .map((error) => `${error.originalName}: ${error.error}`)
           .join("\n");
         setError(`Some files failed to upload:\n${errorMessages}`);
+        setUploadStatus((prev) => ({
+          ...prev,
+          stage: "error",
+        }));
       }
 
       if (successfulUploads.length > 0) {
-        // Navigate to review page with the successful results
+        setUploadStatus((prev) => ({
+          ...prev,
+          stage: "complete",
+        }));
         navigate("/review", {
           state: {
             files: uploadedFiles.map((file) => ({
@@ -143,9 +191,44 @@ const Upload = () => {
         error.response?.data?.error ||
           "An error occurred while uploading your files. Please try again."
       );
+      setUploadStatus((prev) => ({
+        ...prev,
+        stage: "error",
+      }));
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const renderProcessingState = () => {
+    if (uploadStatus.stage === "idle") return null;
+
+    return (
+      <div className="upload__processing">
+        <div className="upload__processing-status">
+          <Loader2 className="upload__processing-spinner" />
+          <div className="upload__processing-info">
+            <div className="upload__processing-stage">
+              {uploadStatus.stage === "uploading" && "Uploading files..."}
+              {uploadStatus.stage === "processing" && "Processing files..."}
+              {uploadStatus.stage === "complete" && "Upload complete!"}
+              {uploadStatus.stage === "error" && "Upload failed"}
+            </div>
+            {uploadStatus.stage === "uploading" && (
+              <div className="upload__processing-details">
+                {uploadStatus.progress}% complete
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="upload__progress-bar">
+          <div
+            className="upload__progress-fill"
+            style={{ width: `${uploadStatus.progress}%` }}
+          />
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -166,7 +249,7 @@ const Upload = () => {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
+            onClick={handleDropzoneClick}
           >
             <UploadIcon size={48} className="upload__icon" />
             <h2 className="upload__title">Drop your files here</h2>
@@ -205,17 +288,30 @@ const Upload = () => {
             <p className="upload__file-limit">
               Maximum file size: 10MB per file
             </p>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              className="upload__input"
-              onChange={handleFileUpload}
-              accept=".pdf,.jpg,.jpeg,.png"
-              multiple
-              disabled={isProcessing}
-            />
           </div>
+
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            className="upload__input"
+            onChange={handleFileUpload}
+            accept=".pdf,.jpg,.jpeg,.png"
+            multiple
+            disabled={isProcessing}
+            style={{
+              position: "absolute",
+              width: "1px",
+              height: "1px",
+              padding: "0",
+              margin: "-1px",
+              overflow: "hidden",
+              clip: "rect(0,0,0,0)",
+              border: "0",
+            }}
+          />
+
+          {renderProcessingState()}
 
           <div className="upload__supported-tests">
             <h3 className="upload__supported-title">Supported Tests</h3>
