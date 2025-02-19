@@ -13,6 +13,7 @@ const Reminders = () => {
   const [error, setError] = useState("");
   const [reminder, setReminder] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const baseUrl = import.meta.env.VITE_APP_URL;
   const userId = "54"; // This should come from your auth context
@@ -145,8 +146,14 @@ const Reminders = () => {
 
           // Handle MySQL date format
           const dbDate = activeReminder.next_test_date;
-          // Don't set initial date, leave it empty
-          setNextTestDate(null);
+          // Set the next test date from the database
+          setNextTestDate(
+            activeReminder.next_test_date
+              ? new Date(activeReminder.next_test_date)
+                  .toISOString()
+                  .split("T")[0]
+              : null
+          );
         }
       } catch (error) {
         console.error("Error fetching reminders:", error);
@@ -162,9 +169,9 @@ const Reminders = () => {
   const handleSaveSettings = async () => {
     setSaving(true);
     setError("");
+    setSaveSuccess(false);
 
     try {
-      // Format date to match MySQL date format (YYYY-MM-DD)
       const formatDateForDB = (dateString) => {
         if (!dateString) return null;
         return dateString.split("T")[0];
@@ -178,36 +185,31 @@ const Reminders = () => {
       };
 
       if (reminder?.id) {
-        // Update existing reminder
         await axios.put(
           `${baseUrl}/reminders/${userId}/reminders/${reminder.id}`,
           reminderData
         );
       } else {
-        // Create new reminder
         await axios.post(
           `${baseUrl}/reminders/${userId}/reminders`,
           reminderData
         );
       }
 
-      navigate("/dashboard");
+      setSaveSuccess(true);
+      // Delay navigation to show success message
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (error) {
-      console.error("Error saving reminder:", error);
-      setError("Failed to save your reminder settings. Please try again.");
+      console.error("Error saving reminder:", error.response || error);
+      setError(
+        `Failed to save your reminder settings: ${
+          error.response?.data?.error || error.message
+        }`
+      );
       setSaving(false);
     }
-  };
-
-  const getNotificationDate = () => {
-    if (!nextTestDate) return null;
-    const date = new Date(nextTestDate);
-    date.setDate(date.getDate() - 14); // 2 weeks before
-    return date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
   };
 
   if (loading) {
@@ -228,6 +230,11 @@ const Reminders = () => {
 
       <div className="reminders__content">
         {error && <div className="reminders__error">{error}</div>}
+        {saveSuccess && (
+          <div className="reminders__success">
+            Testing schedule successfully updated!
+          </div>
+        )}
 
         <div className="reminders__last-test">
           <div className="reminders__test-icon">
@@ -278,7 +285,9 @@ const Reminders = () => {
 
         <div className="reminders__schedule-section">
           <div className="reminders__date-field">
-            <label className="reminders__field-label">Next Test Date</label>
+            <label className="reminders__field-label">
+              Recommended Next Test Date
+            </label>
             <div className="reminders__date-input-wrapper">
               <input
                 type="date"
@@ -292,11 +301,6 @@ const Reminders = () => {
                 Recommended: {getRecommendedDate()}
               </span>
             </div>
-            {nextTestDate && (
-              <p className="reminders__notification-text">
-                Notification will be sent on: {getNotificationDate()}
-              </p>
-            )}
           </div>
 
           <div className="reminders__frequency-field">

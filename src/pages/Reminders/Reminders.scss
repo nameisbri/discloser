@@ -4,6 +4,22 @@
 @use "sass:map";
 
 .reminders {
+  &__success {
+    padding: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "lg");
+    background-color: map.get(vars.$colors, "success-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    color: map.get(vars.$colors, "success");
+    font-size: map.get(type.$font-sizes, "sm");
+    text-align: center;
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+  }
   &__loading,
   &__error {
     padding: map.get(vars.$spacing, "lg");
