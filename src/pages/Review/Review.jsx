@@ -86,9 +86,6 @@ const Review = () => {
                     {files[index]?.fileName || `File ${index + 1}`}
                   </h3>
                 </div>
-                <span className={`review__status review__status--${status}`}>
-                  {status}
-                </span>
               </div>
 
               <div className="review__results">

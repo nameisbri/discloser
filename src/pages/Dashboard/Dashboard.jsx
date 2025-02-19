@@ -6,6 +6,7 @@ import UserHeader from "../../components/UserHeader/UserHeader";
 import ActionButtons from "../../components/ActionButtons/ActionButtons";
 import RecentResults from "../../components/RecentResults/RecentResults";
 import TestingSchedule from "../../components/TestingSchedule/TestingSchedule";
+import NotificationBanner from "../../components/NotificationBanner/NotificationBanner";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ function Dashboard() {
   const [reminder, setReminder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showNotification, setShowNotification] = useState(false);
+  const [dueDate, setDueDate] = useState(null);
   const baseUrl = import.meta.env.VITE_APP_URL;
 
   useEffect(() => {
@@ -59,6 +62,35 @@ function Dashboard() {
     fetchUserData();
   }, [baseUrl]);
 
+  useEffect(() => {
+    if (reminder && reminder.length > 0) {
+      const activeReminder = reminder.find((r) => r.is_active === 1);
+      if (activeReminder && activeReminder.next_test_date) {
+        const nextTestDate = new Date(activeReminder.next_test_date);
+        const today = new Date();
+        const twoWeeksBefore = new Date(nextTestDate);
+        twoWeeksBefore.setDate(twoWeeksBefore.getDate() - 14);
+
+        // Check if this notification was already dismissed
+        const lastDismissed = localStorage.getItem("lastDismissedNotification");
+        const isDismissed = lastDismissed === nextTestDate.toISOString();
+
+        if (today >= twoWeeksBefore && today <= nextTestDate && !isDismissed) {
+          setDueDate(nextTestDate);
+          setShowNotification(true);
+        }
+      }
+    }
+  }, [reminder]);
+
+  const handleDismissNotification = () => {
+    setShowNotification(false);
+    // Save dismissed date to localStorage
+    if (dueDate) {
+      localStorage.setItem("lastDismissedNotification", dueDate.toISOString());
+    }
+  };
+
   if (loading) {
     return <div className="dashboard__loading">Loading...</div>;
   }
@@ -69,6 +101,12 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
+      {showNotification && dueDate && (
+        <NotificationBanner
+          dueDate={dueDate}
+          onDismiss={handleDismissNotification}
+        />
+      )}
       <UserHeader user={user} records={records} />
       <ActionButtons className="dashboard__actions" />
       <div className="dashboard__content">

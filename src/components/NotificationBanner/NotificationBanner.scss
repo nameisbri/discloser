@@ -1,0 +1,54 @@
+@use "sass:map";
+@use "/src/styles/partials/variables" as vars;
+@use "/src/styles/partials/mixins" as mix;
+@use "/src/styles/partials/typography" as type;
+
+.notification {
+  padding: map.get(vars.$spacing, "md");
+  margin-bottom: map.get(vars.$spacing, "md");
+  background-color: map.get(vars.$colors, "primary-light");
+
+  &__content {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
+    padding: map.get(vars.$spacing, "md");
+    background-color: map.get(vars.$colors, "background");
+    border-radius: map.get(vars.$border-radius, "md");
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  &__icon {
+    color: map.get(vars.$colors, "primary");
+    width: 24px;
+    height: 24px;
+  }
+
+  &__text {
+    flex: 1;
+  }
+
+  &__title {
+    color: map.get(vars.$colors, "text");
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    margin-bottom: map.get(vars.$spacing, "xxs");
+  }
+
+  &__message {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__dismiss {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "xl");
+    padding: map.get(vars.$spacing, "xs");
+    line-height: 1;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: map.get(vars.$colors, "primary-light");
+      color: map.get(vars.$colors, "primary");
+    }
+  }
+}
