@@ -152,7 +152,7 @@ const Share = () => {
             {copied ? "Copied!" : "Copy Link"}
           </button>
         </div>
-        <p className="share__expiry">Link expires in 24 hours</p>
+        {/* <p className="share__expiry">Link expires in 24 hours</p> */}
         <div className="share__downloads">
           <button
             className="share__button share__button--secondary"
