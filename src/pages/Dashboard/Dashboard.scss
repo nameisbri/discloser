@@ -58,4 +58,14 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
   }
+
+  &__empty-message {
+    text-align: center;
+    padding: 20px;
+    color: #888; // Or any color you prefer
+    button {
+      margin-top: 10px;
+      // ... other button styles
+    }
+  }
 }

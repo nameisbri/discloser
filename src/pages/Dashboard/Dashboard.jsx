@@ -99,6 +99,8 @@ function Dashboard() {
     return <div className="dashboard__error">Error: {error}</div>;
   }
 
+  console.log();
+
   return (
     <div className="dashboard">
       {showNotification && dueDate && (
@@ -112,11 +114,34 @@ function Dashboard() {
       <div className="dashboard__content">
         <h3 className="dashboard__section-title">Recent Results</h3>
         <section className="dashboard__section">
-          <RecentResults results={results} />
+          {results.results.length === 0 ? (
+            <div className="dashboard__empty-message">
+              No test results yet. Upload your results to track your progress.
+              <button onClick={() => navigate("/upload")}>
+                Upload Results
+              </button>{" "}
+              {/* Example navigation */}
+            </div>
+          ) : (
+            <RecentResults results={results} />
+          )}
         </section>
+
         <h3 className="dashboard__section-title">Testing Schedule</h3>
+
         <section className="dashboard__section">
-          <TestingSchedule reminder={reminder} />
+          {reminder.length === 0 ||
+          !reminder.find((r) => r.is_active === 1) ||
+          !reminder[0]?.next_test_date ? (
+            <div className="dashboard__empty-message">
+              No future testing date set. Set a reminder to plan your next test.
+              <button onClick={() => navigate("/reminders")}>
+                Set Reminder
+              </button>
+            </div>
+          ) : (
+            <TestingSchedule reminder={reminder} />
+          )}
         </section>
       </div>
     </div>
