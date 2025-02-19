@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const TestingSchedule = ({ reminder }) => {
   const navigate = useNavigate();
+
   const formatDate = (dateString) => {
+    if (!dateString) return "Not set";
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -12,18 +14,23 @@ const TestingSchedule = ({ reminder }) => {
     });
   };
 
-  const formatFrequency = (frequencyString) => {
-    if (!frequencyString) return "";
-    const [number, unit] = frequencyString.split("_");
-    return `${number} ${unit}`;
+  const getRiskLevelFromFrequency = (frequencyString) => {
+    if (!frequencyString) return null;
+
+    // Map frequencies to risk levels and their descriptions
+    if (frequencyString.includes("365") || frequencyString.includes("180")) {
+      return "Lower risk - Testing every 6-12 months";
+    } else if (frequencyString.includes("90")) {
+      return "Moderate risk - Testing every 3-6 months";
+    } else if (frequencyString.includes("30")) {
+      return "Higher risk - Testing every 1-3 months";
+    }
+    return null;
   };
 
-  const recentReminders = reminder
-    .sort((a, b) => new Date(b.next_test_date) - new Date(a.next_test_date))
-    .slice(0, 3);
-
-  const activeReminder = Array.isArray(recentReminders)
-    ? reminder.find((r) => r.is_active)
+  // Sort reminders by date and get the active one
+  const activeReminder = Array.isArray(reminder)
+    ? reminder.find((r) => r.is_active === 1)
     : null;
 
   const getReminderDate = (nextTestDate) => {
@@ -33,9 +40,15 @@ const TestingSchedule = ({ reminder }) => {
     return reminderDate;
   };
 
+  const isDateValid = (dateString) => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    return date instanceof Date && !isNaN(date);
+  };
+
   return (
     <div className="schedule">
-      {activeReminder ? (
+      {activeReminder && isDateValid(activeReminder.next_test_date) ? (
         <>
           <div className="schedule__next-test">
             <div className="schedule__date-info">
@@ -44,7 +57,10 @@ const TestingSchedule = ({ reminder }) => {
                 {formatDate(activeReminder.next_test_date)}
               </p>
             </div>
-            <button className="schedule__calendar-icon">
+            <button
+              className="schedule__calendar-icon"
+              onClick={() => navigate("/reminders")}
+            >
               <CalendarDays size={24} />
             </button>
           </div>
@@ -61,7 +77,7 @@ const TestingSchedule = ({ reminder }) => {
 
           <div className="schedule__frequency">
             <p className="schedule__frequency-text">
-              Testing every {formatFrequency(activeReminder.frequency)}
+              {getRiskLevelFromFrequency(activeReminder.frequency)}
             </p>
           </div>
         </>

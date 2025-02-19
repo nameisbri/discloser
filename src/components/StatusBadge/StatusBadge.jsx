@@ -12,7 +12,7 @@ const StatusBadge = ({ status, type = "result" }) => {
       switch (status?.toLowerCase()) {
         case "positive":
         case "detected":
-          return "";
+          return "positive";
         case "negative":
         case "not detected":
           return "negative";

@@ -17,8 +17,65 @@
     );
   }
 
+  &__username {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+    display: flex;
+    align-items: center;
+    gap: map.get(vars.$spacing, "xs");
+  }
+
+  &__verified-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover .share__tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__verified {
+    color: map.get(vars.$colors, "primary");
+    width: 20px;
+    height: 20px;
+    cursor: help;
+  }
+
   &__user {
     @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "sm"));
+  }
+
+  &__tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: map.get(vars.$spacing, "xs") map.get(vars.$spacing, "sm");
+    background-color: map.get(vars.$colors, "text");
+    color: white;
+    font-size: map.get(type.$font-sizes, "xs");
+    border-radius: map.get(vars.$border-radius, "sm");
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    margin-bottom: map.get(vars.$spacing, "xxs");
+    z-index: 10;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 4px;
+      border-style: solid;
+      border-color: map.get(vars.$colors, "text") transparent transparent
+        transparent;
+    }
   }
 
   &__avatar {

@@ -1,0 +1,307 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+
+.reminders {
+  &__success {
+    padding: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "lg");
+    background-color: map.get(vars.$colors, "success-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    color: map.get(vars.$colors, "success");
+    font-size: map.get(type.$font-sizes, "sm");
+    text-align: center;
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+  }
+  &__loading,
+  &__error {
+    padding: map.get(vars.$spacing, "lg");
+    text-align: center;
+    margin: map.get(vars.$spacing, "md");
+  }
+
+  &__loading {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "lg");
+  }
+
+  &__error {
+    color: map.get(vars.$colors, "danger");
+    background-color: map.get(vars.$colors, "danger-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+  min-height: 100vh;
+  background-color: map.get(vars.$colors, "primary-light");
+  padding-bottom: map.get(vars.$spacing, "xl") * 3;
+
+  &__header {
+    @include mix.card;
+    border-radius: 0;
+    margin-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__back {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+    padding: map.get(vars.$spacing, "md");
+
+    &:hover {
+      color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+
+  &__content {
+    padding: 0 map.get(vars.$spacing, "md");
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__last-test {
+    @include mix.card;
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
+    padding: map.get(vars.$spacing, "md");
+  }
+
+  &__test-icon {
+    color: map.get(vars.$colors, "primary");
+    background-color: map.get(vars.$colors, "primary-light");
+    padding: map.get(vars.$spacing, "xs");
+    border-radius: map.get(vars.$border-radius, "sm");
+  }
+
+  &__test-info {
+    @include mix.flex(column, flex-start, flex-start);
+    flex: 1;
+  }
+
+  &__test-label {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__test-date {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__status {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+
+    &--valid {
+      @include mix.status-badge(
+        map.get(vars.$colors, "success-light"),
+        map.get(vars.$colors, "success")
+      );
+    }
+
+    &--expired {
+      @include mix.status-badge(
+        map.get(vars.$colors, "danger-light"),
+        map.get(vars.$colors, "danger")
+      );
+    }
+  }
+
+  &__risk-section {
+    @include mix.card;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__section-title {
+    font-size: map.get(type.$font-sizes, "xl");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__section-description {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "base");
+    margin-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__risk-levels {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__risk-option {
+    border: 1px solid map.get(vars.$colors, "border");
+    border-radius: map.get(vars.$border-radius, "lg");
+    overflow: hidden;
+  }
+
+  &__risk-label {
+    @include mix.flex(row, flex-start, stretch);
+    cursor: pointer;
+  }
+
+  &__risk-input {
+    display: none;
+
+    &:checked + .reminders__risk-content {
+      background-color: map.get(vars.$colors, "primary-light");
+      border-color: map.get(vars.$colors, "primary");
+    }
+  }
+
+  &__risk-content {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "sm")
+    );
+    padding: map.get(vars.$spacing, "md");
+    width: 100%;
+    transition: all 0.2s ease;
+  }
+
+  &__risk-title {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__risk-description {
+    color: map.get(vars.$colors, "text");
+    font-size: map.get(type.$font-sizes, "base");
+  }
+
+  &__risk-recommendation {
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+  }
+
+  &__risk-note {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__find-clinic {
+    color: map.get(vars.$colors, "primary");
+    font-size: map.get(type.$font-sizes, "sm");
+    font-weight: map.get(type.$font-weights, "medium");
+    text-decoration: underline;
+    align-self: flex-start;
+    margin-top: map.get(vars.$spacing, "xs");
+
+    &:hover {
+      color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+
+  &__schedule-section {
+    @include mix.card;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "lg")
+    );
+  }
+
+  &__date-field,
+  &__frequency-field {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "xs")
+    );
+  }
+
+  &__field-label {
+    font-size: map.get(type.$font-sizes, "base");
+    font-weight: map.get(type.$font-weights, "medium");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__date-input-wrapper {
+    position: relative;
+    width: 100%;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "xs")
+    );
+  }
+
+  &__date-recommended {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+  }
+
+  &__date-input,
+  &__frequency-select {
+    width: 100%;
+    padding: map.get(vars.$spacing, "sm");
+    border: 1px solid map.get(vars.$colors, "border");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-size: map.get(type.$font-sizes, "base");
+    color: map.get(vars.$colors, "text");
+    background-color: map.get(vars.$colors, "background");
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: map.get(vars.$colors, "primary");
+    }
+  }
+
+  &__calendar-icon {
+    position: absolute;
+    right: map.get(vars.$spacing, "sm");
+    top: 50%;
+    transform: translateY(-50%);
+    color: map.get(vars.$colors, "text-light");
+    pointer-events: none;
+  }
+
+  &__notification-text {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+    margin-top: map.get(vars.$spacing, "xxs");
+  }
+
+  &__save {
+    background-color: map.get(vars.$colors, "primary");
+    color: white;
+    padding: map.get(vars.$spacing, "md");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-weight: map.get(type.$font-weights, "medium");
+    margin-top: map.get(vars.$spacing, "lg");
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+}
