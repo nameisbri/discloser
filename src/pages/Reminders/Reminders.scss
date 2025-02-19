@@ -1,0 +1,300 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+@use "sass:color";
+
+.reminders {
+  @include mix.flex(column);
+  font-family: vars.$font-family-inter; // Or remove if body font is already set globally
+  background-color: map.get(vars.$colors, "primary-light");
+  min-height: 100vh;
+  padding: map.get(vars.$spacing, "lg");
+
+  &__header {
+    @include mix.flex(row, flex-start, center);
+    padding-bottom: map.get(vars.$spacing, "lg");
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+
+    .reminders__back-arrow {
+      font-size: map.get(
+        type.$font-sizes,
+        "xl"
+      ); // Adjust size if needed using your font-sizes map
+      margin-right: map.get(vars.$spacing, "sm");
+      cursor: pointer;
+    }
+
+    .reminders__title {
+      margin: 0;
+      font-size: map.get(
+        type.$font-sizes,
+        "lg"
+      ); // Adjust size if needed using your font-sizes map
+      font-weight: map.get(type.$font-weights, "bold");
+    }
+  }
+
+  &__content {
+    @include mix.flex(column);
+    gap: map.get(vars.$spacing, "lg");
+    padding-top: map.get(vars.$spacing, "lg");
+  }
+
+  &__last-test-date {
+    @include mix.card(); // Using the card mixin
+    @include mix.flex(row, flex-start, flex-start);
+  }
+  &__guidance,
+  &__next-test-date,
+  &__testing-frequency {
+    @include mix.card(); // Using the card mixin
+  }
+
+  &__last-test-date-header {
+    @include mix.flex(column, flex-start, flex-start);
+    margin-bottom: map.get(vars.$spacing, "sm");
+  }
+
+  &__last-test-date-title {
+    margin: 0;
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    font-weight: map.get(type.$font-weights, "bold");
+  }
+
+  &__last-test-date-edit-icon {
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    cursor: pointer;
+    color: map.get(
+      vars.$colors,
+      "secondary"
+    ); // Using secondary color from variables
+  }
+
+  &__last-test-date-value-container {
+    @include mix.flex(row, flex-start, center);
+    gap: map.get(vars.$spacing, "sm");
+  }
+
+  &__last-test-date-value {
+    font-size: map.get(type.$font-sizes, "xl"); // Adjust size if needed
+    font-weight: map.get(type.$font-weights, "bold");
+    margin: 0;
+  }
+
+  &__last-test-date-valid-badge {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success"),
+      map.get(vars.$colors, "background")
+    ); // Using status-badge mixin and variables
+  }
+
+  &__guidance-header {
+    @include mix.flex(row, space-between, center);
+    margin-bottom: map.get(vars.$spacing, "sm");
+    cursor: pointer;
+  }
+
+  &__guidance-title {
+    margin: 0;
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    font-weight: map.get(type.$font-weights, "bold");
+  }
+
+  &__guidance-expand-icon {
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    color: map.get(
+      vars.$colors,
+      "secondary"
+    ); // Using secondary color from variables
+  }
+
+  &__guidance-content {
+    padding-top: map.get(vars.$spacing, "sm");
+    /* You might want to initially hide this and handle expand/collapse with JS state */
+  }
+
+  &__guidance-description {
+    color: map.get(
+      vars.$colors,
+      "text-light"
+    ); // Using text-light color from variables
+    margin-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__risk-level-card {
+    border: 1px solid map.get(vars.$colors, "border");
+    border-radius: map.get(
+      vars.$border-radius,
+      "xl"
+    ); // Using border-radius variable
+    padding: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "sm");
+    @include mix.flex(column);
+    gap: map.get(vars.$spacing, "sm");
+
+    &--selected {
+      border-color: map.get(
+        vars.$colors,
+        "primary"
+      ); // Using primary color from variables
+      box-shadow: 0 0 0 2px
+        color.adjust(map.get(vars.$colors, "primary"), $alpha: -0.75); // Adjusting alpha of primary color for box-shadow
+    }
+
+    &-radio {
+      /* Style radio button if needed - often you might visually hide the default radio and style the label */
+      margin-right: map.get(vars.$spacing, "sm");
+    }
+
+    &-label {
+      font-weight: map.get(type.$font-weights, "bold");
+    }
+
+    &-description {
+      color: map.get(
+        vars.$colors,
+        "text-light"
+      ); // Using text-light color from variables
+      font-size: map.get(type.$font-sizes, "sm"); // Adjust size if needed
+    }
+
+    &-frequency {
+      font-size: map.get(type.$font-sizes, "sm"); // Adjust size if needed
+      color: map.get(
+        vars.$colors,
+        "secondary"
+      ); // Using secondary color from variables
+    }
+
+    &-recommendation {
+      /* Style the recommendation paragraph */
+      color: map.get(
+        vars.$colors,
+        "success"
+      ); // Using success color from variables
+      font-weight: map.get(type.$font-weights, "bold");
+      margin-top: map.get(vars.$spacing, "xxs");
+    }
+
+    &-clinic-link {
+      color: map.get(
+        vars.$colors,
+        "primary"
+      ); // Using primary color from variables
+      text-decoration: none;
+      font-size: map.get(type.$font-sizes, "sm"); // Adjust size if needed
+    }
+  }
+
+  &__next-test-date-title,
+  &__testing-frequency-title {
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    font-weight: map.get(type.$font-weights, "bold");
+    margin-bottom: map.get(vars.$spacing, "sm");
+  }
+
+  &__next-test-date-input-group {
+    @include mix.flex(row, flex-start, center);
+    border: 1px solid map.get(vars.$colors, "border");
+    border-radius: map.get(
+      vars.$border-radius,
+      "sm"
+    ); // Using border-radius variable
+    padding-left: map.get(vars.$spacing, "sm");
+    overflow: hidden; /* To contain the border-radius */
+  }
+
+  &__next-test-date-input {
+    border: none;
+    padding: map.get(vars.$spacing, "sm");
+    flex-grow: 1;
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+
+    &:focus {
+      outline: none; /* Remove default focus outline */
+    }
+  }
+
+  &__next-test-date-calendar-icon {
+    padding: map.get(vars.$spacing, "sm");
+    color: map.get(
+      vars.$colors,
+      "secondary"
+    ); // Using secondary color from variables
+    cursor: pointer;
+  }
+
+  &__next-test-date-notification {
+    font-size: map.get(type.$font-sizes, "sm"); // Adjust size if needed
+    color: map.get(
+      vars.$colors,
+      "secondary"
+    ); // Using secondary color from variables
+    margin-top: map.get(vars.$spacing, "xxs");
+  }
+
+  &__testing-frequency-select {
+    width: 100%;
+    padding: map.get(vars.$spacing, "sm");
+    border: 1px solid map.get(vars.$colors, "border");
+    border-radius: map.get(
+      vars.$border-radius,
+      "sm"
+    ); // Using border-radius variable
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    appearance: none; /* Remove default select arrow in some browsers */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); // Consider making this an icon variable
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 5px;
+    padding-right: 30px; /* Make space for the arrow */
+
+    &:focus {
+      outline: none;
+      border-color: map.get(
+        vars.$colors,
+        "primary"
+      ); // Using primary color from variables
+      box-shadow: 0 0 0 2px
+        color.adjust(map.get(vars.$colors, "primary"), $alpha: -0.75); // Adjusting alpha of primary color for box-shadow
+    }
+  }
+
+  &__footer {
+    padding-top: map.get(vars.$spacing, "lg");
+    text-align: center; /* Center the button */
+  }
+
+  &__save-settings-button {
+    background-color: map.get(
+      vars.$colors,
+      "success"
+    ); // Using success color from variables
+    color: map.get(
+      vars.$colors,
+      "background"
+    ); // Using background color from variables
+    border: none;
+    padding: map.get(vars.$spacing, "md") map.get(vars.$spacing, "xl");
+    border-radius: map.get(
+      vars.$border-radius,
+      "xl"
+    ); // Using border-radius variable
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+    cursor: pointer;
+    @include mix.flex(row, center, center);
+    gap: map.get(vars.$spacing, "sm");
+
+    &:hover {
+      background-color: color.adjust(
+        map.get(vars.$colors, "success"),
+        $lightness: -10%
+      );
+    }
+  }
+
+  &__save-settings-icon {
+    font-size: map.get(type.$font-sizes, "base"); // Adjust size if needed
+  }
+}
