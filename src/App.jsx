@@ -21,6 +21,7 @@ function App() {
             <Route path="/reminders" element={<Reminders />} />
             <Route path="/results" element={<Results />} />
             <Route path="/share" element={<Share />} />
+            <Route path="/share/:userId" element={<Share />} />
             <Route path="*" element={"404 error"} />
           </Routes>
         </main>

@@ -6,6 +6,7 @@
 .share {
   @include mix.flex(column, flex-start, stretch, map.get(vars.$spacing, "lg"));
   padding: map.get(vars.$spacing, "lg");
+  padding-bottom: 6rem;
 
   &__header {
     @include mix.card;
