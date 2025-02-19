@@ -14,19 +14,18 @@ const TestingSchedule = ({ reminder }) => {
     });
   };
 
-  const formatFrequency = (frequencyString) => {
-    if (!frequencyString) return "";
+  const getRiskLevelFromFrequency = (frequencyString) => {
+    if (!frequencyString) return null;
 
-    // Map frequencies to human-readable strings
-    const frequencyMap = {
-      "every_15_days": "15 days",
-      "every_30_days": "month",
-      "every_90_days": "3 months",
-      "every_180_days": "6 months",
-      "every_365_days": "year",
-    };
-
-    return frequencyMap[frequencyString] || frequencyString;
+    // Map frequencies to risk levels and their descriptions
+    if (frequencyString.includes("365") || frequencyString.includes("180")) {
+      return "Lower risk - Testing every 6-12 months";
+    } else if (frequencyString.includes("90")) {
+      return "Moderate risk - Testing every 3-6 months";
+    } else if (frequencyString.includes("30")) {
+      return "Higher risk - Testing every 1-3 months";
+    }
+    return null;
   };
 
   // Sort reminders by date and get the active one
@@ -78,7 +77,7 @@ const TestingSchedule = ({ reminder }) => {
 
           <div className="schedule__frequency">
             <p className="schedule__frequency-text">
-              Testing every {formatFrequency(activeReminder.frequency)}
+              {getRiskLevelFromFrequency(activeReminder.frequency)}
             </p>
           </div>
         </>
