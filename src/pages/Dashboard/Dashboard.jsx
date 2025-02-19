@@ -99,8 +99,6 @@ function Dashboard() {
     return <div className="dashboard__error">Error: {error}</div>;
   }
 
-  console.log();
-
   return (
     <div className="dashboard">
       {showNotification && dueDate && (
