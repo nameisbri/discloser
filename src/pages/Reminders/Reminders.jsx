@@ -230,7 +230,7 @@ const Reminders = () => {
           </div>
           <div className="reminders__test-info">
             <span className="reminders__test-label">Last Test Date</span>
-            <span className="reminders__test-date">Jan 15, 2025</span>
+            <span className="reminders__test-date">#####</span>
           </div>
         </div>
 

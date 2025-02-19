@@ -8,7 +8,7 @@ const RecentResults = ({ results }) => {
 
   const recentResults = resultsArray
     .sort((a, b) => new Date(b.test_date) - new Date(a.test_date))
-    .slice(0, 3);
+    .slice(0, 6);
 
   const mostRecentDate = recentResults[0]?.test_date;
 
