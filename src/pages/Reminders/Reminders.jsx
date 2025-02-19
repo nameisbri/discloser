@@ -8,7 +8,6 @@ const Reminders = () => {
   const navigate = useNavigate();
   const [selectedRisk, setSelectedRisk] = useState("moderate");
   const [nextTestDate, setNextTestDate] = useState(null);
-  const [frequency, setFrequency] = useState("every_180_days");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [reminder, setReminder] = useState(null);
@@ -113,13 +112,6 @@ const Reminders = () => {
     };
   };
 
-  // Update frequency when risk level changes
-  useEffect(() => {
-    const riskLevel = getCurrentRiskLevel();
-    // Set to first frequency option for the selected risk level
-    setFrequency(riskLevel.frequencies[0].value);
-  }, [selectedRisk]);
-
   useEffect(() => {
     const fetchReminders = async () => {
       try {
@@ -131,11 +123,8 @@ const Reminders = () => {
             response.data.find((r) => r.is_active) || response.data[0];
           setReminder(activeReminder);
 
-          // Set initial frequency and determine risk level
-          const freq = activeReminder.frequency;
-          setFrequency(freq);
-
           // Determine risk level based on frequency
+          const freq = activeReminder.frequency;
           if (freq.includes("365") || freq.includes("180")) {
             setSelectedRisk("lower");
           } else if (freq.includes("90")) {
@@ -144,8 +133,6 @@ const Reminders = () => {
             setSelectedRisk("higher");
           }
 
-          // Handle MySQL date format
-          const dbDate = activeReminder.next_test_date;
           // Set the next test date from the database
           setNextTestDate(
             activeReminder.next_test_date
@@ -177,8 +164,9 @@ const Reminders = () => {
         return dateString.split("T")[0];
       };
 
+      const currentRiskLevel = getCurrentRiskLevel();
       const reminderData = {
-        frequency,
+        frequency: currentRiskLevel.frequencies[0].value, // Use first frequency option
         next_test_date: formatDateForDB(nextTestDate),
         is_active: 1,
         last_notified_date: null,
@@ -285,9 +273,7 @@ const Reminders = () => {
 
         <div className="reminders__schedule-section">
           <div className="reminders__date-field">
-            <label className="reminders__field-label">
-              Recommended Next Test Date
-            </label>
+            <label className="reminders__field-label">Next Test Date</label>
             <div className="reminders__date-input-wrapper">
               <input
                 type="date"
@@ -301,21 +287,6 @@ const Reminders = () => {
                 Recommended: {getRecommendedDate()}
               </span>
             </div>
-          </div>
-
-          <div className="reminders__frequency-field">
-            <label className="reminders__field-label">Testing Frequency</label>
-            <select
-              className="reminders__frequency-select"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value)}
-            >
-              {currentRiskLevel.frequencies.map((freq) => (
-                <option key={freq.value} value={freq.value}>
-                  {freq.label}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
 
