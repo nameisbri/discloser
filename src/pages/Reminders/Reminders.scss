@@ -98,6 +98,13 @@
     color: map.get(vars.$colors, "text");
   }
 
+  &__date-recommended {
+    &--overdue {
+      color: map.get(vars.$colors, "danger");
+      font-weight: map.get(type.$font-weights, "medium");
+    }
+  }
+
   &__status {
     @include mix.status-badge(
       map.get(vars.$colors, "success-light"),

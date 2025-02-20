@@ -7,20 +7,16 @@ import "./Reminders.scss";
 const Reminders = () => {
   const navigate = useNavigate();
   const [selectedRisk, setSelectedRisk] = useState("moderate");
-  const [nextTestDate, setNextTestDate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [reminder, setReminder] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [nextTestDate, setNextTestDate] = useState(null); // This should be a string in YYYY-MM-DD format
+  const [lastTestDate, setLastTestDate] = useState(null); // This should be a Date object
 
   const baseUrl = import.meta.env.VITE_APP_URL;
-  const userId = "54"; // This should come from your auth context
-
-  // Format a date as YYYY-MM-DD
-  const formatDateForInput = (date) => {
-    return date.toISOString().split("T")[0];
-  };
+  const userId = "54"; // Hardcoded for MVP, will come from auth context
 
   const riskLevels = [
     {
@@ -31,10 +27,10 @@ const Reminders = () => {
       recommendation: "Test every 1-2 years",
       note: "Situation changes? Test sooner.",
       frequencies: [
-        { value: "every_180_days", label: "Every 6 months" },
         { value: "every_365_days", label: "Every year" },
+        { value: "every_730_days", label: "Every 2 years" },
       ],
-      minInterval: 180, // days
+      minInterval: 365, // Minimum 1 year for lower risk
     },
     {
       id: "moderate",
@@ -43,10 +39,10 @@ const Reminders = () => {
       recommendation: "Test every 6-12 months",
       note: "Regular testing recommended",
       frequencies: [
-        { value: "every_90_days", label: "Every 3 months" },
         { value: "every_180_days", label: "Every 6 months" },
+        { value: "every_365_days", label: "Every year" },
       ],
-      minInterval: 90,
+      minInterval: 180, // Minimum 6 months for moderate risk
     },
     {
       id: "higher",
@@ -56,102 +52,163 @@ const Reminders = () => {
       recommendation: "Test every 3-6 months",
       note: "Frequent testing recommended",
       frequencies: [
-        { value: "every_30_days", label: "Monthly" },
         { value: "every_90_days", label: "Every 3 months" },
+        { value: "every_180_days", label: "Every 6 months" },
       ],
-      minInterval: 30,
+      minInterval: 90, // Minimum 3 months for higher risk
     },
   ];
 
-  // Get current risk level configuration
   const getCurrentRiskLevel = () => {
     return riskLevels.find((risk) => risk.id === selectedRisk);
   };
 
-  // Set min date for the date picker (tomorrow)
   const getRecommendedDate = () => {
-    const lastTestDate = new Date("2025-01-15"); // This should come from your records
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
-    const sixMonthsAgo = new Date(today);
-    sixMonthsAgo.setMonth(today.getMonth() - 6);
-
-    let recommendedDate;
-    if (lastTestDate < sixMonthsAgo) {
-      // If last test was more than 6 months ago, recommend tomorrow
-      recommendedDate = tomorrow;
-    } else {
-      // Calculate based on risk level frequency
-      recommendedDate = new Date(lastTestDate);
-      const riskLevel = getCurrentRiskLevel();
-      const days = parseInt(riskLevel.frequencies[0].value.match(/\d+/)[0]);
-      recommendedDate.setDate(lastTestDate.getDate() + days);
-
-      // If the calculated date is in the past, recommend tomorrow instead
-      if (recommendedDate < tomorrow) {
-        recommendedDate = tomorrow;
-      }
+    // If no test records exist - new user
+    if (!lastTestDate) {
+      return {
+        date: tomorrow,
+        isOverdue: false,
+        message: "Welcome! We recommend getting your first test soon.",
+      };
     }
 
-    return recommendedDate.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
+    try {
+      const testDate = new Date(lastTestDate);
+      if (isNaN(testDate.getTime())) {
+        throw new Error("Invalid last test date");
+      }
+
+      const riskLevel = getCurrentRiskLevel();
+      const maxInterval = parseInt(
+        riskLevel.frequencies[1].value.match(/\d+/)[0]
+      );
+      const maxAllowedDate = new Date(testDate);
+      maxAllowedDate.setDate(testDate.getDate() + maxInterval);
+
+      if (today > maxAllowedDate) {
+        return {
+          date: tomorrow,
+          isOverdue: true,
+          message: `Your last test was over ${
+            maxInterval / 365 >= 1
+              ? `${maxInterval / 365} year(s)`
+              : `${maxInterval / 30} month(s)`
+          } ago. We recommend testing as soon as possible.`,
+        };
+      }
+
+      const recommendedDate = new Date(testDate);
+      recommendedDate.setDate(testDate.getDate() + riskLevel.minInterval);
+
+      if (recommendedDate < tomorrow) {
+        return {
+          date: tomorrow,
+          isOverdue: true,
+          message:
+            "You're due for a test. We recommend testing as soon as possible.",
+        };
+      }
+
+      return {
+        date: recommendedDate,
+        isOverdue: false,
+        message: `Based on your risk level, we recommend testing by ${recommendedDate.toLocaleDateString(
+          "en-US",
+          {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          }
+        )}`,
+      };
+    } catch (error) {
+      console.error("Error calculating recommended date:", error);
+      return {
+        date: tomorrow,
+        isOverdue: false,
+        message: "Unable to calculate recommendation. Please select a date.",
+      };
+    }
   };
 
-  const getDateConstraints = () => {
-    const today = new Date();
-    const minDate = new Date(today);
-    minDate.setDate(today.getDate() + 1); // Minimum next day
-
-    return {
-      min: minDate.toISOString().split("T")[0],
-    };
+  const handleDateChange = (e) => {
+    console.log("New date selected:", e.target.value);
+    setNextTestDate(e.target.value);
   };
 
   useEffect(() => {
-    const fetchReminders = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
+        console.log("Fetching data...");
+        const reminderResponse = await axios.get(
           `${baseUrl}/reminders/${userId}/reminders`
         );
-        if (response.data && response.data.length > 0) {
+        const recordsResponse = await axios.get(
+          `${baseUrl}/records?user_id=${userId}`
+        );
+
+        if (recordsResponse.data && recordsResponse.data.length > 0) {
+          const sortedRecords = recordsResponse.data.sort(
+            (a, b) => new Date(b.test_date) - new Date(a.test_date)
+          );
+          const testDate = new Date(sortedRecords[0].test_date);
+          if (!isNaN(testDate.getTime())) {
+            setLastTestDate(testDate);
+          }
+        }
+
+        if (reminderResponse.data && reminderResponse.data.length > 0) {
           const activeReminder =
-            response.data.find((r) => r.is_active) || response.data[0];
+            reminderResponse.data.find((r) => r.is_active) ||
+            reminderResponse.data[0];
           setReminder(activeReminder);
 
           // Determine risk level based on frequency
           const freq = activeReminder.frequency;
-          if (freq.includes("365") || freq.includes("180")) {
+          if (freq.includes("365") || freq.includes("730")) {
             setSelectedRisk("lower");
-          } else if (freq.includes("90")) {
+          } else if (freq.includes("180")) {
             setSelectedRisk("moderate");
           } else {
             setSelectedRisk("higher");
           }
 
-          // Set the next test date from the database
-          setNextTestDate(
-            activeReminder.next_test_date
-              ? new Date(activeReminder.next_test_date)
-                  .toISOString()
-                  .split("T")[0]
-              : null
-          );
+          if (activeReminder.next_test_date) {
+            try {
+              const reminderDate = new Date(activeReminder.next_test_date);
+              if (!isNaN(reminderDate.getTime())) {
+                const formattedDate = reminderDate.toISOString().slice(0, 10);
+                console.log("Using existing reminder date:", formattedDate);
+                setNextTestDate(formattedDate);
+              }
+            } catch (error) {
+              console.error("Error parsing reminder date:", error);
+            }
+          }
         }
       } catch (error) {
-        console.error("Error fetching reminders:", error);
-        setError("Failed to load your reminder settings. Please try again.");
+        console.error("Error fetching data:", error);
+        setError("Failed to load your data. Please try again.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchReminders();
+    fetchData();
   }, [baseUrl, userId]);
+
+  useEffect(() => {
+    if (lastTestDate) {
+      const recommendation = getRecommendedDate();
+      const nextDate = recommendation.date;
+      setNextTestDate(nextDate.toLocaleDateString("en-CA")); // YYYY-MM-DD format
+    }
+  }, [selectedRisk]);
 
   const handleSaveSettings = async () => {
     setSaving(true);
@@ -204,8 +261,7 @@ const Reminders = () => {
     return <div className="reminders__loading">Loading...</div>;
   }
 
-  const dateConstraints = getDateConstraints();
-  const currentRiskLevel = getCurrentRiskLevel();
+  const recommendationInfo = getRecommendedDate();
 
   return (
     <div className="reminders">
@@ -230,7 +286,15 @@ const Reminders = () => {
           </div>
           <div className="reminders__test-info">
             <span className="reminders__test-label">Last Test Date</span>
-            <span className="reminders__test-date">#####</span>
+            <span className="reminders__test-date">
+              {lastTestDate
+                ? new Date(lastTestDate).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })
+                : "No previous tests"}
+            </span>
           </div>
         </div>
 
@@ -275,16 +339,25 @@ const Reminders = () => {
           <div className="reminders__date-field">
             <label className="reminders__field-label">Next Test Date</label>
             <div className="reminders__date-input-wrapper">
-              <input
-                type="date"
-                className="reminders__date-input"
-                value={nextTestDate || ""}
-                onChange={(e) => setNextTestDate(e.target.value)}
-                min={dateConstraints.min}
-                placeholder="mm/dd/yyyy"
-              />
-              <span className="reminders__date-recommended">
-                Recommended: {getRecommendedDate()}
+              <span className="reminders__test-date">
+                <input
+                  type="date"
+                  className="reminders__date-input"
+                  value={nextTestDate || ""} // Just use the string value directly
+                  onChange={handleDateChange}
+                  min={new Date().toISOString().slice(0, 10)} // Today in YYYY-MM-DD format
+                  placeholder="mm/dd/yyyy"
+                />
+              </span>
+
+              <span
+                className={`reminders__date-recommended ${
+                  recommendationInfo.isOverdue
+                    ? "reminders__date-recommended--overdue"
+                    : ""
+                }`}
+              >
+                {recommendationInfo.message}
               </span>
             </div>
           </div>
