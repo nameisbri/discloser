@@ -1,7 +1,7 @@
 import "./Navigation.scss";
 import { useNavigate } from "react-router-dom";
 
-import { House, ListCheck, Send } from "lucide-react";
+import { House, ListCheck, Send, BookOpenCheck } from "lucide-react";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -34,6 +34,16 @@ const Navigation = () => {
               <Send />
             </span>
             Share
+          </button>
+          <button
+            href="#"
+            className="nav__link"
+            onClick={() => navigate("/learn")}
+          >
+            <span className="nav__icon">
+              <BookOpenCheck />
+            </span>
+            Learn
           </button>
         </li>
       </ul>
