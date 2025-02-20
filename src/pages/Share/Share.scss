@@ -86,6 +86,14 @@
     background-color: map.get(vars.$colors, "primary-light");
   }
 
+  &__test-note {
+    display: block;
+
+    &:not(:last-child) {
+      margin-bottom: map.get(vars.$spacing, "xxs");
+    }
+  }
+
   &__info {
     @include mix.flex(
       column,

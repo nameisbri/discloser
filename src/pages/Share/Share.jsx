@@ -123,17 +123,32 @@ const Share = () => {
         )}
 
         <div className="share__tests">
-          {shareData?.results.map((test, index) => (
-            <div key={index} className="share__test">
-              <div className="share__test-info">
-                <h4 className="share__test-name">{test.test_type}</h4>
-                <StatusBadge status={test.result} type="result" />
+          {shareData?.results
+            .sort((a, b) => {
+              // Sort by test date descending first
+              const dateCompare = new Date(b.test_date) - new Date(a.test_date);
+              if (dateCompare !== 0) return dateCompare;
+
+              // Then sort by test name
+              return a.test_type.localeCompare(b.test_type);
+            })
+            .map((test, index) => (
+              <div key={index} className="share__test">
+                <div className="share__test-info">
+                  <h4 className="share__test-name">{test.test_type}</h4>
+                  <StatusBadge status={test.result} type="result" />
+                </div>
+                {test.notes && (
+                  <span className="share__test-type">
+                    {test.notes.split("|").map((note, i) => (
+                      <span key={i} className="share__test-note">
+                        {note.trim()}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </div>
-              {test.notes && (
-                <span className="share__test-type">{test.notes}</span>
-              )}
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
