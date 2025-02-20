@@ -1,12 +1,13 @@
-@use "sass:map";
 @use "sass:color";
 
 $colors: (
   "primary": #923d5c,
   "primary-light": #eac4ce,
+  // Your existing raspberry
   "primary-dark": color.scale(#923d5c, $lightness: -10%),
   "secondary": #757575,
   "secondary-dark": #43344f,
+  // Your english violet
   "secondary-light": rgba(234, 196, 206, 0.3),
   "success": #28a745,
   "success-light": #e8f5e9,
@@ -29,6 +30,8 @@ $spacing: (
   "md": 1rem,
   "lg": 1.5rem,
   "xl": 2rem,
+  "2xl": 2.5rem,
+  "3xl": 3rem,
 );
 
 $border-radius: (
@@ -36,6 +39,7 @@ $border-radius: (
   "md": 0.75rem,
   "lg": 1rem,
   "xl": 1.25rem,
+  "2xl": 1.5rem,
   "pill": 9999px,
 );
 

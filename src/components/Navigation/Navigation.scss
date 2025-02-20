@@ -1,44 +1,69 @@
 @use "sass:map";
-@use "/src/styles/partials/variables" as *;
-@use "/src/styles/partials/mixins" as *;
-@use "/src/styles/partials/typography" as *;
+@use "/src/styles/partials/variables" as vars;
+@use "/src/styles/partials/mixins" as mix;
+@use "/src/styles/partials/typography" as type;
 
 .nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: map.get($colors, "background");
-  border-top: 1px solid map.get($colors, "border");
-  padding: map.get($spacing, "sm") 0;
+  background-color: map.get(vars.$colors, "background");
+  border-top: 1px solid map.get(vars.$colors, "border");
+  padding: map.get(vars.$spacing, "sm") 0;
+  box-shadow: 0 -4px 6px rgba(map.get(vars.$colors, "primary"), 0.05);
+  transition: all 0.3s ease;
+  z-index: 10;
 
   &__list {
-    @include flex(row, space-around, center);
+    @include mix.flex(row, space-around, center);
     max-width: 600px;
     margin: 0 auto;
   }
 
   &__item {
-    @include flex(row, center, center, map.get($spacing, "xxs"));
-    color: map.get($colors, "secondary");
+    @include mix.flex(row, center, center, map.get(vars.$spacing, "2xl"));
+    color: map.get(vars.$colors, "text-light");
+    position: relative;
+    transition: all 0.3s ease;
 
+    &:hover,
     &--active {
-      color: map.get($colors, "primary");
+      color: map.get(vars.$colors, "primary");
+
+      .nav__icon {
+        transform: scale(1.1);
+      }
     }
   }
 
   &__link {
-    display: flex;
-    flex-direction: column;
+    @include mix.flex(column, center, center, map.get(vars.$spacing, "xxs"));
+    background: transparent;
+    cursor: pointer;
+    font-weight: map.get(type.$font-weights, "medium");
+    letter-spacing: -0.025em;
+    font-size: map.get(type.$font-sizes, "sm");
+    color: inherit;
+    transition: all 0.3s ease;
   }
 
   &__icon {
     width: 24px;
     height: 24px;
+    transition: transform 0.3s ease;
   }
+}
 
-  &__text {
-    font-size: map.get($font-sizes, "sm");
-    font-weight: map.get($font-weights, "medium");
+// Responsive adjustments
+@media (min-width: 768px) {
+  .nav {
+    &__list {
+      max-width: 400px;
+    }
+
+    &__link {
+      font-size: map.get(type.$font-sizes, "base");
+    }
   }
 }

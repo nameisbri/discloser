@@ -5,21 +5,22 @@
 
 .dashboard {
   @include mix.flex(column, flex-start, stretch);
-  background-color: map.get(vars.$colors, "primary-light");
+  background-color: #eac4ce; // Your raspberry color
   min-height: 100vh;
   padding-bottom: map.get(vars.$spacing, "xl") * 3;
+
   &__loading {
     @include mix.flex(row, center, center);
     min-height: 100vh;
     font-size: map.get(type.$font-sizes, "lg");
-    color: map.get(vars.$colors, "text-light");
+    color: #8e2e56; // Wine color
   }
 
   &__actions {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: map.get(vars.$spacing, "md") 0;
+    padding: map.get(vars.$spacing, "xl") map.get(vars.$spacing, "md");
   }
 
   &__content {
@@ -29,42 +30,65 @@
       column,
       flex-start,
       stretch,
-      map.get(vars.$spacing, "sm")
+      map.get(vars.$spacing, "lg") // Increased spacing
     );
     width: 100%;
-    max-width: 1200px;
+    max-width: 600px;
     margin: 0 auto;
   }
 
   &__section {
     flex: 1;
     min-width: 300px;
-    @include mix.card(map.get(vars.$spacing, "lg"));
-    transition: all 0.2s ease;
-
-    @media (min-width: 768px) {
-      min-width: calc(50% - #{map.get(vars.$spacing, "lg")});
-    }
-
-    &-title {
-      font-size: map.get(type.$font-sizes, "lg");
-      color: map.get(vars.$colors, "secondary-dark");
-      font-weight: vars.$font-weight-semi-bold;
-      margin-top: map.get(vars.$spacing, "sm");
-    }
+    background-color: white;
+    border-radius: map.get(vars.$border-radius, "2xl"); // Increased radius
+    padding: map.get(vars.$spacing, "xl");
+    transition: all 0.3s ease;
+    border: 1px solid rgba(142, 46, 86, 0.1); // Very subtle wine-colored border
+    margin-bottom: map.get(vars.$spacing, "lg");
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 24px rgba(142, 46, 86, 0.08); // Wine-colored shadow
     }
   }
-  // -=-= temporary styles -=-= //
+
+  &__section-title {
+    font-size: map.get(type.$font-sizes, "xl");
+    color: #8e2e56; // Wine color
+    font-weight: map.get(type.$font-weights, "bold");
+    margin: map.get(vars.$spacing, "lg") 0;
+    letter-spacing: -0.02em; // Tighter letter spacing for headlines
+  }
+
   &__empty-message {
     text-align: center;
-    padding: 20px;
-    color: #888;
+    padding: map.get(vars.$spacing, "xl");
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "lg");
+
     button {
-      margin-top: 10px;
+      margin-top: map.get(vars.$spacing, "lg");
+      background-color: #8e2e56; // Wine color
+      color: white;
+      padding: map.get(vars.$spacing, "md") map.get(vars.$spacing, "xl");
+      border-radius: map.get(vars.$border-radius, "xl");
+      font-weight: map.get(type.$font-weights, "medium");
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: darken(#8e2e56, 5%);
+        transform: translateY(-1px);
+      }
     }
+  }
+
+  &__error {
+    margin: map.get(vars.$spacing, "md");
+    padding: map.get(vars.$spacing, "lg");
+    background-color: rgba(map.get(vars.$colors, "danger-light"), 0.1);
+    color: map.get(vars.$colors, "danger");
+    border-radius: map.get(vars.$border-radius, "xl");
+    font-size: map.get(type.$font-sizes, "sm");
   }
 }

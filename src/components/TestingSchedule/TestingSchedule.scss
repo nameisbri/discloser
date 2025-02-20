@@ -5,93 +5,114 @@
 
 .schedule {
   &__title {
-    color: map.get($colors, "text");
+    color: #43344f; // English Violet
     font-size: map.get($font-sizes, "xl");
-    font-weight: $font-weight-semi-bold;
+    font-weight: $font-weight-bold;
     margin-bottom: map.get($spacing, "lg");
+    letter-spacing: -0.02em;
   }
 
   &__next-test {
     @include flex(row, space-between, center);
-    margin-bottom: map.get($spacing, "md");
+    margin-bottom: map.get($spacing, "lg");
+    padding: map.get($spacing, "lg");
+    background-color: rgba(142, 46, 86, 0.03);
+    border-radius: map.get($border-radius, "xl");
+    border: 2px solid rgba(142, 46, 86, 0.1);
   }
 
   &__date-info {
     @include flex(column, flex-start, flex-start);
-    gap: map.get($spacing, "xxs");
+    gap: map.get($spacing, "xs");
   }
 
   &__label {
-    color: map.get($colors, "text-light");
+    color: #43344f; // English Violet
     font-size: map.get($font-sizes, "sm");
     font-weight: $font-weight-medium;
+    opacity: 0.8;
   }
 
   &__date {
-    color: map.get($colors, "text");
-    font-size: map.get($font-sizes, "lg");
-    font-weight: $font-weight-semi-bold;
+    color: #8e2e56; // Wine color
+    font-size: map.get($font-sizes, "xl");
+    font-weight: $font-weight-bold;
+    letter-spacing: -0.02em;
   }
 
   &__calendar-icon {
-    color: map.get($colors, "primary");
-    background: map.get($colors, "primary-light");
-    padding: map.get($spacing, "xs");
-    border-radius: map.get($border-radius, "sm");
-    cursor: default;
+    color: #8e2e56; // Wine color
+    background: rgba(142, 46, 86, 0.08);
+    padding: map.get($spacing, "md");
+    border-radius: map.get($border-radius, "lg");
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(142, 46, 86, 0.12);
+      transform: scale(1.05);
+    }
   }
 
   &__reminder {
     @include flex(row, flex-start, flex-start);
-    gap: map.get($spacing, "xs");
-    margin-bottom: map.get($spacing, "md");
-    padding: map.get($spacing, "sm");
-    background-color: map.get($colors, "secondary-light");
-    border-radius: map.get($border-radius, "sm");
+    gap: map.get($spacing, "md");
+    margin-bottom: map.get($spacing, "lg");
+    padding: map.get($spacing, "lg");
+    background-color: rgba(67, 52, 79, 0.04); // Subtle violet background
+    border-radius: map.get($border-radius, "xl");
+    border: 1px solid rgba(67, 52, 79, 0.1);
   }
 
   &__reminder-icon {
-    color: map.get($colors, "primary");
-    height: map.get($spacing, "md");
+    color: #43344f; // English Violet
+    height: map.get($spacing, "lg");
   }
 
   &__reminder-text {
-    color: map.get($colors, "text");
-    font-size: map.get($font-sizes, "sm");
+    color: #43344f; // English Violet
+    font-size: map.get($font-sizes, "base");
     font-weight: $font-weight-medium;
   }
 
   &__frequency {
-    margin-bottom: map.get($spacing, "lg");
+    margin-bottom: map.get($spacing, "xl");
 
     &-text {
       color: map.get($colors, "text-light");
       font-size: map.get($font-sizes, "sm");
+      font-style: italic;
     }
   }
 
   &__empty {
     text-align: center;
-    padding: map.get($spacing, "lg") 0;
+    padding: map.get($spacing, "xl") 0;
 
     &-text {
-      color: map.get($colors, "text-light");
-      font-size: map.get($font-sizes, "md");
+      color: #43344f; // English Violet
+      font-size: map.get($font-sizes, "lg");
+      opacity: 0.7;
     }
   }
 
   &__modify {
     width: 100%;
-    padding: map.get($spacing, "md");
-    background-color: map.get($colors, "primary");
+    padding: map.get($spacing, "lg");
+    background-color: #8e2e56; // Wine color
     color: white;
-    border-radius: map.get($border-radius, "md");
+    border-radius: map.get($border-radius, "xl");
     font-weight: $font-weight-medium;
-    transition: background-color 0.2s ease;
+    font-size: map.get($font-sizes, "base");
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: map.get($colors, "primary-dark");
-      cursor: pointer;
+      background-color: darken(#8e2e56, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(142, 46, 86, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
