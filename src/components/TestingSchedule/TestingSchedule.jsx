@@ -17,18 +17,16 @@ const TestingSchedule = ({ reminder }) => {
   const getRiskLevelFromFrequency = (frequencyString) => {
     if (!frequencyString) return null;
 
-    // Map frequencies to risk levels and their descriptions
     if (frequencyString.includes("365") || frequencyString.includes("180")) {
-      return "Lower risk - Testing every 6-12 months";
+      return "Lower risk - Testing every 1-2 years";
     } else if (frequencyString.includes("90")) {
-      return "Moderate risk - Testing every 3-6 months";
+      return "Moderate risk - Testing every 6-12 months";
     } else if (frequencyString.includes("30")) {
-      return "Higher risk - Testing every 1-3 months";
+      return "Higher risk - Testing every 3-6 months";
     }
     return null;
   };
 
-  // Sort reminders by date and get the active one
   const activeReminder = Array.isArray(reminder)
     ? reminder.find((r) => r.is_active === 1)
     : null;
