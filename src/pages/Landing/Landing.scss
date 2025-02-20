@@ -1,0 +1,163 @@
+@use "sass:map";
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+
+.landing {
+  min-height: 100vh;
+  background-color: map.get(vars.$colors, "primary-light");
+  padding: map.get(vars.$spacing, "lg");
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(142, 46, 86, 0.05) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        circle at bottom right,
+        rgba(117, 75, 143, 0.1) 0%,
+        transparent 60%
+      );
+    z-index: 1;
+    transform: rotate(-15deg);
+  }
+
+  &__hero {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: map.get(vars.$spacing, "2xl") map.get(vars.$spacing, "lg");
+  }
+
+  &__hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: map.get(type.$font-sizes, "3xl");
+    color: map.get(vars.$colors, "secondary-dark");
+    margin-bottom: map.get(vars.$spacing, "md");
+    font-weight: map.get(type.$font-weights, "bold");
+  }
+
+  &__title-highlight {
+    color: #8e2e56; // Wine color
+    font-style: italic;
+  }
+
+  &__subtitle {
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "text-light");
+    margin-bottom: map.get(vars.$spacing, "xl");
+    line-height: 1.6;
+  }
+
+  &__cta-group {
+    @include mix.flex(row, center, center, map.get(vars.$spacing, "md"));
+  }
+
+  &__cta-button {
+    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "lg");
+    border-radius: map.get(vars.$border-radius, "xl");
+    font-weight: map.get(type.$font-weights, "semibold");
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &--primary {
+      background-color: #8e2e56; // Wine color
+      color: white;
+      border: 2px solid #8e2e56;
+
+      &:hover {
+        background-color: darken(#8e2e56, 10%);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(142, 46, 86, 0.2);
+      }
+    }
+
+    &--secondary {
+      background-color: transparent;
+      color: #8e2e56;
+      border: 2px solid #8e2e56;
+      margin-left: map.get(vars.$spacing, "md");
+
+      &:hover {
+        background-color: rgba(142, 46, 86, 0.1);
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  &__features {
+    @include mix.flex(
+      row,
+      space-between,
+      stretch,
+      map.get(vars.$spacing, "lg")
+    );
+    position: relative;
+    z-index: 2;
+    margin-top: map.get(vars.$spacing, "2xl");
+  }
+
+  &__feature {
+    flex: 1;
+    background-color: white;
+    border-radius: map.get(vars.$border-radius, "xl");
+    padding: map.get(vars.$spacing, "xl");
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    margin: 0 map.get(vars.$spacing, "sm");
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    &:hover,
+    &--active {
+      border-color: #8e2e56;
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(142, 46, 86, 0.1);
+    }
+  }
+
+  &__feature-icon {
+    color: #8e2e56;
+    margin-bottom: map.get(vars.$spacing, "md");
+    @include mix.flex(row, center, center);
+  }
+
+  &__feature-title {
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "secondary-dark");
+    margin-bottom: map.get(vars.$spacing, "sm");
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
+  &__feature-description {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing {
+    &__features {
+      flex-direction: column;
+    }
+
+    &__feature {
+      margin: map.get(vars.$spacing, "sm") 0;
+    }
+  }
+}
