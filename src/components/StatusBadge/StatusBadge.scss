@@ -1,16 +1,16 @@
+@use "sass:map";
 @use "../../styles/partials/variables" as vars;
 @use "../../styles/partials/mixins" as mix;
-@use "sass:map";
+@use "../../styles/partials/typography" as type;
 
 .status-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-  white-space: nowrap;
+  @include mix.status-badge(
+    map.get(vars.$colors, "primary-light"),
+    map.get(vars.$colors, "primary")
+  );
+  text-transform: capitalize;
+  letter-spacing: -0.025em;
+  transition: all 0.3s ease;
 
   &--verified {
     @include mix.status-badge(
@@ -45,5 +45,11 @@
       map.get(vars.$colors, "info-light"),
       map.get(vars.$colors, "info")
     );
+  }
+
+  // Soft hover effect
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
 }

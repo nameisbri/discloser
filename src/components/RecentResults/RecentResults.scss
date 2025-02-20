@@ -5,61 +5,81 @@
 
 .results {
   &__title {
-    color: map.get($colors, "text");
+    color: #43344f; // English Violet
     font-size: map.get($font-sizes, "xl");
-    font-weight: $font-weight-semi-bold;
+    font-weight: $font-weight-bold;
     margin-bottom: map.get($spacing, "lg");
+    letter-spacing: -0.02em;
   }
 
   &__date {
     @include flex(row, space-between, center);
-    margin-bottom: map.get($spacing, "md");
+    margin-bottom: map.get($spacing, "lg");
+    padding: map.get($spacing, "md") 0;
+    border-bottom: 2px solid rgba(67, 52, 79, 0.08); // Subtle violet border
   }
 
   &__date-text {
-    color: map.get($colors, "text");
-    font-weight: $font-weight-regular;
+    color: #43344f; // English Violet
+    font-weight: $font-weight-medium;
+    font-size: map.get($font-sizes, "lg");
   }
 }
 
 .result-item {
-  padding: map.get($spacing, "sm") 0;
-  border-bottom: 1px solid map.get($colors, "border");
+  padding: map.get($spacing, "lg") 0;
+  border-bottom: 1px solid rgba(142, 46, 86, 0.08); // Subtle wine border
+  transition: all 0.2s ease;
 
   &:last-child {
     border-bottom: none;
   }
 
+  &:hover {
+    background-color: rgba(142, 46, 86, 0.02);
+    transform: translateX(4px);
+  }
+
   &__header {
     @include flex(row, space-between, center);
-    margin-bottom: map.get($spacing, "xxs");
+    margin-bottom: map.get($spacing, "sm");
   }
 
   &__title {
-    color: map.get($colors, "primary");
+    color: #8e2e56; // Wine color
     font-size: map.get($font-sizes, "lg");
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-semi-bold;
+    letter-spacing: -0.01em;
   }
 
   &__collection {
-    color: map.get($colors, "text-light");
+    color: #43344f; // English Violet
     font-size: map.get($font-sizes, "sm");
+    opacity: 0.8;
+    margin-top: map.get($spacing, "xs");
   }
 }
 
 .results__view-all {
   width: 100%;
-  padding: map.get($spacing, "md");
-  margin-top: map.get($spacing, "lg");
-  background-color: map.get($colors, "primary");
-  color: white;
-  border-radius: map.get($border-radius, "md");
-  font-weight: $font-weight-regular;
-  transition: background-color 0.2s ease;
-  font-size: map.get($font-sizes, "sm");
+  padding: map.get($spacing, "lg");
+  margin-top: map.get($spacing, "xl");
+  background-color: white;
+  color: #8e2e56; // Wine color
+  border-radius: map.get($border-radius, "xl");
+  font-weight: $font-weight-medium;
+  font-size: map.get($font-sizes, "base");
+  border: 2px solid rgba(142, 46, 86, 0.1);
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: map.get($colors, "primary-dark");
-    cursor: pointer;
+    background-color: #8e2e56;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(142, 46, 86, 0.12);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }

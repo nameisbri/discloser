@@ -1,7 +1,7 @@
+@use "sass:map";
 @use "../../styles/partials/variables" as vars;
 @use "../../styles/partials/mixins" as mix;
 @use "../../styles/partials/typography" as type;
-@use "sass:map";
 
 .upload {
   min-height: 100vh;
@@ -12,20 +12,42 @@
     @include mix.card;
     max-width: 800px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: map.get(vars.$spacing, "lg");
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "lg")
+    );
   }
 
   &__header {
     border-bottom: 1px solid map.get(vars.$colors, "border");
     padding-bottom: map.get(vars.$spacing, "md");
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: map.get(vars.$colors, "primary");
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+    }
   }
 
   &__back-button {
     @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
     color: map.get(vars.$colors, "primary");
     font-weight: map.get(type.$font-weights, "medium");
+    transition: color 0.3s ease;
 
     &:hover {
       color: map.get(vars.$colors, "primary-dark");
@@ -48,12 +70,13 @@
     padding: map.get(vars.$spacing, "xl");
     position: relative;
     text-align: center;
-    background-color: map.get(vars.$colors, "secondary-light");
+    background-color: map.get(vars.$colors, "background");
     transition: all 0.2s ease;
     cursor: pointer;
 
     &:hover {
       border-color: map.get(vars.$colors, "primary");
+      background-color: map.get(vars.$colors, "primary-light");
     }
 
     &--dragging {
@@ -65,6 +88,11 @@
   &__icon {
     color: map.get(vars.$colors, "primary");
     margin-bottom: map.get(vars.$spacing, "md");
+    transition: transform 0.3s ease;
+
+    .upload__dropzone:hover & {
+      transform: scale(1.1);
+    }
   }
 
   &__title {
@@ -85,37 +113,16 @@
 
   &__file-type {
     padding: map.get(vars.$spacing, "xxs") map.get(vars.$spacing, "xs");
-    background-color: map.get(vars.$colors, "background");
+    background-color: map.get(vars.$colors, "secondary-light");
     border-radius: map.get(vars.$border-radius, "sm");
     font-size: map.get(type.$font-sizes, "sm");
     color: map.get(vars.$colors, "text-light");
-  }
+    transition: all 0.3s ease;
 
-  &__file-limit {
-    font-size: map.get(type.$font-sizes, "sm");
-    color: map.get(vars.$colors, "text-light");
-    margin-top: map.get(vars.$spacing, "md");
-  }
-
-  &__input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-
-    &:disabled {
-      cursor: not-allowed;
+    &:hover {
+      background-color: map.get(vars.$colors, "primary-light");
+      color: map.get(vars.$colors, "primary");
     }
-  }
-
-  &__error {
-    color: map.get(vars.$colors, "danger");
-    font-size: map.get(type.$font-sizes, "sm");
-    margin-top: map.get(vars.$spacing, "sm");
-    text-align: center;
   }
 
   &__file-list {
@@ -132,6 +139,12 @@
     border-radius: map.get(vars.$border-radius, "sm");
     margin-bottom: map.get(vars.$spacing, "xs");
     border: 1px solid map.get(vars.$colors, "border");
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: map.get(vars.$colors, "primary-light");
+      transform: translateX(-5px);
+    }
 
     &:last-child {
       margin-bottom: 0;
@@ -160,44 +173,13 @@
     font-size: map.get(type.$font-sizes, "lg");
     width: 24px;
     height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include mix.flex(row, center, center);
     border-radius: 50%;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 
     &:hover {
       background-color: map.get(vars.$colors, "danger-light");
     }
-  }
-
-  &__supported-tests {
-    @include mix.card(map.get(vars.$spacing, "md"));
-  }
-
-  &__supported-title {
-    font-size: map.get(type.$font-sizes, "lg");
-    font-weight: map.get(type.$font-weights, "semibold");
-    margin-bottom: map.get(vars.$spacing, "md");
-  }
-
-  &__test-list {
-    @include mix.flex(
-      column,
-      flex-start,
-      stretch,
-      map.get(vars.$spacing, "sm")
-    );
-    list-style: none;
-  }
-
-  &__test-item {
-    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "sm"));
-    color: map.get(vars.$colors, "text");
-  }
-
-  &__test-check {
-    color: map.get(vars.$colors, "success");
   }
 
   &__submit-button {
@@ -210,6 +192,7 @@
 
     &:hover:not(:disabled) {
       background-color: map.get(vars.$colors, "primary-dark");
+      transform: translateY(-2px);
     }
 
     &:disabled {
@@ -235,21 +218,6 @@
   &__processing-spinner {
     color: map.get(vars.$colors, "primary");
     animation: spin 1s linear infinite;
-  }
-
-  &__processing-info {
-    flex: 1;
-  }
-
-  &__processing-stage {
-    color: map.get(vars.$colors, "text");
-    font-weight: map.get(type.$font-weights, "medium");
-    margin-bottom: map.get(vars.$spacing, "xxs");
-  }
-
-  &__processing-details {
-    color: map.get(vars.$colors, "text-light");
-    font-size: map.get(type.$font-sizes, "sm");
   }
 
   &__progress-bar {

@@ -4,37 +4,49 @@
 @use "/src/styles/partials/typography" as *;
 
 .user-header {
-  @include card;
+  background-color: white;
   @include flex(row, space-between, center);
-  padding: map.get($spacing, "md");
-  border-radius: 0;
+  padding: map.get($spacing, "xl") map.get($spacing, "lg");
+  border-bottom: 1px solid rgba(142, 46, 86, 0.1);
+  margin-bottom: map.get($spacing, "lg");
 
   &__profile {
-    @include flex(row, flex-start, center, map.get($spacing, "md"));
+    @include flex(row, flex-start, center, map.get($spacing, "lg"));
   }
 
   &__avatar {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(142, 46, 86, 0.15);
   }
 
   &__info {
-    @include flex(column, flex-start, flex-start, 2px);
+    @include flex(column, flex-start, flex-start, map.get($spacing, "xs"));
   }
 
   &__name {
     display: flex;
     align-items: center;
-    color: map.get($colors, "primary");
-    font-size: map.get($font-sizes, "lg");
-    font-weight: map.get($font-weights, "semibold");
+    gap: map.get($spacing, "xs");
+    color: #8e2e56;
+    font-size: map.get($font-sizes, "xl");
+    font-weight: map.get($font-weights, "bold");
+    letter-spacing: -0.02em;
+
+    svg {
+      color: #8e2e56;
+      width: 24px;
+      height: 24px;
+    }
   }
 
   &__last-update {
     color: map.get($colors, "text-light");
     font-size: map.get($font-sizes, "sm");
+    font-weight: map.get($font-weights, "medium");
   }
 
   &__notifications {
@@ -42,6 +54,18 @@
   }
 
   &__icon-button {
-    @include icon-button;
+    @include flex(row, center, center);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(142, 46, 86, 0.1);
+    color: #8e2e56;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(142, 46, 86, 0.03);
+      border-color: #8e2e56;
+      transform: translateY(-1px);
+    }
   }
 }
