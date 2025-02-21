@@ -6,6 +6,7 @@ import {
   FileText,
   Info,
   AlertTriangle,
+  ArrowLeft,
 } from "lucide-react";
 import "./Learn.scss";
 import { useNavigate } from "react-router-dom";
@@ -41,13 +42,6 @@ const Learn = () => {
     },
   ];
 
-  const emergencyResources = {
-    icon: <AlertTriangle size={24} />,
-    title: "Emergency Support",
-    subtitle: "Need immediate assistance?",
-    action: "Call Emergency Services",
-  };
-
   const navigate = useNavigate();
   const handleActionClick = (item) => {
     switch (item.title) {
@@ -78,29 +72,18 @@ const Learn = () => {
   };
   return (
     <div className="learn">
-      <button className="learn__back-button" onClick={() => navigate(-1)}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-      </button>
-
-      <div className="learn__header-card">
+      <header className="learn__header-card">
+        <nav className="learn__nav">
+          <button className="learn__back-button" onClick={() => navigate(-1)}>
+            <ArrowLeft size={20} />
+            <span className="learn__nav-title">Health Resources</span>
+          </button>
+        </nav>
         <h2 className="learn__header-title">Ontario Sexual Health Resources</h2>
         <p className="learn__header-subtitle">
           Access reliable information and services for your sexual health needs.
         </p>
-      </div>
+      </header>
 
       <div className="learn__action-row">
         {resources.slice(0, 2).map((item, index) => (

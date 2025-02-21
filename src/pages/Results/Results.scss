@@ -11,25 +11,26 @@
 
   &__header {
     @include mix.card;
+    @include mix.flex(column, center, flex-start, map.get(vars.$spacing, "xs"));
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+    padding-bottom: map.get(vars.$spacing, "md");
     margin-bottom: map.get(vars.$spacing, "lg");
-    padding: map.get(vars.$spacing, "lg");
+    &-title {
+      color: map.get(vars.$colors, "primary");
+      font-size: map.get(type.$font-sizes, "lg");
+      font-weight: map.get(type.$font-weights, "semibold");
+    }
   }
 
   &__back-button {
     @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
     color: map.get(vars.$colors, "primary");
     font-weight: map.get(type.$font-weights, "medium");
+    transition: color 0.3s ease;
 
     &:hover {
       color: map.get(vars.$colors, "primary-dark");
     }
-  }
-
-  &__title {
-    color: map.get(vars.$colors, "primary");
-    font-size: map.get(type.$font-sizes, "2xl");
-    font-weight: map.get(type.$font-weights, "semibold");
-    margin-bottom: map.get(vars.$spacing, "xs");
   }
 
   &__subtitle {

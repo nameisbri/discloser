@@ -23,23 +23,12 @@
   &__header {
     border-bottom: 1px solid map.get(vars.$colors, "border");
     padding-bottom: map.get(vars.$spacing, "md");
-    position: relative;
-    overflow: hidden;
+    margin-bottom: map.get(vars.$spacing, "lg");
 
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background-color: map.get(vars.$colors, "primary");
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    &:hover::before {
-      transform: scaleX(1);
+    &-title {
+      color: map.get(vars.$colors, "primary");
+      font-size: map.get(type.$font-sizes, "lg");
+      font-weight: map.get(type.$font-weights, "semibold");
     }
   }
 
@@ -130,6 +119,21 @@
     margin-top: map.get(vars.$spacing, "md");
     max-height: 200px;
     overflow-y: auto;
+    padding-right: map.get(vars.$spacing, "xs");
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: map.get(vars.$colors, "secondary-light");
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: map.get(vars.$colors, "primary-light");
+      border-radius: 3px;
+    }
   }
 
   &__file-item {
@@ -143,7 +147,7 @@
 
     &:hover {
       background-color: map.get(vars.$colors, "primary-light");
-      transform: translateX(-5px);
+      transform: translateX(4px);
     }
 
     &:last-child {
@@ -179,6 +183,85 @@
 
     &:hover {
       background-color: map.get(vars.$colors, "danger-light");
+      transform: rotate(90deg);
+    }
+  }
+
+  &__file-limit {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+    margin-top: map.get(vars.$spacing, "md");
+  }
+
+  &__error {
+    color: map.get(vars.$colors, "danger");
+    font-size: map.get(type.$font-sizes, "sm");
+    margin-top: map.get(vars.$spacing, "sm");
+    text-align: center;
+    padding: map.get(vars.$spacing, "xs") map.get(vars.$spacing, "sm");
+    background-color: map.get(vars.$colors, "danger-light");
+    border-radius: map.get(vars.$border-radius, "sm");
+  }
+
+  &__info-section {
+    @include mix.card(map.get(vars.$spacing, "lg"));
+    background-color: map.get(vars.$colors, "background");
+  }
+
+  &__info-title {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+    margin-bottom: map.get(vars.$spacing, "lg");
+  }
+
+  &__info-list {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+    list-style: none;
+  }
+
+  &__info-item {
+    @include mix.flex(
+      row,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "md")
+    );
+    padding: map.get(vars.$spacing, "md");
+    border-radius: map.get(vars.$border-radius, "md");
+    background-color: map.get(vars.$colors, "secondary-light");
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: map.get(vars.$colors, "primary-light");
+      transform: translateX(4px);
+    }
+  }
+
+  &__info-icon {
+    font-size: 1.5rem;
+    min-width: 32px;
+    height: 32px;
+    @include mix.flex(row, center, center);
+  }
+
+  &__info-content {
+    h4 {
+      font-size: map.get(type.$font-sizes, "base");
+      font-weight: map.get(type.$font-weights, "semibold");
+      color: map.get(vars.$colors, "text");
+      margin-bottom: map.get(vars.$spacing, "xxs");
+    }
+
+    p {
+      font-size: map.get(type.$font-sizes, "sm");
+      color: map.get(vars.$colors, "text-light");
+      line-height: 1.4;
     }
   }
 
@@ -188,11 +271,29 @@
     padding: map.get(vars.$spacing, "md");
     border-radius: map.get(vars.$border-radius, "md");
     font-weight: map.get(type.$font-weights, "medium");
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateX(-100%);
+    }
 
     &:hover:not(:disabled) {
       background-color: map.get(vars.$colors, "primary-dark");
       transform: translateY(-2px);
+
+      &::after {
+        transform: translateX(100%);
+        transition: transform 0.5s ease;
+      }
     }
 
     &:disabled {
@@ -203,63 +304,43 @@
   }
 
   &__processing {
-    @include mix.flex(column, center, center);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(map.get(vars.$colors, "background"), 0.9);
-    z-index: 1000;
-    animation: fadeIn 0.3s ease;
+    margin-top: map.get(vars.$spacing, "lg");
+    padding: map.get(vars.$spacing, "lg");
+    background-color: map.get(vars.$colors, "background");
+    border-radius: map.get(vars.$border-radius, "md");
+    border: 1px solid map.get(vars.$colors, "border");
 
     &-status {
-      @include mix.flex(column, center, center);
-      background-color: map.get(vars.$colors, "background");
-      padding: map.get(vars.$spacing, "xl");
-      border-radius: map.get(vars.$border-radius, "lg");
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
     }
 
     &-spinner {
-      animation: spin 1s linear infinite;
-      width: 60px;
-      height: 60px;
       color: map.get(vars.$colors, "primary");
-      margin-bottom: map.get(vars.$spacing, "md");
+      animation: spin 1s linear infinite;
+    }
+
+    &-info {
+      flex: 1;
     }
 
     &-stage {
-      font-size: map.get(type.$font-sizes, "lg");
-      font-weight: map.get(type.$font-weights, "medium");
       color: map.get(vars.$colors, "text");
-      margin-bottom: map.get(vars.$spacing, "xs");
+      font-weight: map.get(type.$font-weights, "medium");
     }
 
     &-details {
-      font-size: map.get(type.$font-sizes, "sm");
       color: map.get(vars.$colors, "text-light");
-      max-width: 300px;
-      line-height: 1.5;
+      font-size: map.get(type.$font-sizes, "sm");
+      margin-top: map.get(vars.$spacing, "xxs");
     }
   }
 }
 
 @keyframes spin {
-  0% {
+  from {
     transform: rotate(0deg);
   }
-  100% {
+  to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }

@@ -73,9 +73,9 @@ const Share = () => {
   return (
     <div className="share">
       <header className="share__header">
-        <button className="share__back" onClick={() => navigate(-1)}>
+        <button className="share__back-button" onClick={() => navigate(-1)}>
           <ArrowLeft size={20} />
-          <span>Share Results</span>
+          <span className="share__header-title">Share Results</span>
         </button>
 
         <div className="share__user">
