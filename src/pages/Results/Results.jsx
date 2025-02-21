@@ -72,7 +72,7 @@ const Results = () => {
             onClick={() => navigate(-1)}
           >
             <ArrowLeft size={20} />
-            <span className="results-page__header-title">Health Resources</span>
+            <span className="results-page__header-title">Testing Results</span>
           </button>
         </nav>
         <p className="results-page__subtitle">

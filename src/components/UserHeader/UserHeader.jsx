@@ -1,6 +1,7 @@
 import "./UserHeader.scss";
 import { BadgeCheck } from "lucide-react";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
+import { useEffect } from "react";
 
 const UserHeader = ({ user, records }) => {
   const minioUrl = import.meta.env.VITE_MINIO_API_URL;
@@ -17,14 +18,13 @@ const UserHeader = ({ user, records }) => {
   const getAvatarUrl = (filePath) => {
     if (!filePath) return defaultAvatar;
 
-    // Ensure the filePath doesn't already start with the bucket name
     if (filePath.startsWith("users/")) {
       return `${minioUrl}/${filePath}`;
     }
 
-    // If the bucket name is not included, prepend it
     return `${minioUrl}/users/${filePath}`;
   };
+
   const lastLogged =
     records && records.length > 0
       ? formatDate(records[0].test_date)
