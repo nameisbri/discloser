@@ -123,12 +123,6 @@
     );
   }
 
-  &__username {
-    font-size: map.get(type.$font-sizes, "lg");
-    font-weight: map.get(type.$font-weights, "semibold");
-    color: map.get(vars.$colors, "text");
-  }
-
   &__date,
   &__frequency {
     font-size: map.get(type.$font-sizes, "sm");

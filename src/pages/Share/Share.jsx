@@ -13,25 +13,11 @@ const Share = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [shareFrequency, setShareFrequency] = useState("");
+  const [reminder, setReminder] = useState([]);
   const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
   const minioUrl = import.meta.env.VITE_MINIO_API_URL;
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userResponse = await axios.get(`${baseUrl}/users/${userID}`); // user hardcoded for MVP - should come from auth later on
-        if (!userResponse.data) {
-          throw new Error("No user data received");
-        }
-        setUser(userResponse.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchUserData();
-  }, [baseUrl]);
 
   const getAvatarUrl = (filePath) => {
     if (!filePath) return defaultAvatar;
@@ -42,22 +28,6 @@ const Share = () => {
 
     return `${minioUrl}/users/${filePath}`;
   };
-
-  useEffect(() => {
-    const fetchShareData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/share/${userID}`);
-        setShareData(response.data);
-      } catch (err) {
-        setError("Failed to load share data");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchShareData();
-  }, [baseUrl]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -87,6 +57,69 @@ const Share = () => {
       console.error("Failed to copy:", err);
     }
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await axios.get(`${baseUrl}/users/${userID}`); // user hardcoded for MVP - should come from auth later on
+        if (!userResponse.data) {
+          throw new Error("No user data received");
+        }
+        setUser(userResponse.data);
+
+        const reminderResponse = await axios.get(
+          `${baseUrl}/reminders/${userResponse.data.id}/reminders`
+        );
+        setReminder(reminderResponse.data || []);
+
+        if (reminderResponse.next_test_date) {
+          try {
+            const reminderDate = new Date(reminderResponse.next_test_date);
+            if (!isNaN(reminderDate.getTime())) {
+              const formattedDate = reminderDate.toISOString().slice(0, 10);
+              setNextTestDate(formattedDate);
+            }
+          } catch (error) {
+            console.error("Error parsing reminder date:", error);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserData();
+  }, [baseUrl]);
+
+  useEffect(() => {
+    const fetchShareData = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/share/${userID}`);
+        setShareData(response.data);
+      } catch (err) {
+        setError("Failed to load share data");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchShareData();
+  }, [baseUrl]);
+
+  useEffect(() => {
+    if (reminder.length > 0 && reminder[0]?.frequency) {
+      const freq = reminder[0].frequency;
+
+      if (freq.search("365") !== -1 || freq.search("730") !== -1) {
+        setShareFrequency("Every year");
+      } else if (freq.search("180") !== -1) {
+        setShareFrequency("Every 6 months");
+      } else {
+        setShareFrequency("Every 3 months");
+      }
+    }
+  }, [reminder]);
 
   if (loading) {
     return <div className="share__loading">Loading...</div>;
@@ -138,7 +171,9 @@ const Share = () => {
             <p className="share__date">
               Last updated: {formatDate(latestTestDate)}
             </p>
-            <p className="share__frequency">Regular testing: Every 3 months</p>
+            <p className="share__frequency">
+              Regular testing: {shareFrequency}
+            </p>
           </>
         )}
       </header>

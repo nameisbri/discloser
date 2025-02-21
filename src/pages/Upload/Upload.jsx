@@ -314,7 +314,7 @@ const Upload = () => {
             }
             message={
               uploadStatus.stage === "uploading"
-                ? "Please wait while your files are being uploaded and processed. This may take up to 20 seconds."
+                ? "Please wait while your files are being uploaded and processed. This may take up to 30 seconds."
                 : uploadStatus.stage === "complete"
                 ? "Your files have been successfully uploaded and processed."
                 : "An error occurred while uploading your files. Please try again."
