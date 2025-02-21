@@ -10,14 +10,13 @@
   padding: map.get(vars.$spacing, "lg");
   padding-bottom: map.get(vars.$spacing, "xl") * 3;
 
-  // Main header section
   &__header {
     @include mix.card;
     @include mix.flex(
       column,
       flex-start,
       stretch,
-      map.get(vars.$spacing, "md")
+      map.get(vars.$spacing, "xs")
     );
     margin-bottom: map.get(vars.$spacing, "lg");
   }
@@ -26,7 +25,7 @@
     @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
     color: map.get(vars.$colors, "primary");
     font-weight: map.get(type.$font-weights, "medium");
-    padding: map.get(vars.$spacing, "md") 0;
+    padding: 0 0 map.get(vars.$spacing, "sm") 0;
     border-bottom: 1px solid map.get(vars.$colors, "border");
     margin-bottom: map.get(vars.$spacing, "md");
     width: 100%;
@@ -38,20 +37,23 @@
   }
 
   &__header-title {
-    color: map.get(vars.$colors, "text");
+    color: map.get(vars.$colors, "primary");
     font-size: map.get(type.$font-sizes, "lg");
     font-weight: map.get(type.$font-weights, "semibold");
   }
 
-  // User section
   &__user {
-    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
-    padding: map.get(vars.$spacing, "md") 0;
+    @include mix.flex(
+      row,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "md")
+    );
   }
 
   .user-header__avatar {
-    width: 48px;
-    height: 48px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -66,16 +68,22 @@
   }
 
   &__username {
-    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    @include mix.flex(
+      column,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "xs")
+    );
     color: map.get(vars.$colors, "text");
     font-size: map.get(type.$font-sizes, "lg");
     font-weight: map.get(type.$font-weights, "semibold");
+    min-width: 8rem;
   }
 
-  // Verification badge
-  &__verified-wrapper {
+  &__secure-wrapper {
     position: relative;
     display: inline-flex;
+    align-items: center;
     cursor: help;
 
     &:hover .share__tooltip {
@@ -85,19 +93,24 @@
     }
   }
 
-  &__verified {
-    color: map.get(vars.$colors, "primary");
+  &__secure-icon {
+    color: map.get(vars.$colors, "success");
     width: 20px;
     height: 20px;
+  }
+
+  &__secure-label {
+    color: map.get(vars.$colors, "success");
+    font-size: map.get(type.$font-sizes, "sm");
+    font-weight: map.get(type.$font-weights, "medium");
+    margin-left: map.get(vars.$spacing, "xxs");
   }
 
   &__tooltip {
     position: absolute;
     bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(0);
     padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "md");
-    background-color: map.get(vars.$colors, "text");
+    background-color: map.get(vars.$colors, "secondary-dark");
     color: white;
     font-size: map.get(type.$font-sizes, "xs");
     border-radius: map.get(vars.$border-radius, "md");
@@ -112,19 +125,19 @@
       content: "";
       position: absolute;
       top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
+      left: map.get(vars.$spacing, "sm");
+      // transform: translateX(-50%);
       border: 6px solid transparent;
       border-top-color: map.get(vars.$colors, "text");
     }
   }
 
-  // Dates and updates
   &__date,
   &__frequency {
     color: map.get(vars.$colors, "text-light");
     font-size: map.get(type.$font-sizes, "sm");
     line-height: 1.5;
+    @include mix.flex(column, space-around, flex-start, 0);
   }
 
   // Results section

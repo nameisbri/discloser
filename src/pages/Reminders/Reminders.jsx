@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Reminders.scss";
 
-// Helper functions
+// Helper function to get the true latest test date from records
 const getTrueLatestTestDate = (records) => {
   if (!records || records.length === 0) return null;
 
@@ -14,31 +14,7 @@ const getTrueLatestTestDate = (records) => {
   );
 
   // Return the most recent date
-  return new Date(Math.max(...allDates));
-};
-
-const getLatestResultsByType = (records) => {
-  // Flatten all results from all records
-  const allResults = records.flatMap((record) =>
-    record.results.map((result) => ({
-      ...result,
-      test_date: record.test_date,
-    }))
-  );
-
-  // Group by test type and get most recent for each
-  return Object.values(
-    allResults.reduce((acc, result) => {
-      const existingResult = acc[result.test_type];
-      if (
-        !existingResult ||
-        new Date(result.test_date) > new Date(existingResult.test_date)
-      ) {
-        acc[result.test_type] = result;
-      }
-      return acc;
-    }, {})
-  ).sort((a, b) => new Date(b.test_date) - new Date(a.test_date));
+  return allDates.length > 0 ? new Date(Math.max(...allDates)) : null;
 };
 
 const Reminders = () => {
@@ -51,6 +27,7 @@ const Reminders = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [nextTestDate, setNextTestDate] = useState(null);
   const [lastTestDate, setLastTestDate] = useState(null);
+  const [records, setRecords] = useState([]);
 
   const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
@@ -179,22 +156,22 @@ const Reminders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const reminderResponse = await axios.get(
-          `${baseUrl}/reminders/${userID}/reminders`
-        );
+        // Fetch records first to get the true latest test date
         const recordsResponse = await axios.get(
           `${baseUrl}/records?user_id=${userID}`
         );
+        setRecords(recordsResponse.data || []);
 
-        if (recordsResponse.data && recordsResponse.data.length > 0) {
-          const sortedRecords = recordsResponse.data.sort(
-            (a, b) => new Date(b.test_date) - new Date(a.test_date)
-          );
-          const testDate = new Date(sortedRecords[0].test_date);
-          if (!isNaN(testDate.getTime())) {
-            setLastTestDate(testDate);
-          }
+        // Get the true latest test date
+        const latestDate = getTrueLatestTestDate(recordsResponse.data);
+        if (latestDate) {
+          setLastTestDate(latestDate);
         }
+
+        // Fetch reminders
+        const reminderResponse = await axios.get(
+          `${baseUrl}/reminders/${userID}/reminders`
+        );
 
         if (reminderResponse.data && reminderResponse.data.length > 0) {
           const activeReminder =
@@ -202,6 +179,7 @@ const Reminders = () => {
             reminderResponse.data[0];
           setReminder(activeReminder);
 
+          // Set risk level based on frequency
           const freq = activeReminder.frequency;
           if (freq.includes("365") || freq.includes("730")) {
             setSelectedRisk("lower");
@@ -211,15 +189,11 @@ const Reminders = () => {
             setSelectedRisk("higher");
           }
 
+          // Set next test date if exists
           if (activeReminder.next_test_date) {
-            try {
-              const reminderDate = new Date(activeReminder.next_test_date);
-              if (!isNaN(reminderDate.getTime())) {
-                const formattedDate = reminderDate.toISOString().slice(0, 10);
-                setNextTestDate(formattedDate);
-              }
-            } catch (error) {
-              console.error("Error parsing reminder date:", error);
+            const reminderDate = new Date(activeReminder.next_test_date);
+            if (!isNaN(reminderDate.getTime())) {
+              setNextTestDate(reminderDate.toISOString().slice(0, 10));
             }
           }
         }
@@ -238,7 +212,7 @@ const Reminders = () => {
     if (lastTestDate) {
       const recommendation = getRecommendedDate();
       const nextDate = recommendation.date;
-      setNextTestDate(nextDate.toLocaleDateString("en-CA"));
+      setNextTestDate(nextDate.toISOString().slice(0, 10));
     }
   }, [selectedRisk]);
 
@@ -248,15 +222,10 @@ const Reminders = () => {
     setSaveSuccess(false);
 
     try {
-      const formatDateForDB = (dateString) => {
-        if (!dateString) return null;
-        return dateString.split("T")[0];
-      };
-
       const currentRiskLevel = getCurrentRiskLevel();
       const reminderData = {
         frequency: currentRiskLevel.frequencies[0].value,
-        next_test_date: formatDateForDB(nextTestDate),
+        next_test_date: nextTestDate,
         is_active: 1,
         last_notified_date: null,
       };
@@ -274,10 +243,7 @@ const Reminders = () => {
       }
 
       setSaveSuccess(true);
-
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      setTimeout(() => navigate("/"), 1500);
     } catch (error) {
       console.error("Error saving reminder:", error.response || error);
       setError(
@@ -320,7 +286,7 @@ const Reminders = () => {
             <span className="reminders__test-label">Last Test Date</span>
             <span className="reminders__test-date">
               {lastTestDate
-                ? new Date(lastTestDate).toLocaleDateString("en-US", {
+                ? lastTestDate.toLocaleDateString("en-US", {
                     month: "long",
                     day: "numeric",
                     year: "numeric",
