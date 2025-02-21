@@ -13,12 +13,12 @@ const Share = () => {
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
   const baseUrl = import.meta.env.VITE_APP_URL;
-  const userId = "54"; // Hardcoded for MVP
+  const userID = import.meta.env.VITE_USER_ID;
 
   useEffect(() => {
     const fetchShareData = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/share/${userId}`);
+        const response = await axios.get(`${baseUrl}/share/${userID}`);
         setShareData(response.data);
       } catch (err) {
         setError("Failed to load share data");
@@ -47,7 +47,7 @@ const Share = () => {
 
   const getShareableLink = () => {
     // For MVP, generate a simple link
-    return `${window.location.origin}/share/${userId}`;
+    return `${window.location.origin}/share/${userID}`;
   };
 
   const handleCopyLink = async () => {

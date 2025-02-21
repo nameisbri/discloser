@@ -14,12 +14,13 @@ const Results = () => {
 
   const resultsPerPage = 6;
   const baseUrl = import.meta.env.VITE_APP_URL;
+  const userID = import.meta.env.VITE_USER_ID;
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const recordsResponse = await axios.get(
-          `${baseUrl}/records?user_id=54`
+          `${baseUrl}/records?user_id=${userID}`
         );
 
         const allResults = recordsResponse.data

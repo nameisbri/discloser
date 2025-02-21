@@ -11,6 +11,8 @@ const Upload = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
+  const userID = import.meta.env.VITE_USER_ID;
+
   const [uploadStatus, setUploadStatus] = useState({
     stage: "idle",
     progress: 0,
@@ -115,7 +117,7 @@ const Upload = () => {
       uploadedFiles.forEach((file) => {
         formData.append("files", file);
       });
-      formData.append("user_id", "54");
+      formData.append("user_id", userID);
       formData.append("test_date", new Date().toISOString());
 
       const response = await axios.post(`${baseUrl}/records/upload`, formData, {
