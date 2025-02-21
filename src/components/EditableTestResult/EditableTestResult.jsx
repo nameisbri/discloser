@@ -14,7 +14,7 @@ const EditableTestResult = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
 
   const handleDelete = async () => {
     setIsDeleting(true);

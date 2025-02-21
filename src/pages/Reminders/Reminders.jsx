@@ -15,7 +15,7 @@ const Reminders = () => {
   const [nextTestDate, setNextTestDate] = useState(null);
   const [lastTestDate, setLastTestDate] = useState(null);
 
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
 
   const riskLevels = [

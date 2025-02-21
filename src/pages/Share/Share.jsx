@@ -12,7 +12,7 @@ const Share = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
 
   useEffect(() => {

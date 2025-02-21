@@ -13,7 +13,7 @@ const Results = () => {
   const [error, setError] = useState("");
 
   const resultsPerPage = 6;
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
 
   useEffect(() => {

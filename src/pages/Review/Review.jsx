@@ -12,7 +12,7 @@ const Review = () => {
   const [editedResults, setEditedResults] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
 
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!location.state) {

@@ -20,7 +20,7 @@ const Upload = () => {
     processedFiles: [],
   });
   const fileInputRef = useRef(null);
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024;
   const ALLOWED_TYPES = {

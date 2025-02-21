@@ -18,7 +18,7 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
   const [dueDate, setDueDate] = useState(null);
-  const baseUrl = import.meta.env.VITE_APP_URL;
+  const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
 
   useEffect(() => {
