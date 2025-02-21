@@ -5,16 +5,50 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import EditableTestResult from "../../components/EditableTestResult/EditableTestResult";
 import "./Results.scss";
 
+// Helper function to group results by date
+const groupResultsByDate = (records) => {
+  const allResults = records.flatMap((record) =>
+    record.results.map((result) => ({
+      ...result,
+      test_date: record.test_date,
+      record_id: record.id,
+    }))
+  );
+
+  const resultsByDate = allResults.reduce((acc, result) => {
+    const dateKey = new Date(result.test_date).toISOString().split("T")[0];
+    if (!acc[dateKey]) {
+      acc[dateKey] = [];
+    }
+    acc[dateKey].push(result);
+    return acc;
+  }, {});
+
+  return Object.entries(resultsByDate)
+    .sort(([dateA], [dateB]) => new Date(dateB) - new Date(dateA))
+    .map(([date, results]) => ({
+      date,
+      results: results.sort((a, b) => a.test_type.localeCompare(b.test_type)),
+    }));
+};
+
 const Results = () => {
   const navigate = useNavigate();
-  const [results, setResults] = useState([]);
+  const [groupedResults, setGroupedResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const resultsPerPage = 6;
+  const resultsPerPage = 6; // Number of dates to show per page
   const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -23,17 +57,8 @@ const Results = () => {
           `${baseUrl}/records?user_id=${userID}`
         );
 
-        const allResults = recordsResponse.data
-          .flatMap((record) =>
-            record.results.map((result) => ({
-              ...result,
-              test_date: record.test_date,
-              record_id: record.id,
-            }))
-          )
-          .sort((a, b) => new Date(b.test_date) - new Date(a.test_date));
-
-        setResults(allResults);
+        const grouped = groupResultsByDate(recordsResponse.data);
+        setGroupedResults(grouped);
       } catch (err) {
         console.error("Error fetching results:", err);
         setError("Failed to load test results");
@@ -43,17 +68,33 @@ const Results = () => {
     };
 
     fetchResults();
-  }, [baseUrl]);
+  }, [baseUrl, userID]);
 
   const handleDelete = async (testId) => {
-    setResults(results.filter((result) => result.id !== testId));
+    try {
+      await axios.delete(`${baseUrl}/results/${testId}`);
+
+      // Update state to remove the deleted result
+      setGroupedResults((prevGrouped) => {
+        const newGrouped = prevGrouped
+          .map((dateGroup) => ({
+            ...dateGroup,
+            results: dateGroup.results.filter((result) => result.id !== testId),
+          }))
+          .filter((dateGroup) => dateGroup.results.length > 0);
+
+        return newGrouped;
+      });
+    } catch (error) {
+      console.error("Error deleting result:", error);
+    }
   };
 
   // Pagination calculations
-  const totalPages = Math.ceil(results.length / resultsPerPage);
+  const totalPages = Math.ceil(groupedResults.length / resultsPerPage);
   const startIndex = (currentPage - 1) * resultsPerPage;
   const endIndex = startIndex + resultsPerPage;
-  const currentResults = results.slice(startIndex, endIndex);
+  const currentDateGroups = groupedResults.slice(startIndex, endIndex);
 
   if (loading) {
     return <div className="results-page__loading">Loading...</div>;
@@ -66,29 +107,43 @@ const Results = () => {
   return (
     <div className="results-page">
       <header className="results-page__header">
-        <nav className="results-page__nav">
-          <button
-            className="results-page__back-button"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft size={20} />
-            <span className="results-page__header-title">Testing Results</span>
-          </button>
-        </nav>
+        <button
+          className="results-page__back-button"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft size={20} />
+          <span className="results-page__title">Testing History</span>
+        </button>
         <p className="results-page__subtitle">
-          Showing {startIndex + 1}-{Math.min(endIndex, results.length)} of{" "}
-          {results.length} results
+          {groupedResults.length > 0 ? (
+            <>
+              Showing results from {formatDate(groupedResults[0].date)} to{" "}
+              {formatDate(groupedResults[groupedResults.length - 1].date)}
+            </>
+          ) : (
+            "No test results found"
+          )}
         </p>
       </header>
+
       <div className="results-page__content">
-        {currentResults.length > 0 ? (
-          currentResults.map((result) => (
-            <EditableTestResult
-              key={result.id}
-              test={result}
-              recordDate={result.test_date}
-              onDelete={handleDelete}
-            />
+        {currentDateGroups.length > 0 ? (
+          currentDateGroups.map((dateGroup) => (
+            <div key={dateGroup.date} className="results-page__date-group">
+              <h3 className="results-page__date-header">
+                {formatDate(dateGroup.date)}
+              </h3>
+              <div className="results-page__results-list">
+                {dateGroup.results.map((result) => (
+                  <EditableTestResult
+                    key={result.id}
+                    test={result}
+                    recordDate={result.test_date}
+                    onDelete={() => handleDelete(result.id)}
+                  />
+                ))}
+              </div>
+            </div>
           ))
         ) : (
           <div className="results-page__empty">

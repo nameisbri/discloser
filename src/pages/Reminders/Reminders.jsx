@@ -4,6 +4,43 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Reminders.scss";
 
+// Helper functions
+const getTrueLatestTestDate = (records) => {
+  if (!records || records.length === 0) return null;
+
+  // Flatten all results and get their dates
+  const allDates = records.flatMap((record) =>
+    record.results.map((result) => new Date(record.test_date))
+  );
+
+  // Return the most recent date
+  return new Date(Math.max(...allDates));
+};
+
+const getLatestResultsByType = (records) => {
+  // Flatten all results from all records
+  const allResults = records.flatMap((record) =>
+    record.results.map((result) => ({
+      ...result,
+      test_date: record.test_date,
+    }))
+  );
+
+  // Group by test type and get most recent for each
+  return Object.values(
+    allResults.reduce((acc, result) => {
+      const existingResult = acc[result.test_type];
+      if (
+        !existingResult ||
+        new Date(result.test_date) > new Date(existingResult.test_date)
+      ) {
+        acc[result.test_type] = result;
+      }
+      return acc;
+    }, {})
+  ).sort((a, b) => new Date(b.test_date) - new Date(a.test_date));
+};
+
 const Reminders = () => {
   const navigate = useNavigate();
   const [selectedRisk, setSelectedRisk] = useState("moderate");

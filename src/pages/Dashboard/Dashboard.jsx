@@ -119,7 +119,7 @@ function Dashboard() {
               {/* Example navigation */}
             </div>
           ) : (
-            <RecentResults results={results} />
+            <RecentResults results={results} reminder={reminder} />
           )}
         </section>
 
