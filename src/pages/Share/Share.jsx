@@ -6,10 +6,41 @@ import axios from "axios";
 import StatusBadge from "../../components/StatusBadge/StatusBadge";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
 
+// Helper function to get latest result per test type
+const getLatestResultsByType = (results) => {
+  if (!results) return [];
+
+  return Object.values(
+    results.reduce((acc, result) => {
+      const existingResult = acc[result.test_type];
+      if (
+        !existingResult ||
+        new Date(result.test_date) > new Date(existingResult.test_date)
+      ) {
+        acc[result.test_type] = result;
+      }
+      return acc;
+    }, {})
+  ).sort((a, b) => {
+    const dateCompare = new Date(b.test_date) - new Date(a.test_date);
+    if (dateCompare !== 0) return dateCompare;
+    return a.test_type.localeCompare(b.test_type);
+  });
+};
+
+// Helper function to get true latest test date
+const getTrueLatestTestDate = (results) => {
+  if (!results || results.length === 0) return null;
+  return results.reduce((latest, current) => {
+    const currentDate = new Date(current.test_date);
+    return latest ? (currentDate > latest ? currentDate : latest) : currentDate;
+  }, null);
+};
+
 const Share = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [shareData, setShareData] = useState(null);
+  const [latestResults, setLatestResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -19,21 +50,11 @@ const Share = () => {
   const userID = import.meta.env.VITE_USER_ID;
   const minioUrl = import.meta.env.VITE_MINIO_API_URL;
 
-  const getAvatarUrl = (filePath) => {
-    if (!filePath) return defaultAvatar;
-
-    if (filePath.startsWith("users/")) {
-      return `${minioUrl}/${filePath}`;
-    }
-
-    return `${minioUrl}/users/${filePath}`;
-  };
-
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
       month: "long",
       day: "numeric",
+      year: "numeric",
     });
   };
 
@@ -44,7 +65,6 @@ const Share = () => {
   };
 
   const getShareableLink = () => {
-    // For MVP, generate a simple link
     return `${window.location.origin}/share/${userID}`;
   };
 
@@ -59,58 +79,35 @@ const Share = () => {
   };
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
-        const userResponse = await axios.get(`${baseUrl}/users/${userID}`); // user hardcoded for MVP - should come from auth later on
-        if (!userResponse.data) {
-          throw new Error("No user data received");
-        }
+        const userResponse = await axios.get(`${baseUrl}/users/${userID}`);
         setUser(userResponse.data);
 
+        const shareResponse = await axios.get(`${baseUrl}/share/${userID}`);
+        const sortedResults = getLatestResultsByType(
+          shareResponse.data.results
+        );
+        setLatestResults(sortedResults);
+
         const reminderResponse = await axios.get(
-          `${baseUrl}/reminders/${userResponse.data.id}/reminders`
+          `${baseUrl}/reminders/${userID}/reminders`
         );
         setReminder(reminderResponse.data || []);
-
-        if (reminderResponse.next_test_date) {
-          try {
-            const reminderDate = new Date(reminderResponse.next_test_date);
-            if (!isNaN(reminderDate.getTime())) {
-              const formattedDate = reminderDate.toISOString().slice(0, 10);
-              setNextTestDate(formattedDate);
-            }
-          } catch (error) {
-            console.error("Error parsing reminder date:", error);
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchUserData();
-  }, [baseUrl]);
-
-  useEffect(() => {
-    const fetchShareData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/share/${userID}`);
-        setShareData(response.data);
       } catch (err) {
+        console.error("Error fetching data:", err);
         setError("Failed to load share data");
-        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchShareData();
-  }, [baseUrl]);
+    fetchData();
+  }, [baseUrl, userID]);
 
   useEffect(() => {
     if (reminder.length > 0 && reminder[0]?.frequency) {
       const freq = reminder[0].frequency;
-
       if (freq.search("365") !== -1 || freq.search("730") !== -1) {
         setShareFrequency("Every year");
       } else if (freq.search("180") !== -1) {
@@ -121,15 +118,11 @@ const Share = () => {
     }
   }, [reminder]);
 
-  if (loading) {
-    return <div className="share__loading">Loading...</div>;
-  }
+  if (loading) return <div className="share__loading">Loading...</div>;
+  if (error) return <div className="share__error">{error}</div>;
 
-  if (error) {
-    return <div className="share__error">{error}</div>;
-  }
-
-  const latestTestDate = shareData?.results[0]?.test_date;
+  const latestTestDate =
+    latestResults.length > 0 ? latestResults[0].test_date : null;
 
   return (
     <div className="share">
@@ -142,17 +135,12 @@ const Share = () => {
         <div className="share__user">
           <img
             className="user-header__avatar"
-            src={getAvatarUrl(user?.avatar_file_path)}
+            src={defaultAvatar}
             alt={`${user?.name}'s avatar`}
-            onError={(e) => {
-              console.log(getAvatarUrl(user?.avatar_file_path));
-              console.log("Image load error, using default avatar");
-              e.target.src = defaultAvatar;
-            }}
           />
           <div className="share__info">
             <h2 className="share__username">
-              @{shareData?.screen_name}
+              @{user?.screen_name}
               <span className="share__verified-wrapper">
                 <BadgeCheck className="share__verified" />
                 <span className="share__tooltip">
@@ -160,12 +148,13 @@ const Share = () => {
                 </span>
               </span>
             </h2>
-            <StatusBadge
+            {/* <StatusBadge
               status={latestTestDate ? "Valid" : "No results"}
               type="validity"
-            />
+            /> */}
           </div>
         </div>
+
         {latestTestDate && (
           <>
             <p className="share__date">
@@ -191,30 +180,23 @@ const Share = () => {
         )}
 
         <div className="share__tests">
-          {shareData?.results
-            .sort((a, b) => {
-              const dateCompare = new Date(b.test_date) - new Date(a.test_date);
-              if (dateCompare !== 0) return dateCompare;
-
-              return a.test_type.localeCompare(b.test_type);
-            })
-            .map((test, index) => (
-              <div key={index} className="share__test">
-                <div className="share__test-info">
-                  <h4 className="share__test-name">{test.test_type}</h4>
-                  <StatusBadge status={test.result} type="result" />
-                </div>
-                {test.notes && (
-                  <span className="share__test-type">
-                    {test.notes.split("|").map((note, i) => (
-                      <span key={i} className="share__test-note">
-                        {note.trim()}
-                      </span>
-                    ))}
-                  </span>
-                )}
+          {latestResults.map((test, index) => (
+            <div key={index} className="share__test">
+              <div className="share__test-info">
+                <h4 className="share__test-name">{test.test_type}</h4>
+                <StatusBadge status={test.result} type="result" />
               </div>
-            ))}
+              {test.notes && (
+                <span className="share__test-type">
+                  {test.notes.split("|").map((note, i) => (
+                    <span key={i} className="share__test-note">
+                      {note.trim()}
+                    </span>
+                  ))}
+                </span>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -233,11 +215,10 @@ const Share = () => {
             {copied ? "Copied!" : "Copy Link"}
           </button>
         </div>
-        {/* <p className="share__expiry">Link expires in 24 hours</p> */}
         <div className="share__downloads">
           <button
             className="share__button share__button--secondary"
-            onClick={() => window.print()} // Simple print for MVP
+            onClick={() => window.print()}
           >
             Download as PDF
           </button>

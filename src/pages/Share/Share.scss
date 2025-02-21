@@ -1,13 +1,16 @@
+// Share.scss
 @use "sass:map";
 @use "../../styles/partials/variables" as vars;
 @use "../../styles/partials/mixins" as mix;
 @use "../../styles/partials/typography" as type;
 
 .share {
-  @include mix.flex(column, flex-start, stretch, map.get(vars.$spacing, "lg"));
+  min-height: 100vh;
+  background-color: map.get(vars.$colors, "primary-light");
   padding: map.get(vars.$spacing, "lg");
-  padding-bottom: 6rem;
+  padding-bottom: map.get(vars.$spacing, "xl") * 3;
 
+  // Main header section
   &__header {
     @include mix.card;
     @include mix.flex(
@@ -16,8 +19,6 @@
       stretch,
       map.get(vars.$spacing, "md")
     );
-    border-bottom: 1px solid map.get(vars.$colors, "border");
-    padding-bottom: map.get(vars.$spacing, "md");
     margin-bottom: map.get(vars.$spacing, "lg");
   }
 
@@ -25,7 +26,11 @@
     @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
     color: map.get(vars.$colors, "primary");
     font-weight: map.get(type.$font-weights, "medium");
-    transition: color 0.3s ease;
+    padding: map.get(vars.$spacing, "md") 0;
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+    margin-bottom: map.get(vars.$spacing, "md");
+    width: 100%;
+    transition: color 0.2s ease;
 
     &:hover {
       color: map.get(vars.$colors, "primary-dark");
@@ -33,85 +38,22 @@
   }
 
   &__header-title {
-    color: map.get(vars.$colors, "primary");
-    font-size: map.get(type.$font-sizes, "lg");
-    font-weight: map.get(type.$font-weights, "semibold");
-  }
-
-  &__username {
-    font-size: map.get(type.$font-sizes, "lg");
-    font-weight: map.get(type.$font-weights, "semibold");
     color: map.get(vars.$colors, "text");
-    display: flex;
-    align-items: center;
-    gap: map.get(vars.$spacing, "xs");
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
   }
 
-  &__verified-wrapper {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-
-    &:hover .share__tooltip {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  &__verified {
-    color: map.get(vars.$colors, "primary");
-    width: 20px;
-    height: 20px;
-    cursor: help;
-  }
-
+  // User section
   &__user {
-    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "sm"));
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
+    padding: map.get(vars.$spacing, "md") 0;
   }
 
-  &__tooltip {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: map.get(vars.$spacing, "xs") map.get(vars.$spacing, "sm");
-    background-color: map.get(vars.$colors, "text");
-    color: white;
-    font-size: map.get(type.$font-sizes, "xs");
-    border-radius: map.get(vars.$border-radius, "sm");
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    margin-bottom: map.get(vars.$spacing, "xxs");
-    z-index: 10;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 4px;
-      border-style: solid;
-      border-color: map.get(vars.$colors, "text") transparent transparent
-        transparent;
-    }
-  }
-
-  &__avatar {
+  .user-header__avatar {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: map.get(vars.$colors, "primary-light");
-  }
-
-  &__test-note {
-    display: block;
-
-    &:not(:last-child) {
-      margin-bottom: map.get(vars.$spacing, "xxs");
-    }
+    object-fit: cover;
   }
 
   &__info {
@@ -123,53 +65,84 @@
     );
   }
 
+  &__username {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    color: map.get(vars.$colors, "text");
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
+  // Verification badge
+  &__verified-wrapper {
+    position: relative;
+    display: inline-flex;
+    cursor: help;
+
+    &:hover .share__tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-4px);
+    }
+  }
+
+  &__verified {
+    color: map.get(vars.$colors, "primary");
+    width: 20px;
+    height: 20px;
+  }
+
+  &__tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "md");
+    background-color: map.get(vars.$colors, "text");
+    color: white;
+    font-size: map.get(type.$font-sizes, "xs");
+    border-radius: map.get(vars.$border-radius, "md");
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: map.get(vars.$colors, "text");
+    }
+  }
+
+  // Dates and updates
   &__date,
   &__frequency {
-    font-size: map.get(type.$font-sizes, "sm");
     color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+    line-height: 1.5;
   }
 
-  &__badge {
-    padding: map.get(vars.$spacing, "xxs") map.get(vars.$spacing, "xs");
-    border-radius: map.get(vars.$border-radius, "pill");
-    font-size: map.get(type.$font-sizes, "xs");
-    font-weight: map.get(type.$font-weights, "medium");
-
-    &--valid {
-      background-color: map.get(vars.$colors, "success-light");
-      color: map.get(vars.$colors, "success");
-    }
-
-    &--success {
-      background-color: map.get(vars.$colors, "success-light");
-      color: map.get(vars.$colors, "success");
-    }
-  }
-
+  // Results section
   &__results {
     @include mix.card;
-    @include mix.flex(
-      column,
-      flex-start,
-      stretch,
-      map.get(vars.$spacing, "md")
-    );
+    margin-bottom: map.get(vars.$spacing, "lg");
   }
 
   &__results-header {
-    @include mix.flex(
-      column,
-      flex-start,
-      stretch,
-      map.get(vars.$spacing, "xs")
-    );
-    padding-bottom: map.get(vars.$spacing, "md");
+    padding: map.get(vars.$spacing, "lg");
     border-bottom: 1px solid map.get(vars.$colors, "border");
   }
 
   &__results-date {
-    font-size: map.get(type.$font-sizes, "lg");
+    font-size: map.get(type.$font-sizes, "xl");
     font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+    margin-bottom: map.get(vars.$spacing, "xs");
   }
 
   &__results-validity {
@@ -177,38 +150,52 @@
     color: map.get(vars.$colors, "text-light");
   }
 
+  // Individual test results
   &__tests {
     @include mix.flex(column, flex-start, stretch);
   }
 
   &__test {
-    @include mix.flex(
-      column,
-      flex-start,
-      stretch,
-      map.get(vars.$spacing, "xs")
-    );
-    padding: map.get(vars.$spacing, "md");
+    padding: map.get(vars.$spacing, "lg");
     border-bottom: 1px solid map.get(vars.$colors, "border");
+    transition: background-color 0.2s ease;
 
     &:last-child {
       border-bottom: none;
+    }
+
+    &:hover {
+      background-color: rgba(map.get(vars.$colors, "primary-light"), 0.5);
     }
   }
 
   &__test-info {
     @include mix.flex(row, space-between, center);
+    margin-bottom: map.get(vars.$spacing, "xs");
   }
 
   &__test-name {
+    color: map.get(vars.$colors, "primary");
+    font-size: map.get(type.$font-sizes, "lg");
     font-weight: map.get(type.$font-weights, "medium");
   }
 
   &__test-type {
-    font-size: map.get(type.$font-sizes, "sm");
+    display: block;
     color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
   }
 
+  &__test-note {
+    display: block;
+    line-height: 1.5;
+
+    &:not(:last-child) {
+      margin-bottom: map.get(vars.$spacing, "xxs");
+    }
+  }
+
+  // Share actions section
   &__actions {
     @include mix.card;
     @include mix.flex(
@@ -225,32 +212,26 @@
 
   &__input {
     flex: 1;
-    padding: map.get(vars.$spacing, "sm");
+    padding: map.get(vars.$spacing, "md");
     border: 1px solid map.get(vars.$colors, "border");
     border-radius: map.get(vars.$border-radius, "md");
     font-size: map.get(type.$font-sizes, "sm");
-    color: map.get(vars.$colors, "text-light");
-  }
+    color: map.get(vars.$colors, "text");
+    background-color: white;
+    transition: all 0.2s ease;
 
-  &__expiry {
-    font-size: map.get(type.$font-sizes, "sm");
-    color: map.get(vars.$colors, "text-light");
-  }
-
-  &__downloads {
-    @include mix.flex(
-      column,
-      flex-start,
-      stretch,
-      map.get(vars.$spacing, "sm")
-    );
+    &:focus {
+      border-color: map.get(vars.$colors, "primary");
+      outline: none;
+    }
   }
 
   &__button {
     @include mix.flex(row, center, center);
-    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "md");
+    padding: map.get(vars.$spacing, "md") map.get(vars.$spacing, "lg");
     border-radius: map.get(vars.$border-radius, "md");
     font-weight: map.get(type.$font-weights, "medium");
+    font-size: map.get(type.$font-sizes, "sm");
     transition: all 0.2s ease;
 
     &--primary {
@@ -259,6 +240,11 @@
 
       &:hover {
         background-color: map.get(vars.$colors, "primary-dark");
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
 
@@ -270,7 +256,26 @@
       &:hover {
         background-color: map.get(vars.$colors, "primary-light");
         border-color: map.get(vars.$colors, "primary");
+        color: map.get(vars.$colors, "primary");
       }
     }
+  }
+
+  // Loading and error states
+  &__loading,
+  &__error {
+    @include mix.flex(row, center, center);
+    min-height: 50vh;
+    padding: map.get(vars.$spacing, "xl");
+    text-align: center;
+    font-size: map.get(type.$font-sizes, "lg");
+  }
+
+  &__loading {
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__error {
+    color: map.get(vars.$colors, "danger");
   }
 }

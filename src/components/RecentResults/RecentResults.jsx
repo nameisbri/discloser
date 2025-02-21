@@ -31,7 +31,7 @@ const getTrueLatestTestDate = (results) => {
   }, null);
 };
 
-const RecentResults = ({ results }) => {
+const RecentResults = ({ results, reminder }) => {
   const navigate = useNavigate();
   const resultsArray = results?.results || [];
 
@@ -58,17 +58,15 @@ const RecentResults = ({ results }) => {
     });
   };
 
+  const testingFrequency = reminder[0]?.frequency;
+
   return (
     <div className="results">
       {mostRecentDate && (
         <div className="results__date">
           <span className="results__date-text">
-            {formatDate(mostRecentDate)}
+            Recommendation: {testingFrequency}
           </span>
-          {/* <StatusBadge
-            status={isUpToDate() ? "Up to date" : "Testing recommended"}
-            type="validity"
-          /> */}
         </div>
       )}
 
