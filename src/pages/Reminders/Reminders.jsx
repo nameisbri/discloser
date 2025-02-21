@@ -16,7 +16,7 @@ const Reminders = () => {
   const [lastTestDate, setLastTestDate] = useState(null);
 
   const baseUrl = import.meta.env.VITE_APP_URL;
-  const userId = "54"; // Hardcoded for MVP, will come from auth context
+  const userID = import.meta.env.VITE_USER_ID;
 
   const riskLevels = [
     {
@@ -143,10 +143,10 @@ const Reminders = () => {
     const fetchData = async () => {
       try {
         const reminderResponse = await axios.get(
-          `${baseUrl}/reminders/${userId}/reminders`
+          `${baseUrl}/reminders/${userID}/reminders`
         );
         const recordsResponse = await axios.get(
-          `${baseUrl}/records?user_id=${userId}`
+          `${baseUrl}/records?user_id=${userID}`
         );
 
         if (recordsResponse.data && recordsResponse.data.length > 0) {
@@ -195,7 +195,7 @@ const Reminders = () => {
     };
 
     fetchData();
-  }, [baseUrl, userId]);
+  }, [baseUrl, userID]);
 
   useEffect(() => {
     if (lastTestDate) {
@@ -226,12 +226,12 @@ const Reminders = () => {
 
       if (reminder?.id) {
         await axios.put(
-          `${baseUrl}/reminders/${userId}/reminders/${reminder.id}`,
+          `${baseUrl}/reminders/${userID}/reminders/${reminder.id}`,
           reminderData
         );
       } else {
         await axios.post(
-          `${baseUrl}/reminders/${userId}/reminders`,
+          `${baseUrl}/reminders/${userID}/reminders`,
           reminderData
         );
       }

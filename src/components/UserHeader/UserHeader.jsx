@@ -3,7 +3,7 @@ import { BadgeCheck } from "lucide-react";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
 
 const UserHeader = ({ user, records }) => {
-  const MINIO_URL = "http://localhost:9001";
+  const minioUrl = import.meta.env.VITE_MINIO_API_URL;
 
   function formatDate(timestamp) {
     const rawDate = new Date(timestamp);
@@ -16,9 +16,15 @@ const UserHeader = ({ user, records }) => {
 
   const getAvatarUrl = (filePath) => {
     if (!filePath) return defaultAvatar;
-    return `${MINIO_URL}/${filePath}`;
-  };
 
+    // Ensure the filePath doesn't already start with the bucket name
+    if (filePath.startsWith("users/")) {
+      return `${minioUrl}/${filePath}`;
+    }
+
+    // If the bucket name is not included, prepend it
+    return `${minioUrl}/users/${filePath}`;
+  };
   const lastLogged =
     records && records.length > 0
       ? formatDate(records[0].test_date)
@@ -32,6 +38,7 @@ const UserHeader = ({ user, records }) => {
           src={getAvatarUrl(user?.avatar_file_path)}
           alt={`${user?.name}'s avatar`}
           onError={(e) => {
+            console.log(getAvatarUrl(user?.avatar_file_path));
             console.log("Image load error, using default avatar");
             e.target.src = defaultAvatar;
           }}
