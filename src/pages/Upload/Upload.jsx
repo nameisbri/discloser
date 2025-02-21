@@ -86,14 +86,11 @@ const Upload = () => {
   };
 
   const handleDropzoneClick = (e) => {
-    // Only trigger file input if clicking the dropzone area or its immediate children
     const dropzoneEl = e.currentTarget;
     const clickedEl = e.target;
 
-    // Don't trigger if clicking a button or interactive element
     if (clickedEl.tagName.toLowerCase() === "button") return;
 
-    // Don't trigger if clicking outside the dropzone area
     if (!dropzoneEl.contains(clickedEl)) return;
 
     fileInputRef.current?.click();
@@ -105,7 +102,7 @@ const Upload = () => {
     setError("");
 
     setUploadStatus({
-      stage: "uploading",
+      stage: "uploading", // Stages: uploading, processing, complete, error
       progress: 0,
       currentFile: uploadedFiles[0].name,
       processedFiles: [],
@@ -113,8 +110,6 @@ const Upload = () => {
 
     try {
       const formData = new FormData();
-      const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
-      let uploadedSize = 0;
 
       uploadedFiles.forEach((file) => {
         formData.append("files", file);
@@ -122,35 +117,34 @@ const Upload = () => {
       formData.append("user_id", "54");
       formData.append("test_date", new Date().toISOString());
 
+      // Upload phase
       const response = await axios.post(`${baseUrl}/records/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
-          // Calculate progress based on the total size of all files
-          const loaded = progressEvent.loaded;
-          uploadedSize = loaded;
+          if (progressEvent.lengthComputable) {
+            const percentCompleted = Math.floor(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
 
-          // Add artificial delay for very small files
-          const percentCompleted = Math.min(
-            Math.round((uploadedSize * 100) / totalSize),
-            99 // Cap at 99% until fully complete
-          );
-
-          setUploadStatus((prev) => ({
-            ...prev,
-            stage: "uploading",
-            progress: percentCompleted,
-          }));
+            setUploadStatus((prev) => ({
+              ...prev,
+              stage: "uploading",
+              progress: percentCompleted,
+            }));
+          }
         },
       });
 
+      // Switch to processing phase
       setUploadStatus((prev) => ({
         ...prev,
         stage: "processing",
-        progress: 100,
+        progress: 100, // Upload is complete
       }));
 
+      // Handle backend response
       const successfulUploads = response.data.results.filter(
         (result) => result.record
       );
@@ -209,23 +203,20 @@ const Upload = () => {
           <Loader2 className="upload__processing-spinner" />
           <div className="upload__processing-info">
             <div className="upload__processing-stage">
-              {uploadStatus.stage === "uploading" && "Uploading files..."}
-              {uploadStatus.stage === "processing" && "Processing files..."}
+              {(uploadStatus.stage === "uploading" ||
+                uploadStatus.stage === "processing") && (
+                <>
+                  <p>Uploading and processing your files...</p>
+                  <p className="upload__processing-details">
+                    This may take up to 30 seconds. Please do not close the
+                    window.
+                  </p>
+                </>
+              )}
               {uploadStatus.stage === "complete" && "Upload complete!"}
               {uploadStatus.stage === "error" && "Upload failed"}
             </div>
-            {uploadStatus.stage === "uploading" && (
-              <div className="upload__processing-details">
-                {uploadStatus.progress}% complete
-              </div>
-            )}
           </div>
-        </div>
-        <div className="upload__progress-bar">
-          <div
-            className="upload__progress-fill"
-            style={{ width: `${uploadStatus.progress}%` }}
-          />
         </div>
       </div>
     );
