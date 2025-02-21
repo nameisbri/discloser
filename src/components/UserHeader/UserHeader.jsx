@@ -17,12 +17,10 @@ const UserHeader = ({ user, records }) => {
   const getAvatarUrl = (filePath) => {
     if (!filePath) return defaultAvatar;
 
-    // Ensure the filePath doesn't already start with the bucket name
     if (filePath.startsWith("users/")) {
       return `${minioUrl}/${filePath}`;
     }
 
-    // If the bucket name is not included, prepend it
     return `${minioUrl}/users/${filePath}`;
   };
   const lastLogged =
