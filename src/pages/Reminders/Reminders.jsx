@@ -261,9 +261,9 @@ const Reminders = () => {
   return (
     <div className="reminders">
       <header className="reminders__header">
-        <button className="reminders__back" onClick={() => navigate(-1)}>
+        <button className="reminders__back-button" onClick={() => navigate(-1)}>
           <ArrowLeft size={20} />
-          <span>Testing Reminders</span>
+          <span className="reminders__title">Testing Reminders</span>
         </button>
       </header>
 

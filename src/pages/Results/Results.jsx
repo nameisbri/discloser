@@ -66,19 +66,20 @@ const Results = () => {
   return (
     <div className="results-page">
       <header className="results-page__header">
-        <button
-          className="results-page__back-button"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft size={20} />
-          <h1 className="results-page__title">Test Results History</h1>
-        </button>
+        <nav className="results-page__nav">
+          <button
+            className="results-page__back-button"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft size={20} />
+            <span className="results-page__header-title">Health Resources</span>
+          </button>
+        </nav>
         <p className="results-page__subtitle">
           Showing {startIndex + 1}-{Math.min(endIndex, results.length)} of{" "}
           {results.length} results
         </p>
       </header>
-
       <div className="results-page__content">
         {currentResults.length > 0 ? (
           currentResults.map((result) => (

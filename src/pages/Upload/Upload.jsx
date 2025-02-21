@@ -228,7 +228,7 @@ const Upload = () => {
         <header className="upload__header">
           <button className="upload__back-button" onClick={() => navigate(-1)}>
             <ArrowLeft size={20} />
-            <span>Upload Test Results</span>
+            <span className="upload__header-title">Upload Test Results</span>
           </button>
         </header>
 
@@ -323,20 +323,37 @@ const Upload = () => {
             <Loader2 className="upload__processing-spinner" />
           </Modal>
 
-          <div className="upload__supported-tests">
-            <h3 className="upload__supported-title">Supported Tests</h3>
-            <ul className="upload__test-list">
-              <li className="upload__test-item">
-                <span className="upload__test-check">✓</span>
-                Lifelabs
+          <div className="upload__info-section">
+            <h3 className="upload__info-title">Upload Guidelines</h3>
+            <ul className="upload__info-list">
+              <li className="upload__info-item">
+                <span className="upload__info-icon">📄</span>
+                <div className="upload__info-content">
+                  <h4>STI Lab Reports</h4>
+                  <p>
+                    We extract only STI test results and dates from your reports
+                  </p>
+                </div>
               </li>
-              <li className="upload__test-item">
-                <span className="upload__test-check">✓</span>
-                Public Health
+              <li className="upload__info-item">
+                <span className="upload__info-icon">🔍</span>
+                <div className="upload__info-content">
+                  <h4>Image Quality</h4>
+                  <p>
+                    Clear, unblurred photos or scans work best for accurate
+                    results
+                  </p>
+                </div>
               </li>
-              <li className="upload__test-item">
-                <span className="upload__test-check">✓</span>
-                Other labs
+              <li className="upload__info-item">
+                <span className="upload__info-icon">ℹ️</span>
+                <div className="upload__info-content">
+                  <h4>Data Privacy</h4>
+                  <p>
+                    Personal information like name and health card numbers are
+                    not stored
+                  </p>
+                </div>
               </li>
             </ul>
           </div>
