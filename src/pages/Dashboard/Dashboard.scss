@@ -5,7 +5,7 @@
 
 .dashboard {
   @include mix.flex(column, flex-start, stretch);
-  background-color: #eac4ce; // Your raspberry color
+  background-color: #eac4ce;
   min-height: 100vh;
   padding-bottom: map.get(vars.$spacing, "xl") * 3;
 
@@ -13,7 +13,7 @@
     @include mix.flex(row, center, center);
     min-height: 100vh;
     font-size: map.get(type.$font-sizes, "lg");
-    color: #8e2e56; // Wine color
+    color: #8e2e56;
   }
 
   &__actions {
@@ -30,7 +30,7 @@
       column,
       flex-start,
       stretch,
-      map.get(vars.$spacing, "lg") // Increased spacing
+      map.get(vars.$spacing, "lg")
     );
     width: 100%;
     max-width: 600px;
@@ -41,24 +41,23 @@
     flex: 1;
     min-width: 300px;
     background-color: white;
-    border-radius: map.get(vars.$border-radius, "2xl"); // Increased radius
+    border-radius: map.get(vars.$border-radius, "2xl");
     padding: map.get(vars.$spacing, "xl");
     transition: all 0.3s ease;
-    border: 1px solid rgba(142, 46, 86, 0.1); // Very subtle wine-colored border
+    border: 1px solid rgba(142, 46, 86, 0.1);
     margin-bottom: map.get(vars.$spacing, "lg");
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(142, 46, 86, 0.08); // Wine-colored shadow
+      box-shadow: 0 8px 24px rgba(142, 46, 86, 0.08);
     }
   }
 
   &__section-title {
     font-size: map.get(type.$font-sizes, "xl");
-    color: #8e2e56; // Wine color
+    color: #8e2e56;
     font-weight: map.get(type.$font-weights, "bold");
     margin: map.get(vars.$spacing, "lg") 0;
-    letter-spacing: -0.02em; // Tighter letter spacing for headlines
   }
 
   &__empty-message {
@@ -69,7 +68,7 @@
 
     button {
       margin-top: map.get(vars.$spacing, "lg");
-      background-color: #8e2e56; // Wine color
+      background-color: #8e2e56;
       color: white;
       padding: map.get(vars.$spacing, "md") map.get(vars.$spacing, "xl");
       border-radius: map.get(vars.$border-radius, "xl");

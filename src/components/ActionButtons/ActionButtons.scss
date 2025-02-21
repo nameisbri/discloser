@@ -11,10 +11,10 @@
     @include flex(column, center, center, map.get($spacing, "sm"));
     flex: 1;
     background-color: white;
-    border: 2px solid rgba(142, 46, 86, 0.1); // Subtle wine-colored border
+    border: 2px solid rgba(142, 46, 86, 0.1);
     border-radius: map.get($border-radius, "2xl");
     padding: map.get($spacing, "lg");
-    color: #8e2e56; // Wine color
+    color: #8e2e56; //
     transition: all 0.3s ease;
 
     &:hover {
@@ -30,8 +30,8 @@
   }
 
   &__icon {
-    color: #8e2e56; // Wine color
-    width: 32px; // Slightly larger
+    color: #8e2e56;
+    width: 32px;
     height: 32px;
     margin-bottom: map.get($spacing, "sm");
     transition: transform 0.2s ease;

@@ -34,7 +34,7 @@ const TestingSchedule = ({ reminder }) => {
   const getReminderDate = (nextTestDate) => {
     if (!nextTestDate) return null;
     const reminderDate = new Date(nextTestDate);
-    reminderDate.setDate(reminderDate.getDate() - 14); // 2 weeks before
+    reminderDate.setDate(reminderDate.getDate() - 14);
     return reminderDate;
   };
 

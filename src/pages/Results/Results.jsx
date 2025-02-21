@@ -45,7 +45,6 @@ const Results = () => {
   }, [baseUrl]);
 
   const handleDelete = async (testId) => {
-    // In the Results view, we directly update the UI after successful API deletion
     setResults(results.filter((result) => result.id !== testId));
   };
 

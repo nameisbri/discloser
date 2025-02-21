@@ -74,7 +74,7 @@
     @include mix.flex(row, space-between, center);
     padding: map.get(vars.$spacing, "md");
     position: fixed;
-    bottom: 72px; // Position above nav bar
+    bottom: 72px;
     left: map.get(vars.$spacing, "lg");
     right: map.get(vars.$spacing, "lg");
     max-width: calc(600px - #{map.get(vars.$spacing, "lg")} * 2);
@@ -107,31 +107,4 @@
     font-size: map.get(type.$font-sizes, "sm");
     font-weight: map.get(type.$font-weights, "medium");
   }
-}
-
-.review__header-actions {
-  @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "sm"));
-}
-
-.review__delete-button {
-  color: map.get(vars.$colors, "danger");
-  padding: map.get(vars.$spacing, "xxs");
-  border-radius: 50%;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background-color: map.get(vars.$colors, "danger-light");
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-
-.review__error {
-  color: map.get(vars.$colors, "danger");
-  font-size: map.get(type.$font-sizes, "sm");
-  margin-top: map.get(vars.$spacing, "sm");
-  text-align: center;
 }

@@ -41,12 +41,12 @@ const Share = () => {
 
   const calculateValidity = (testDate) => {
     const date = new Date(testDate);
-    date.setMonth(date.getMonth() + 3); // Assuming 3-month validity
+    date.setMonth(date.getMonth() + 3);
     return formatDate(date);
   };
 
   const getShareableLink = () => {
-    // For MVP, generate a simple link. In production, this should be a secure, unique token
+    // For MVP, generate a simple link
     return `${window.location.origin}/share/${userId}`;
   };
 
@@ -125,11 +125,9 @@ const Share = () => {
         <div className="share__tests">
           {shareData?.results
             .sort((a, b) => {
-              // Sort by test date descending first
               const dateCompare = new Date(b.test_date) - new Date(a.test_date);
               if (dateCompare !== 0) return dateCompare;
 
-              // Then sort by test name
               return a.test_type.localeCompare(b.test_type);
             })
             .map((test, index) => (

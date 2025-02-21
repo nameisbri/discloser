@@ -203,43 +203,63 @@
   }
 
   &__processing {
-    margin-top: map.get(vars.$spacing, "lg");
-    padding: map.get(vars.$spacing, "md");
-    background-color: map.get(vars.$colors, "background");
-    border-radius: map.get(vars.$border-radius, "md");
-    border: 1px solid map.get(vars.$colors, "border");
-  }
-
-  &__processing-status {
-    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
-    margin-bottom: map.get(vars.$spacing, "sm");
-  }
-
-  &__processing-spinner {
-    color: map.get(vars.$colors, "primary");
-    animation: spin 1s linear infinite;
-  }
-
-  &__progress-bar {
+    @include mix.flex(column, center, center);
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 4px;
-    background-color: map.get(vars.$colors, "secondary-light");
-    border-radius: map.get(vars.$border-radius, "pill");
-    overflow: hidden;
-  }
-
-  &__progress-fill {
     height: 100%;
-    background-color: map.get(vars.$colors, "primary");
-    transition: width 0.3s ease;
+    background-color: rgba(map.get(vars.$colors, "background"), 0.9);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+
+    &-status {
+      @include mix.flex(column, center, center);
+      background-color: map.get(vars.$colors, "background");
+      padding: map.get(vars.$spacing, "xl");
+      border-radius: map.get(vars.$border-radius, "lg");
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    &-spinner {
+      animation: spin 1s linear infinite;
+      width: 60px;
+      height: 60px;
+      color: map.get(vars.$colors, "primary");
+      margin-bottom: map.get(vars.$spacing, "md");
+    }
+
+    &-stage {
+      font-size: map.get(type.$font-sizes, "lg");
+      font-weight: map.get(type.$font-weights, "medium");
+      color: map.get(vars.$colors, "text");
+      margin-bottom: map.get(vars.$spacing, "xs");
+    }
+
+    &-details {
+      font-size: map.get(type.$font-sizes, "sm");
+      color: map.get(vars.$colors, "text-light");
+      max-width: 300px;
+      line-height: 1.5;
+    }
   }
 }
 
 @keyframes spin {
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

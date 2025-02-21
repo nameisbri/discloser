@@ -5,7 +5,7 @@
 
 .results {
   &__title {
-    color: #43344f; // English Violet
+    color: #43344f; //
     font-size: map.get($font-sizes, "xl");
     font-weight: $font-weight-bold;
     margin-bottom: map.get($spacing, "lg");
@@ -16,11 +16,11 @@
     @include flex(row, space-between, center);
     margin-bottom: map.get($spacing, "lg");
     padding: map.get($spacing, "md") 0;
-    border-bottom: 2px solid rgba(67, 52, 79, 0.08); // Subtle violet border
+    border-bottom: 2px solid rgba(67, 52, 79, 0.08);
   }
 
   &__date-text {
-    color: #43344f; // English Violet
+    color: #43344f;
     font-weight: $font-weight-medium;
     font-size: map.get($font-sizes, "lg");
   }
@@ -28,7 +28,7 @@
 
 .result-item {
   padding: map.get($spacing, "lg") 0;
-  border-bottom: 1px solid rgba(142, 46, 86, 0.08); // Subtle wine border
+  border-bottom: 1px solid rgba(142, 46, 86, 0.08);
   transition: all 0.2s ease;
 
   &:last-child {
@@ -46,14 +46,14 @@
   }
 
   &__title {
-    color: #8e2e56; // Wine color
+    color: #8e2e56;
     font-size: map.get($font-sizes, "lg");
     font-weight: $font-weight-semi-bold;
     letter-spacing: -0.01em;
   }
 
   &__collection {
-    color: #43344f; // English Violet
+    color: #43344f;
     font-size: map.get($font-sizes, "sm");
     opacity: 0.8;
     margin-top: map.get($spacing, "xs");
@@ -65,7 +65,7 @@
   padding: map.get($spacing, "lg");
   margin-top: map.get($spacing, "xl");
   background-color: white;
-  color: #8e2e56; // Wine color
+  color: #8e2e56;
   border-radius: map.get($border-radius, "xl");
   font-weight: $font-weight-medium;
   font-size: map.get($font-sizes, "base");

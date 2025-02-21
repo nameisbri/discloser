@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload as UploadIcon, Loader2 } from "lucide-react";
 import axios from "axios";
+import Modal from "../../components/Modal/Modal";
 import "./Upload.scss";
 
 const Upload = () => {
@@ -11,7 +12,7 @@ const Upload = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
   const [uploadStatus, setUploadStatus] = useState({
-    stage: "idle", // idle, uploading, processing, complete, error
+    stage: "idle",
     progress: 0,
     currentFile: null,
     processedFiles: [],
@@ -19,7 +20,7 @@ const Upload = () => {
   const fileInputRef = useRef(null);
   const baseUrl = import.meta.env.VITE_APP_URL;
 
-  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
   const ALLOWED_TYPES = {
     "application/pdf": "PDF",
     "image/jpeg": "JPG",
@@ -86,14 +87,11 @@ const Upload = () => {
   };
 
   const handleDropzoneClick = (e) => {
-    // Only trigger file input if clicking the dropzone area or its immediate children
     const dropzoneEl = e.currentTarget;
     const clickedEl = e.target;
 
-    // Don't trigger if clicking a button or interactive element
     if (clickedEl.tagName.toLowerCase() === "button") return;
 
-    // Don't trigger if clicking outside the dropzone area
     if (!dropzoneEl.contains(clickedEl)) return;
 
     fileInputRef.current?.click();
@@ -113,8 +111,6 @@ const Upload = () => {
 
     try {
       const formData = new FormData();
-      const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
-      let uploadedSize = 0;
 
       uploadedFiles.forEach((file) => {
         formData.append("files", file);
@@ -127,21 +123,17 @@ const Upload = () => {
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
-          // Calculate progress based on the total size of all files
-          const loaded = progressEvent.loaded;
-          uploadedSize = loaded;
+          if (progressEvent.lengthComputable) {
+            const percentCompleted = Math.floor(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
 
-          // Add artificial delay for very small files
-          const percentCompleted = Math.min(
-            Math.round((uploadedSize * 100) / totalSize),
-            99 // Cap at 99% until fully complete
-          );
-
-          setUploadStatus((prev) => ({
-            ...prev,
-            stage: "uploading",
-            progress: percentCompleted,
-          }));
+            setUploadStatus((prev) => ({
+              ...prev,
+              stage: "uploading",
+              progress: percentCompleted,
+            }));
+          }
         },
       });
 
@@ -209,23 +201,20 @@ const Upload = () => {
           <Loader2 className="upload__processing-spinner" />
           <div className="upload__processing-info">
             <div className="upload__processing-stage">
-              {uploadStatus.stage === "uploading" && "Uploading files..."}
-              {uploadStatus.stage === "processing" && "Processing files..."}
+              {(uploadStatus.stage === "uploading" ||
+                uploadStatus.stage === "processing") && (
+                <>
+                  <p>Uploading and processing your files...</p>
+                  <p className="upload__processing-details">
+                    This may take up to 30 seconds. Please do not close the
+                    window.
+                  </p>
+                </>
+              )}
               {uploadStatus.stage === "complete" && "Upload complete!"}
               {uploadStatus.stage === "error" && "Upload failed"}
             </div>
-            {uploadStatus.stage === "uploading" && (
-              <div className="upload__processing-details">
-                {uploadStatus.progress}% complete
-              </div>
-            )}
           </div>
-        </div>
-        <div className="upload__progress-bar">
-          <div
-            className="upload__progress-fill"
-            style={{ width: `${uploadStatus.progress}%` }}
-          />
         </div>
       </div>
     );
@@ -311,7 +300,26 @@ const Upload = () => {
             }}
           />
 
-          {renderProcessingState()}
+          <Modal
+            isOpen={uploadStatus.stage !== "idle"}
+            onClose={() => setUploadStatus({ ...uploadStatus, stage: "idle" })}
+            title={
+              uploadStatus.stage === "uploading"
+                ? "Uploading and Processing"
+                : uploadStatus.stage === "complete"
+                ? "Upload Complete"
+                : "Upload Failed"
+            }
+            message={
+              uploadStatus.stage === "uploading"
+                ? "Please wait while your files are being uploaded and processed. This may take up to 20 seconds."
+                : uploadStatus.stage === "complete"
+                ? "Your files have been successfully uploaded and processed."
+                : "An error occurred while uploading your files. Please try again."
+            }
+          >
+            <Loader2 className="upload__processing-spinner" />
+          </Modal>
 
           <div className="upload__supported-tests">
             <h3 className="upload__supported-title">Supported Tests</h3>
