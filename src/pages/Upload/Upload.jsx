@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload as UploadIcon, Loader2 } from "lucide-react";
 import axios from "axios";
+import Modal from "../../components/Modal/Modal";
 import "./Upload.scss";
 
 const Upload = () => {
@@ -11,7 +12,7 @@ const Upload = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
   const [uploadStatus, setUploadStatus] = useState({
-    stage: "idle", // idle, uploading, processing, complete, error
+    stage: "idle",
     progress: 0,
     currentFile: null,
     processedFiles: [],
@@ -19,7 +20,7 @@ const Upload = () => {
   const fileInputRef = useRef(null);
   const baseUrl = import.meta.env.VITE_APP_URL;
 
-  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
   const ALLOWED_TYPES = {
     "application/pdf": "PDF",
     "image/jpeg": "JPG",
@@ -102,7 +103,7 @@ const Upload = () => {
     setError("");
 
     setUploadStatus({
-      stage: "uploading", // Stages: uploading, processing, complete, error
+      stage: "uploading",
       progress: 0,
       currentFile: uploadedFiles[0].name,
       processedFiles: [],
@@ -117,7 +118,6 @@ const Upload = () => {
       formData.append("user_id", "54");
       formData.append("test_date", new Date().toISOString());
 
-      // Upload phase
       const response = await axios.post(`${baseUrl}/records/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -137,14 +137,12 @@ const Upload = () => {
         },
       });
 
-      // Switch to processing phase
       setUploadStatus((prev) => ({
         ...prev,
         stage: "processing",
-        progress: 100, // Upload is complete
+        progress: 100,
       }));
 
-      // Handle backend response
       const successfulUploads = response.data.results.filter(
         (result) => result.record
       );
@@ -302,7 +300,26 @@ const Upload = () => {
             }}
           />
 
-          {renderProcessingState()}
+          <Modal
+            isOpen={uploadStatus.stage !== "idle"}
+            onClose={() => setUploadStatus({ ...uploadStatus, stage: "idle" })}
+            title={
+              uploadStatus.stage === "uploading"
+                ? "Uploading and Processing"
+                : uploadStatus.stage === "complete"
+                ? "Upload Complete"
+                : "Upload Failed"
+            }
+            message={
+              uploadStatus.stage === "uploading"
+                ? "Please wait while your files are being uploaded and processed. This may take up to 20 seconds."
+                : uploadStatus.stage === "complete"
+                ? "Your files have been successfully uploaded and processed."
+                : "An error occurred while uploading your files. Please try again."
+            }
+          >
+            <Loader2 className="upload__processing-spinner" />
+          </Modal>
 
           <div className="upload__supported-tests">
             <h3 className="upload__supported-title">Supported Tests</h3>

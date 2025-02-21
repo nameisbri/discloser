@@ -5,7 +5,7 @@
 
 .schedule {
   &__title {
-    color: #43344f; // English Violet
+    color: #43344f;
     font-size: map.get($font-sizes, "xl");
     font-weight: $font-weight-bold;
     margin-bottom: map.get($spacing, "lg");
@@ -27,21 +27,21 @@
   }
 
   &__label {
-    color: #43344f; // English Violet
+    color: #43344f;
     font-size: map.get($font-sizes, "sm");
     font-weight: $font-weight-medium;
     opacity: 0.8;
   }
 
   &__date {
-    color: #8e2e56; // Wine color
+    color: #8e2e56;
     font-size: map.get($font-sizes, "xl");
     font-weight: $font-weight-bold;
     letter-spacing: -0.02em;
   }
 
   &__calendar-icon {
-    color: #8e2e56; // Wine color
+    color: #8e2e56;
     background: rgba(142, 46, 86, 0.08);
     padding: map.get($spacing, "md");
     border-radius: map.get($border-radius, "lg");
@@ -58,18 +58,18 @@
     gap: map.get($spacing, "md");
     margin-bottom: map.get($spacing, "lg");
     padding: map.get($spacing, "lg");
-    background-color: rgba(67, 52, 79, 0.04); // Subtle violet background
+    background-color: rgba(67, 52, 79, 0.04);
     border-radius: map.get($border-radius, "xl");
     border: 1px solid rgba(67, 52, 79, 0.1);
   }
 
   &__reminder-icon {
-    color: #43344f; // English Violet
+    color: #43344f;
     height: map.get($spacing, "lg");
   }
 
   &__reminder-text {
-    color: #43344f; // English Violet
+    color: #43344f;
     font-size: map.get($font-sizes, "base");
     font-weight: $font-weight-medium;
   }
@@ -89,7 +89,7 @@
     padding: map.get($spacing, "xl") 0;
 
     &-text {
-      color: #43344f; // English Violet
+      color: #43344f;
       font-size: map.get($font-sizes, "lg");
       opacity: 0.7;
     }
@@ -98,7 +98,7 @@
   &__modify {
     width: 100%;
     padding: map.get($spacing, "lg");
-    background-color: #8e2e56; // Wine color
+    background-color: #8e2e56;
     color: white;
     border-radius: map.get($border-radius, "xl");
     font-weight: $font-weight-medium;

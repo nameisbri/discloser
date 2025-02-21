@@ -3,7 +3,6 @@ import "./StatusBadge.scss";
 
 const StatusBadge = ({ status, type = "result" }) => {
   const getStatusType = (status, type) => {
-    // Special case for "Verified" status
     if (status === "Verified") {
       return "verified";
     }
@@ -34,7 +33,7 @@ const StatusBadge = ({ status, type = "result" }) => {
         case "current":
         case "valid":
         case "up to date":
-          return "negative"; // Using negative style as it's green
+          return "negative";
         case "outdated":
         case "expired":
         case "testing recommended":

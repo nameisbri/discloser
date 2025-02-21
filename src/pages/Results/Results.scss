@@ -74,7 +74,7 @@
     @include mix.flex(row, space-between, center);
     padding: map.get(vars.$spacing, "md");
     position: fixed;
-    bottom: 72px; // Position above nav bar
+    bottom: 72px;
     left: map.get(vars.$spacing, "lg");
     right: map.get(vars.$spacing, "lg");
     max-width: calc(600px - #{map.get(vars.$spacing, "lg")} * 2);

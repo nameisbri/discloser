@@ -12,8 +12,8 @@ const Reminders = () => {
   const [reminder, setReminder] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [nextTestDate, setNextTestDate] = useState(null); // This should be a string in YYYY-MM-DD format
-  const [lastTestDate, setLastTestDate] = useState(null); // This should be a Date object
+  const [nextTestDate, setNextTestDate] = useState(null);
+  const [lastTestDate, setLastTestDate] = useState(null);
 
   const baseUrl = import.meta.env.VITE_APP_URL;
   const userId = "54"; // Hardcoded for MVP, will come from auth context
@@ -30,7 +30,7 @@ const Reminders = () => {
         { value: "every_365_days", label: "Every year" },
         { value: "every_730_days", label: "Every 2 years" },
       ],
-      minInterval: 365, // Minimum 1 year for lower risk
+      minInterval: 365,
     },
     {
       id: "moderate",
@@ -42,7 +42,7 @@ const Reminders = () => {
         { value: "every_180_days", label: "Every 6 months" },
         { value: "every_365_days", label: "Every year" },
       ],
-      minInterval: 180, // Minimum 6 months for moderate risk
+      minInterval: 180,
     },
     {
       id: "higher",
@@ -55,7 +55,7 @@ const Reminders = () => {
         { value: "every_90_days", label: "Every 3 months" },
         { value: "every_180_days", label: "Every 6 months" },
       ],
-      minInterval: 90, // Minimum 3 months for higher risk
+      minInterval: 90,
     },
   ];
 
@@ -68,7 +68,6 @@ const Reminders = () => {
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
-    // If no test records exist - new user
     if (!lastTestDate) {
       return {
         date: tomorrow,
@@ -137,14 +136,12 @@ const Reminders = () => {
   };
 
   const handleDateChange = (e) => {
-    console.log("New date selected:", e.target.value);
     setNextTestDate(e.target.value);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching data...");
         const reminderResponse = await axios.get(
           `${baseUrl}/reminders/${userId}/reminders`
         );
@@ -168,7 +165,6 @@ const Reminders = () => {
             reminderResponse.data[0];
           setReminder(activeReminder);
 
-          // Determine risk level based on frequency
           const freq = activeReminder.frequency;
           if (freq.includes("365") || freq.includes("730")) {
             setSelectedRisk("lower");
@@ -183,7 +179,6 @@ const Reminders = () => {
               const reminderDate = new Date(activeReminder.next_test_date);
               if (!isNaN(reminderDate.getTime())) {
                 const formattedDate = reminderDate.toISOString().slice(0, 10);
-                console.log("Using existing reminder date:", formattedDate);
                 setNextTestDate(formattedDate);
               }
             } catch (error) {
@@ -206,7 +201,7 @@ const Reminders = () => {
     if (lastTestDate) {
       const recommendation = getRecommendedDate();
       const nextDate = recommendation.date;
-      setNextTestDate(nextDate.toLocaleDateString("en-CA")); // YYYY-MM-DD format
+      setNextTestDate(nextDate.toLocaleDateString("en-CA"));
     }
   }, [selectedRisk]);
 
@@ -223,7 +218,7 @@ const Reminders = () => {
 
       const currentRiskLevel = getCurrentRiskLevel();
       const reminderData = {
-        frequency: currentRiskLevel.frequencies[0].value, // Use first frequency option
+        frequency: currentRiskLevel.frequencies[0].value,
         next_test_date: formatDateForDB(nextTestDate),
         is_active: 1,
         last_notified_date: null,
@@ -242,7 +237,7 @@ const Reminders = () => {
       }
 
       setSaveSuccess(true);
-      // Delay navigation to show success message
+
       setTimeout(() => {
         navigate("/");
       }, 1500);
@@ -343,9 +338,9 @@ const Reminders = () => {
                 <input
                   type="date"
                   className="reminders__date-input"
-                  value={nextTestDate || ""} // Just use the string value directly
+                  value={nextTestDate || ""}
                   onChange={handleDateChange}
-                  min={new Date().toISOString().slice(0, 10)} // Today in YYYY-MM-DD format
+                  min={new Date().toISOString().slice(0, 10)}
                   placeholder="mm/dd/yyyy"
                 />
               </span>

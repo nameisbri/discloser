@@ -23,7 +23,6 @@ function Dashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get user data
         const userResponse = await axios.get(`${baseUrl}/users/54`); // user hardcoded for MVP - should come from auth later on
         if (!userResponse.data) {
           throw new Error("No user data received");
@@ -71,7 +70,6 @@ function Dashboard() {
         const twoWeeksBefore = new Date(nextTestDate);
         twoWeeksBefore.setDate(twoWeeksBefore.getDate() - 14);
 
-        // Check if this notification was already dismissed
         const lastDismissed = localStorage.getItem("lastDismissedNotification");
         const isDismissed = lastDismissed === nextTestDate.toISOString();
 
@@ -85,7 +83,6 @@ function Dashboard() {
 
   const handleDismissNotification = () => {
     setShowNotification(false);
-    // Save dismissed date to localStorage
     if (dueDate) {
       localStorage.setItem("lastDismissedNotification", dueDate.toISOString());
     }

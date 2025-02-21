@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
 import StatusBadge from "../StatusBadge/StatusBadge";
+import Modal from "../Modal/Modal";
 
 const EditableTestResult = ({
   test,
@@ -12,13 +13,10 @@ const EditableTestResult = ({
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const baseUrl = import.meta.env.VITE_APP_URL;
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to remove this test result?")) {
-      return;
-    }
-
     setIsDeleting(true);
     setError("");
 
@@ -34,6 +32,7 @@ const EditableTestResult = ({
       console.error("Delete error:", err);
     } finally {
       setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
@@ -46,47 +45,74 @@ const EditableTestResult = ({
   };
 
   return (
-    <div className="review__result-card">
-      <div className="review__result-header">
-        <h3 className="review__test-name">{test.test_type}</h3>
-        <div className="review__header-actions">
-          {/* <StatusBadge status="Verified" type="validity" /> */}
-          {!disabled && (
-            <button
-              className="review__delete-button"
-              onClick={handleDelete}
-              disabled={isDeleting}
-              aria-label="Delete result"
-            >
-              <Trash2 size={18} />
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="review__result-details">
-        <div className="review__detail-row">
-          <span className="review__detail-label">Collection:</span>
-          <span className="review__detail-value">{formatDate(recordDate)}</span>
+    <>
+      <div className="review__result-card">
+        <div className="review__result-header">
+          <h3 className="review__test-name">{test.test_type}</h3>
+          <div className="review__header-actions">
+            {!disabled && (
+              <button
+                className="review__delete-button"
+                onClick={() => setShowDeleteModal(true)}
+                disabled={isDeleting}
+                aria-label="Delete result"
+              >
+                <Trash2 size={18} />
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="review__detail-row">
-          <span className="review__detail-label">Result:</span>
-          <StatusBadge status={test.result} type="result" />
-        </div>
-
-        {test.notes && (
+        <div className="review__result-details">
           <div className="review__detail-row">
-            <span className="review__detail-label">Notes:</span>
-            <span className="review__detail-value review__detail-value--notes">
-              {test.notes}
+            <span className="review__detail-label">Collection:</span>
+            <span className="review__detail-value">
+              {formatDate(recordDate)}
             </span>
           </div>
-        )}
 
-        {error && <div className="review__error">{error}</div>}
+          <div className="review__detail-row">
+            <span className="review__detail-label">Result:</span>
+            <StatusBadge status={test.result} type="result" />
+          </div>
+
+          {test.notes && (
+            <div className="review__detail-row">
+              <span className="review__detail-label">Notes:</span>
+              <span className="review__detail-value review__detail-value--notes">
+                {test.notes}
+              </span>
+            </div>
+          )}
+
+          {error && <div className="review__error">{error}</div>}
+        </div>
       </div>
-    </div>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        title="Delete Test Result"
+        message="Are you sure you want to delete this test result? This action cannot be undone."
+      >
+        <div className="modal__actions">
+          <button
+            className="modal__button modal__button--secondary"
+            onClick={() => setShowDeleteModal(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className="modal__button modal__button--danger"
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Deleting..." : "Delete"}
+          </button>
+        </div>
+      </Modal>
+    </>
   );
 };
 
