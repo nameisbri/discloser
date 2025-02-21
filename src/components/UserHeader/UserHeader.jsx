@@ -1,6 +1,7 @@
 import "./UserHeader.scss";
 import { BadgeCheck } from "lucide-react";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
+import { useEffect } from "react";
 
 const UserHeader = ({ user, records }) => {
   const minioUrl = import.meta.env.VITE_MINIO_API_URL;
@@ -23,6 +24,7 @@ const UserHeader = ({ user, records }) => {
 
     return `${minioUrl}/users/${filePath}`;
   };
+
   const lastLogged =
     records && records.length > 0
       ? formatDate(records[0].test_date)

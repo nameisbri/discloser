@@ -62,6 +62,7 @@
 
   &__empty-message {
     text-align: center;
+    @include mix.flex(column, center, center);
     padding: map.get(vars.$spacing, "xl");
     color: map.get(vars.$colors, "text-light");
     font-size: map.get(type.$font-sizes, "lg");

@@ -8,12 +8,40 @@ import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
 
 const Share = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [shareData, setShareData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
   const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
+  const minioUrl = import.meta.env.VITE_MINIO_API_URL;
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await axios.get(`${baseUrl}/users/${userID}`); // user hardcoded for MVP - should come from auth later on
+        if (!userResponse.data) {
+          throw new Error("No user data received");
+        }
+        setUser(userResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserData();
+  }, [baseUrl]);
+
+  const getAvatarUrl = (filePath) => {
+    if (!filePath) return defaultAvatar;
+
+    if (filePath.startsWith("users/")) {
+      return `${minioUrl}/${filePath}`;
+    }
+
+    return `${minioUrl}/users/${filePath}`;
+  };
 
   useEffect(() => {
     const fetchShareData = async () => {
@@ -80,9 +108,14 @@ const Share = () => {
 
         <div className="share__user">
           <img
-            className="share__avatar"
-            src={defaultAvatar}
-            alt="User avatar"
+            className="user-header__avatar"
+            src={getAvatarUrl(user?.avatar_file_path)}
+            alt={`${user?.name}'s avatar`}
+            onError={(e) => {
+              console.log(getAvatarUrl(user?.avatar_file_path));
+              console.log("Image load error, using default avatar");
+              e.target.src = defaultAvatar;
+            }}
           />
           <div className="share__info">
             <h2 className="share__username">
