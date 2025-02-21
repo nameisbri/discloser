@@ -11,15 +11,15 @@
 
   &__header {
     @include mix.card;
-    @include mix.flex(column, center, flex-start, map.get(vars.$spacing, "xs"));
+    @include mix.flex(
+      column,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "xs")
+    );
     border-bottom: 1px solid map.get(vars.$colors, "border");
     padding-bottom: map.get(vars.$spacing, "md");
     margin-bottom: map.get(vars.$spacing, "lg");
-    &-title {
-      color: map.get(vars.$colors, "primary");
-      font-size: map.get(type.$font-sizes, "lg");
-      font-weight: map.get(type.$font-weights, "semibold");
-    }
   }
 
   &__back-button {
@@ -33,6 +33,12 @@
     }
   }
 
+  &__title {
+    color: map.get(vars.$colors, "primary");
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
   &__subtitle {
     color: map.get(vars.$colors, "text-light");
     font-size: map.get(type.$font-sizes, "sm");
@@ -43,9 +49,26 @@
       column,
       flex-start,
       stretch,
-      map.get(vars.$spacing, "md")
+      map.get(vars.$spacing, "xl")
     );
     margin-bottom: map.get(vars.$spacing, "xl");
+  }
+
+  &__date-group {
+    @include mix.card;
+    margin-bottom: map.get(vars.$spacing, "lg");
+  }
+
+  &__date-header {
+    color: map.get(vars.$colors, "primary");
+    font-size: map.get(type.$font-sizes, "xl");
+    font-weight: map.get(type.$font-weights, "semibold");
+    padding: map.get(vars.$spacing, "lg");
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+  }
+
+  &__results-list {
+    @include mix.flex(column, flex-start, stretch);
   }
 
   &__empty {
