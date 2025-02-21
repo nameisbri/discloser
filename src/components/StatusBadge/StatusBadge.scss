@@ -35,15 +35,15 @@
 
   &--indeterminate {
     @include mix.status-badge(
-      map.get(vars.$colors, "warning-light"),
-      map.get(vars.$colors, "warning")
+      map.get(vars.$colors, "secondary-light"),
+      map.get(vars.$colors, "secondary-dark")
     );
   }
 
   &--numeric {
     @include mix.status-badge(
-      map.get(vars.$colors, "info-light"),
-      map.get(vars.$colors, "info")
+      map.get(vars.$colors, "secondary-light"),
+      map.get(vars.$colors, "secondary-dark")
     );
   }
 
