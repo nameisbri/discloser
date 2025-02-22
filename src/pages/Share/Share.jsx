@@ -62,6 +62,16 @@ const Share = () => {
     }
   };
 
+  const getAvatarUrl = (filePath) => {
+    if (!filePath) return defaultAvatar;
+
+    if (filePath.startsWith("users/")) {
+      return `${minioUrl}/${filePath}`;
+    }
+
+    return `${minioUrl}/users/${filePath}`;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,7 +130,7 @@ const Share = () => {
           <h2 className="share__username">
             <img
               className="user-header__avatar"
-              src={defaultAvatar}
+              src={getAvatarUrl(user?.avatar_file_path)}
               alt={`${user?.name}'s avatar`}
             />
             <div className="share__user-details">

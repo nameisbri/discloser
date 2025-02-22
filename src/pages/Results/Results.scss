@@ -48,7 +48,7 @@
   }
 
   &__header-subtitle {
-    font-size: map.get(type.$font-sizes, "base");
+    font-size: map.get(type.$font-sizes, "sm");
     color: map.get(vars.$colors, "text-light");
   }
 
