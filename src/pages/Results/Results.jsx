@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import EditableTestResult from "../../components/EditableTestResult/EditableTestResult";
 import "./Results.scss";
 
-// Helper function to group results by date
 const groupResultsByDate = (records) => {
   const allResults = records.flatMap((record) =>
     record.results.map((result) => ({
@@ -39,7 +38,7 @@ const Results = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const resultsPerPage = 6; // Number of dates to show per page
+  const resultsPerPage = 6;
   const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
   const formatDate = (dateString) => {
@@ -74,7 +73,6 @@ const Results = () => {
     try {
       await axios.delete(`${baseUrl}/results/${testId}`);
 
-      // Update state to remove the deleted result
       setGroupedResults((prevGrouped) => {
         const newGrouped = prevGrouped
           .map((dateGroup) => ({
@@ -90,7 +88,6 @@ const Results = () => {
     }
   };
 
-  // Pagination calculations
   const totalPages = Math.ceil(groupedResults.length / resultsPerPage);
   const startIndex = (currentPage - 1) * resultsPerPage;
   const endIndex = startIndex + resultsPerPage;

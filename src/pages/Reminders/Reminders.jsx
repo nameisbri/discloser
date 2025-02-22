@@ -4,16 +4,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Reminders.scss";
 
-// Helper function to get the true latest test date from records
 const getTrueLatestTestDate = (records) => {
   if (!records || records.length === 0) return null;
 
-  // Flatten all results and get their dates
   const allDates = records.flatMap((record) =>
     record.results.map((result) => new Date(record.test_date))
   );
 
-  // Return the most recent date
   return allDates.length > 0 ? new Date(Math.max(...allDates)) : null;
 };
 
@@ -156,19 +153,16 @@ const Reminders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch records first to get the true latest test date
         const recordsResponse = await axios.get(
           `${baseUrl}/records?user_id=${userID}`
         );
         setRecords(recordsResponse.data || []);
 
-        // Get the true latest test date
         const latestDate = getTrueLatestTestDate(recordsResponse.data);
         if (latestDate) {
           setLastTestDate(latestDate);
         }
 
-        // Fetch reminders
         const reminderResponse = await axios.get(
           `${baseUrl}/reminders/${userID}/reminders`
         );
@@ -179,7 +173,6 @@ const Reminders = () => {
             reminderResponse.data[0];
           setReminder(activeReminder);
 
-          // Set risk level based on frequency
           const freq = activeReminder.frequency;
           if (freq.includes("365") || freq.includes("730")) {
             setSelectedRisk("lower");
@@ -189,7 +182,6 @@ const Reminders = () => {
             setSelectedRisk("higher");
           }
 
-          // Set next test date if exists
           if (activeReminder.next_test_date) {
             const reminderDate = new Date(activeReminder.next_test_date);
             if (!isNaN(reminderDate.getTime())) {

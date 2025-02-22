@@ -6,7 +6,6 @@ import axios from "axios";
 import StatusBadge from "../../components/StatusBadge/StatusBadge";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
 
-// Helper function to get latest result per test type
 const getLatestResultsByType = (results) => {
   if (!results) return [];
 
