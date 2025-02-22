@@ -5,7 +5,7 @@
 
 .results {
   &__title {
-    color: #43344f; //
+    color: map.get($colors, "secondary-dark");
     font-size: map.get($font-sizes, "xl");
     font-weight: $font-weight-bold;
     margin-bottom: map.get($spacing, "lg");
@@ -20,7 +20,7 @@
   }
 
   &__date-text {
-    color: #43344f;
+    color: map.get($colors, "secondary-dark");
     font-weight: $font-weight-medium;
     font-size: map.get($font-sizes, "lg");
   }
@@ -46,14 +46,14 @@
   }
 
   &__title {
-    color: #8e2e56;
+    color: map.get($colors, "primary-dark");
     font-size: map.get($font-sizes, "lg");
     font-weight: $font-weight-semi-bold;
     letter-spacing: -0.01em;
   }
 
   &__collection {
-    color: #43344f;
+    color: map.get($colors, "secondary-dark");
     font-size: map.get($font-sizes, "sm");
     opacity: 0.8;
     margin-top: map.get($spacing, "xs");
@@ -65,7 +65,7 @@
   padding: map.get($spacing, "lg");
   margin-top: map.get($spacing, "xl");
   background-color: white;
-  color: #8e2e56;
+  color: map.get($colors, "primary-dark");
   border-radius: map.get($border-radius, "xl");
   font-weight: $font-weight-medium;
   font-size: map.get($font-sizes, "base");
@@ -73,7 +73,7 @@
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #8e2e56;
+    background-color: map.get($colors, "primary-dark");
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(142, 46, 86, 0.12);

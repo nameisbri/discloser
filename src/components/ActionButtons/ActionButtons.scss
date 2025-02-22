@@ -14,13 +14,13 @@
     border: 2px solid rgba(142, 46, 86, 0.1);
     border-radius: map.get($border-radius, "2xl");
     padding: map.get($spacing, "lg");
-    color: #8e2e56; //
+    color: map.get($colors, "primary-dark");
     transition: all 0.3s ease;
 
     &:hover {
       background-color: rgba(142, 46, 86, 0.03);
       transform: translateY(-2px);
-      border-color: #8e2e56;
+      border-color: map.get($colors, "primary-dark");
       box-shadow: 0 8px 24px rgba(142, 46, 86, 0.08);
     }
 
@@ -30,7 +30,7 @@
   }
 
   &__icon {
-    color: #8e2e56;
+    color: map.get($colors, "primary-dark");
     width: 32px;
     height: 32px;
     margin-bottom: map.get($spacing, "sm");

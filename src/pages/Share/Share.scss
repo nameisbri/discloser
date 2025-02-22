@@ -1,4 +1,3 @@
-// Share.scss
 @use "sass:map";
 @use "../../styles/partials/variables" as vars;
 @use "../../styles/partials/mixins" as mix;
@@ -126,7 +125,6 @@
       position: absolute;
       top: 100%;
       left: map.get(vars.$spacing, "sm");
-      // transform: translateX(-50%);
       border: 6px solid transparent;
       border-top-color: map.get(vars.$colors, "text");
     }
@@ -140,7 +138,6 @@
     @include mix.flex(column, space-around, flex-start, 0);
   }
 
-  // Results section
   &__results {
     @include mix.card;
     margin-bottom: map.get(vars.$spacing, "lg");
@@ -163,7 +160,6 @@
     color: map.get(vars.$colors, "text-light");
   }
 
-  // Individual test results
   &__tests {
     @include mix.flex(column, flex-start, stretch);
   }
@@ -208,7 +204,6 @@
     }
   }
 
-  // Share actions section
   &__actions {
     @include mix.card;
     @include mix.flex(
@@ -274,7 +269,6 @@
     }
   }
 
-  // Loading and error states
   &__loading,
   &__error {
     @include mix.flex(row, center, center);

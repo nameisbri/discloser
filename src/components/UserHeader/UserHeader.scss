@@ -31,13 +31,13 @@
     display: flex;
     align-items: center;
     gap: map.get($spacing, "xs");
-    color: #8e2e56;
+    color: map.get($colors, "primary-dark");
     font-size: map.get($font-sizes, "xl");
     font-weight: map.get($font-weights, "bold");
     letter-spacing: -0.02em;
 
     svg {
-      color: #8e2e56;
+      color: map.get($colors, "primary-dark");
       width: 24px;
       height: 24px;
     }
@@ -59,12 +59,12 @@
     height: 40px;
     border-radius: 50%;
     border: 2px solid rgba(142, 46, 86, 0.1);
-    color: #8e2e56;
+    color: map.get($colors, "primary-dark");
     transition: all 0.2s ease;
 
     &:hover {
       background-color: rgba(142, 46, 86, 0.03);
-      border-color: #8e2e56;
+      border-color: map.get($colors, "primary-dark");
       transform: translateY(-1px);
     }
   }

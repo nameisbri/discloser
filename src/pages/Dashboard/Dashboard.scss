@@ -13,7 +13,7 @@
     @include mix.flex(row, center, center);
     min-height: 100vh;
     font-size: map.get(type.$font-sizes, "lg");
-    color: #8e2e56;
+    color: map.get(vars.$colors, "primary-dark");
   }
 
   &__actions {
@@ -55,7 +55,7 @@
 
   &__section-title {
     font-size: map.get(type.$font-sizes, "xl");
-    color: #8e2e56;
+    color: map.get(vars.$colors, "primary-dark");
     font-weight: map.get(type.$font-weights, "bold");
   }
 
@@ -68,7 +68,7 @@
 
     button {
       margin-top: map.get(vars.$spacing, "lg");
-      background-color: #8e2e56;
+      background-color: map.get(vars.$colors, "primary-dark");
       color: white;
       padding: map.get(vars.$spacing, "md") map.get(vars.$spacing, "xl");
       border-radius: map.get(vars.$border-radius, "xl");
