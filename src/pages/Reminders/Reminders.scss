@@ -150,7 +150,7 @@
     transition: background-color 0.3s ease;
 
     &:hover:not(:disabled) {
-      background-color: darken(map.get(vars.$colors, "primary"), 10%);
+      background-color: map.get(vars.$colors, "primary-dark");
     }
 
     &:disabled {

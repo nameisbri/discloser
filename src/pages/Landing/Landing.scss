@@ -80,7 +80,7 @@
       border: 2px solid map.get(vars.$colors, "primary-dark");
 
       &:hover {
-        background-color: darken(#8e2e56, 10%);
+        background-color: map.get(vars.$colors, "primary-dark");
         transform: translateY(-3px);
         box-shadow: 0 4px 12px rgba(142, 46, 86, 0.2);
       }
