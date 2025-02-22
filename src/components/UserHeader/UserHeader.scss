@@ -8,15 +8,14 @@
   @include flex(row, space-between, center);
   padding: map.get($spacing, "xl") map.get($spacing, "lg");
   border-bottom: 1px solid rgba(142, 46, 86, 0.1);
-  margin-bottom: map.get($spacing, "lg");
 
   &__profile {
-    @include flex(row, flex-start, center, map.get($spacing, "lg"));
+    @include flex(row, flex-start, center, map.get($spacing, "md"));
   }
 
   &__avatar {
-    width: 56px;
-    height: 56px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid white;
@@ -35,12 +34,6 @@
     font-size: map.get($font-sizes, "xl");
     font-weight: map.get($font-weights, "bold");
     letter-spacing: -0.02em;
-
-    svg {
-      color: map.get($colors, "primary-dark");
-      width: 24px;
-      height: 24px;
-    }
   }
 
   &__last-update {
@@ -51,21 +44,5 @@
 
   &__notifications {
     @include flex(row, flex-end, center, map.get($spacing, "sm"));
-  }
-
-  &__icon-button {
-    @include flex(row, center, center);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid rgba(142, 46, 86, 0.1);
-    color: map.get($colors, "primary-dark");
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: rgba(142, 46, 86, 0.03);
-      border-color: map.get($colors, "primary-dark");
-      transform: translateY(-1px);
-    }
   }
 }

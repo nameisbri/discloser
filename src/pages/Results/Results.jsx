@@ -104,14 +104,19 @@ const Results = () => {
   return (
     <div className="results-page">
       <header className="results-page__header">
-        <button
-          className="results-page__back-button"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft size={20} />
-          <span className="results-page__title">Testing History</span>
-        </button>
-        <p className="results-page__subtitle">
+        <nav className="results-page__nav">
+          <button
+            className="results-page__back-button"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft size={20} />
+            <span className="results-page__nav-title">Testing History</span>
+          </button>
+        </nav>
+        <h2 className="results-page__header-title">
+          Ontario Sexual Health Resources
+        </h2>
+        <p className="results-page__header-subtitle">
           {groupedResults.length > 0 ? (
             <>
               Showing results from {formatDate(groupedResults[0].date)} to{" "}

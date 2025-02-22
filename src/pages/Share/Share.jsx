@@ -117,42 +117,47 @@ const Share = () => {
         </button>
 
         <div className="share__user">
-          <img
-            className="user-header__avatar"
-            src={defaultAvatar}
-            alt={`${user?.name}'s avatar`}
-          />
           <h2 className="share__username">
-            @{user?.screen_name}
-            <span className="share__secure-wrapper">
-              <ShieldCheck className="share__secure-icon" />
-              <span className="share__secure-label">Secure</span>
-              <span className="share__tooltip">
-                <p>
-                  {" "}
-                  These results were securely extracted from user-uploaded lab
-                  documents.
-                </p>
-                <p>
-                  Please note that they may be subject to processing errors.
-                </p>
+            <img
+              className="user-header__avatar"
+              src={defaultAvatar}
+              alt={`${user?.name}'s avatar`}
+            />
+            <div className="share__user-details">
+              @{user?.screen_name}
+              <span className="share__user-wrapper">
+                <ShieldCheck className="share__secure-icon" />
+                <span className="share__secure-label">Secure</span>
+                <span className="share__tooltip">
+                  <p>
+                    {" "}
+                    These results were extracted from user-uploaded lab
+                    documents.
+                  </p>
+                  <p>
+                    Please note that they may be subject to processing errors.
+                  </p>
+                </span>
               </span>
-            </span>
+            </div>
           </h2>
-          <div className="share__info"></div>
-          {latestTestDate && (
-            <>
-              <p className="share__date">
-                <span>Last updated:</span>
-                <span>{formatDate(latestTestDate)}</span>
-              </p>
+          <div className="share__info">
+            {latestTestDate && (
+              <>
+                <p className="share__date">
+                  <span className="share__date-title">Last updated</span>
+                  <span>{formatDate(latestTestDate)}</span>
+                </p>
 
-              <p className="share__frequency">
-                <span> Testing schedule:</span>
-                <span>{shareFrequency}</span>
-              </p>
-            </>
-          )}
+                <p className="share__frequency">
+                  <span className="share__frequency-title">
+                    Testing schedule
+                  </span>
+                  <span>{shareFrequency}</span>
+                </p>
+              </>
+            )}
+          </div>
         </div>
       </header>
 
