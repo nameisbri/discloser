@@ -1,5 +1,4 @@
 import "./UserHeader.scss";
-import { ShieldCheck } from "lucide-react";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
 
 const UserHeader = ({ user, records }) => {
