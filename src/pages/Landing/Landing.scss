@@ -149,15 +149,3 @@
     line-height: 1.6;
   }
 }
-
-@media (max-width: 768px) {
-  .landing {
-    &__features {
-      flex-direction: column;
-    }
-
-    &__feature {
-      margin: map.get(vars.$spacing, "sm") 0;
-    }
-  }
-}
