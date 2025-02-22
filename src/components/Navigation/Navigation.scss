@@ -54,15 +54,3 @@
     transition: transform 0.3s ease;
   }
 }
-
-@media (min-width: 768px) {
-  .nav {
-    &__list {
-      max-width: 400px;
-    }
-
-    &__link {
-      font-size: map.get(type.$font-sizes, "base");
-    }
-  }
-}
