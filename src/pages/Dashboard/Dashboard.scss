@@ -7,7 +7,7 @@
   @include mix.flex(column, flex-start, stretch);
   background-color: #eac4ce;
   min-height: 100vh;
-  padding-bottom: map.get(vars.$spacing, "xl") * 3;
+  padding-bottom: map.get(vars.$spacing, "xl");
 
   &__loading {
     @include mix.flex(row, center, center);

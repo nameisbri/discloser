@@ -22,7 +22,7 @@ const Learn = () => {
     {
       icon: <Phone size={24} />,
       title: "Sexual Health Infoline Ontario",
-      subtitle: "Chat . Phone",
+      subtitle: "Chat · Phone",
       type: "link",
     },
     {

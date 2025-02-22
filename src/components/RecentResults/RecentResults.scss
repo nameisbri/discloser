@@ -35,6 +35,10 @@
     border-bottom: none;
   }
 
+  &:first-child {
+    padding-top: 0;
+  }
+
   &:hover {
     background-color: rgba(142, 46, 86, 0.02);
     transform: translateX(4px);

@@ -43,7 +43,7 @@
     cursor: pointer;
     font-weight: map.get(type.$font-weights, "medium");
     letter-spacing: -0.025em;
-    font-size: map.get(type.$font-sizes, "sm");
+    font-size: map.get(type.$font-sizes, "lg");
     color: inherit;
     transition: all 0.3s ease;
   }

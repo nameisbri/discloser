@@ -81,7 +81,7 @@
   }
 
   &__action-content {
-    @include mix.flex(column, center, flex-start);
+    @include mix.flex(column, center, center);
   }
 
   &__action-title {

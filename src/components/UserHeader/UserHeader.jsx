@@ -1,7 +1,6 @@
 import "./UserHeader.scss";
-import { BadgeCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import defaultAvatar from "../../assets/users/avatar/default-avatar.webp";
-import { useEffect } from "react";
 
 const UserHeader = ({ user, records }) => {
   const minioUrl = import.meta.env.VITE_MINIO_API_URL;
@@ -44,11 +43,10 @@ const UserHeader = ({ user, records }) => {
           }}
         />
         <div className="user-header__info">
-          <h2 className="user-header__name">
-            {user.name}&nbsp;
-            <BadgeCheck />
-          </h2>
-          <p className="user-header__last-update">Last update: {lastLogged}</p>
+          <h2 className="user-header__name">{user.name}&nbsp;</h2>
+          <p className="user-header__last-update">
+            Last test recorded: {lastLogged}
+          </p>
         </div>
       </div>
     </div>
