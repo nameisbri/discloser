@@ -1,6 +1,6 @@
 import "./Share.scss";
 import { useState, useEffect } from "react";
-import { ArrowLeft, BadgeCheck } from "lucide-react";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StatusBadge from "../../components/StatusBadge/StatusBadge";
@@ -28,15 +28,6 @@ const getLatestResultsByType = (results) => {
   });
 };
 
-// Helper function to get true latest test date
-const getTrueLatestTestDate = (results) => {
-  if (!results || results.length === 0) return null;
-  return results.reduce((latest, current) => {
-    const currentDate = new Date(current.test_date);
-    return latest ? (currentDate > latest ? currentDate : latest) : currentDate;
-  }, null);
-};
-
 const Share = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -56,12 +47,6 @@ const Share = () => {
       day: "numeric",
       year: "numeric",
     });
-  };
-
-  const calculateValidity = (testDate) => {
-    const date = new Date(testDate);
-    date.setMonth(date.getMonth() + 3);
-    return formatDate(date);
   };
 
   const getShareableLink = () => {
@@ -138,33 +123,38 @@ const Share = () => {
             src={defaultAvatar}
             alt={`${user?.name}'s avatar`}
           />
-          <div className="share__info">
-            <h2 className="share__username">
-              @{user?.screen_name}
-              <span className="share__verified-wrapper">
-                <BadgeCheck className="share__verified" />
-                <span className="share__tooltip">
-                  Results verified from official lab documents
-                </span>
+          <h2 className="share__username">
+            @{user?.screen_name}
+            <span className="share__secure-wrapper">
+              <ShieldCheck className="share__secure-icon" />
+              <span className="share__secure-label">Secure</span>
+              <span className="share__tooltip">
+                <p>
+                  {" "}
+                  These results were securely extracted from user-uploaded lab
+                  documents.
+                </p>
+                <p>
+                  Please note that they may be subject to processing errors.
+                </p>
               </span>
-            </h2>
-            {/* <StatusBadge
-              status={latestTestDate ? "Valid" : "No results"}
-              type="validity"
-            /> */}
-          </div>
-        </div>
+            </span>
+          </h2>
+          <div className="share__info"></div>
+          {latestTestDate && (
+            <>
+              <p className="share__date">
+                <span>Last updated:</span>
+                <span>{formatDate(latestTestDate)}</span>
+              </p>
 
-        {latestTestDate && (
-          <>
-            <p className="share__date">
-              Last updated: {formatDate(latestTestDate)}
-            </p>
-            <p className="share__frequency">
-              Regular testing: {shareFrequency}
-            </p>
-          </>
-        )}
+              <p className="share__frequency">
+                <span> Testing schedule:</span>
+                <span>{shareFrequency}</span>
+              </p>
+            </>
+          )}
+        </div>
       </header>
 
       <div className="share__results">
@@ -173,9 +163,6 @@ const Share = () => {
             <h3 className="share__results-date">
               {formatDate(latestTestDate)}
             </h3>
-            <span className="share__results-validity">
-              Results valid through {calculateValidity(latestTestDate)}
-            </span>
           </div>
         )}
 

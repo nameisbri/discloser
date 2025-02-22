@@ -51,7 +51,7 @@
   }
 
   &__title-highlight {
-    color: #8e2e56;
+    color: map.get(vars.$colors, "primary-dark");
     font-style: italic;
   }
 
@@ -75,9 +75,9 @@
     letter-spacing: 1px;
 
     &--primary {
-      background-color: #8e2e56;
+      background-color: map.get(vars.$colors, "primary-dark");
       color: white;
-      border: 2px solid #8e2e56;
+      border: 2px solid map.get(vars.$colors, "primary-dark");
 
       &:hover {
         background-color: darken(#8e2e56, 10%);
@@ -88,8 +88,8 @@
 
     &--secondary {
       background-color: transparent;
-      color: #8e2e56;
-      border: 2px solid #8e2e56;
+      color: map.get(vars.$colors, "primary-dark");
+      border: 2px solid map.get(vars.$colors, "primary-dark");
       margin-left: map.get(vars.$spacing, "md");
 
       &:hover {
@@ -124,14 +124,14 @@
 
     &:hover,
     &--active {
-      border-color: #8e2e56;
+      border-color: map.get(vars.$colors, "primary-dark");
       transform: translateY(-10px);
       box-shadow: 0 12px 24px rgba(142, 46, 86, 0.1);
     }
   }
 
   &__feature-icon {
-    color: #8e2e56;
+    color: map.get(vars.$colors, "primary-dark");
     margin-bottom: map.get(vars.$spacing, "md");
     @include mix.flex(row, center, center);
   }

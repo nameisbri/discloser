@@ -24,7 +24,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await axios.get(`${baseUrl}/users/${userID}`); // user hardcoded for MVP - should come from auth later on
+        const userResponse = await axios.get(`${baseUrl}/users/${userID}`);
         if (!userResponse.data) {
           throw new Error("No user data received");
         }

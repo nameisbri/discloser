@@ -2,7 +2,6 @@ import "./RecentResults.scss";
 import { useNavigate } from "react-router-dom";
 import StatusBadge from "../StatusBadge/StatusBadge";
 
-// Helper function to get latest results by test type
 const getLatestResultsByType = (results) => {
   return Object.values(
     results.reduce((acc, result) => {
@@ -22,7 +21,6 @@ const getLatestResultsByType = (results) => {
   });
 };
 
-// Helper function to get the true latest test date
 const getTrueLatestTestDate = (results) => {
   if (!results || results.length === 0) return null;
   return results.reduce((latest, current) => {
