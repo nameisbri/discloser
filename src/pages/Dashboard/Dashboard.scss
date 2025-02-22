@@ -76,7 +76,7 @@
       transition: all 0.2s ease;
 
       &:hover {
-        background-color: darken(#8e2e56, 5%);
+        background-color: map.get(vars.$colors, "primary-dark");
         transform: translateY(-1px);
       }
     }
