@@ -65,25 +65,6 @@ const Landing = () => {
           </div>
         </div>
       </div>
-
-      <div className="landing__features">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className={`landing__feature ${
-              activeFeature === index ? "landing__feature--active" : ""
-            }`}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="landing__feature-icon">{feature.icon}</div>
-            <h3 className="landing__feature-title">{feature.title}</h3>
-            <p className="landing__feature-description">
-              {feature.description}
-            </p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
