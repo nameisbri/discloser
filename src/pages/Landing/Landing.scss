@@ -9,6 +9,7 @@
   padding: map.get(vars.$spacing, "lg");
   position: relative;
   overflow: hidden;
+  @include mix.flex(row, center, center, map.get(vars.$spacing, "md"));
 
   &::before {
     content: "";
@@ -36,11 +37,15 @@
     z-index: 2;
     text-align: center;
     padding: map.get(vars.$spacing, "2xl") map.get(vars.$spacing, "lg");
-  }
 
-  &__hero-content {
-    max-width: 800px;
-    margin: 0 auto;
+    &-logo {
+      max-width: 10rem;
+    }
+
+    &-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
   }
 
   &__title {
@@ -51,8 +56,7 @@
   }
 
   &__title-highlight {
-    color: map.get(vars.$colors, "primary-dark");
-    font-style: italic;
+    color: map.get(vars.$colors, "primary");
   }
 
   &__subtitle {
@@ -148,8 +152,4 @@
     color: map.get(vars.$colors, "text-light");
     line-height: 1.6;
   }
-}
-
-.nav {
-  visibility: hidden;
 }
