@@ -1,0 +1,90 @@
+@use "sass:map";
+@use "/src/styles/partials/variables" as vars;
+@use "/src/styles/partials/mixins" as mix;
+@use "/src/styles/partials/typography" as type;
+
+.notification {
+  padding: map.get(vars.$spacing, "md");
+  margin-bottom: map.get(vars.$spacing, "md");
+  background-color: map.get(vars.$colors, "primary-light");
+  border-radius: map.get(vars.$border-radius, "lg");
+  transition: all 0.3s ease;
+
+  &__content {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "md"));
+    background-color: map.get(vars.$colors, "background");
+    border-radius: map.get(vars.$border-radius, "lg");
+    box-shadow: 0 4px 6px rgba(map.get(vars.$colors, "primary"), 0.1);
+    padding: map.get(vars.$spacing, "md");
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: map.get(vars.$colors, "primary");
+      transition: all 0.3s ease;
+    }
+
+    &:hover::before {
+      width: 6px;
+    }
+  }
+
+  &__icon {
+    color: map.get(vars.$colors, "primary");
+    width: 28px;
+    height: 28px;
+    margin-right: map.get(vars.$spacing, "sm");
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: rotate(15deg) scale(1.1);
+    }
+  }
+
+  &__text {
+    flex: 1;
+    @include mix.flex(
+      column,
+      center,
+      flex-start,
+      map.get(vars.$spacing, "xxs")
+    );
+  }
+
+  &__title {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "text");
+    letter-spacing: -0.025em;
+  }
+
+  &__message {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+    line-height: 1.4;
+  }
+
+  &__dismiss {
+    @include mix.icon-button;
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "lg");
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: map.get(vars.$colors, "primary");
+      background-color: map.get(vars.$colors, "primary-light");
+    }
+  }
+}

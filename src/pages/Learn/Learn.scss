@@ -1,0 +1,136 @@
+@use "sass:map";
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+
+.learn {
+  min-height: 100vh;
+  background-color: map.get(vars.$colors, "primary-light");
+  padding: map.get(vars.$spacing, "lg");
+
+  &__nav {
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+    padding-bottom: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "lg");
+
+    &-title {
+      color: map.get(vars.$colors, "primary");
+      font-size: map.get(type.$font-sizes, "lg");
+      font-weight: map.get(type.$font-weights, "semibold");
+    }
+  }
+
+  &__back-button {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+
+  &__header-card {
+    background-color: white;
+    border-radius: map.get(vars.$border-radius, "md");
+    padding: map.get(vars.$spacing, "lg");
+    margin-bottom: map.get(vars.$spacing, "lg");
+    box-shadow: 0 2px 4px rgba(142, 46, 86, 0.1);
+  }
+
+  &__header-title {
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "primary");
+    margin-bottom: map.get(vars.$spacing, "sm");
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
+  &__header-subtitle {
+    font-size: map.get(type.$font-sizes, "base");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__action-row {
+    @include mix.flex(
+      row,
+      space-between,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+    margin-bottom: map.get(vars.$spacing, "lg");
+  }
+
+  &__action-button {
+    flex: 1;
+    background-color: white;
+    border-radius: map.get(vars.$border-radius, "md");
+    padding: map.get(vars.$spacing, "md");
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "sm"));
+    box-shadow: 0 2px 4px rgba(142, 46, 86, 0.1);
+    border: 1px solid map.get(vars.$colors, "border");
+
+    &:first-child {
+      margin-right: map.get(vars.$spacing, "sm");
+    }
+  }
+
+  &__action-icon {
+    color: map.get(vars.$colors, "primary");
+    margin-right: map.get(vars.$spacing, "sm");
+  }
+
+  &__action-content {
+    @include mix.flex(column, center, center);
+  }
+
+  &__action-title {
+    font-size: map.get(type.$font-sizes, "base");
+    font-weight: map.get(type.$font-weights, "medium");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__action-subtitle {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__resource-list {
+    margin-bottom: map.get(vars.$spacing, "lg");
+  }
+
+  &__resource-item {
+    @include mix.flex(row, space-between, center);
+    width: 100%;
+    background-color: white;
+    padding: map.get(vars.$spacing, "md");
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+
+    &:first-child {
+      border-top-left-radius: map.get(vars.$border-radius, "md");
+      border-top-right-radius: map.get(vars.$border-radius, "md");
+    }
+
+    &:last-child {
+      border-bottom-left-radius: map.get(vars.$border-radius, "md");
+      border-bottom-right-radius: map.get(vars.$border-radius, "md");
+      border-bottom: none;
+    }
+  }
+
+  &__resource-icon {
+    color: map.get(vars.$colors, "primary");
+    margin-right: map.get(vars.$spacing, "md");
+  }
+
+  &__resource-title {
+    flex: 1;
+    text-align: left;
+    font-size: map.get(type.$font-sizes, "base");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__resource-chevron {
+    color: map.get(vars.$colors, "text-light");
+  }
+}

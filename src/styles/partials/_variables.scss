@@ -1,0 +1,49 @@
+@use "sass:color";
+
+$colors: (
+  "primary": #923d5c,
+  "primary-light": #eac4ce,
+  "primary-dark": color.scale(#923d5c, $lightness: -10%),
+  "secondary": #757575,
+  "secondary-dark": #43344f,
+  "secondary-light": rgba(234, 196, 206, 0.3),
+  "success": #28a745,
+  "success-light": #e8f5e9,
+  "danger": #dc3545,
+  "danger-light": #f8d7da,
+  "warning": #ffc107,
+  "warning-light": #fff3cd,
+  "info": #17a2b8,
+  "info-light": #d1ecf1,
+  "background": #ffffff,
+  "border": #e0e0e0,
+  "text": #374151,
+  "text-light": #6b7280,
+);
+
+$spacing: (
+  "xxs": 0.25rem,
+  "xs": 0.5rem,
+  "sm": 0.75rem,
+  "md": 1rem,
+  "lg": 1.5rem,
+  "xl": 2rem,
+  "2xl": 2.5rem,
+  "3xl": 3rem,
+);
+
+$border-radius: (
+  "sm": 0.5rem,
+  "md": 0.75rem,
+  "lg": 1rem,
+  "xl": 1.25rem,
+  "2xl": 1.5rem,
+  "pill": 9999px,
+);
+
+$font-family-inter: "Inter", sans-serif;
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;

@@ -1,0 +1,76 @@
+@use "sass:map";
+@use "./styles/partials/globals";
+@use "./styles/partials/variables" as vars;
+@use "./styles/partials/mixins" as mix;
+@use "./styles/partials/typography" as type;
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: map.get(vars.$colors, "primary-light");
+  min-height: 100vh;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(
+      135deg,
+      rgba(map.get(vars.$colors, "primary"), 0.05) 0%,
+      rgba(map.get(vars.$colors, "primary"), 0.025) 100%
+    );
+    z-index: -1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    box-shadow: 0 -10px 20px rgba(map.get(vars.$colors, "primary"), 0.05),
+      0 10px 20px rgba(map.get(vars.$colors, "primary"), 0.05);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__main {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 80px;
+    transition: all 0.3s ease;
+  }
+
+  &__page-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  &__page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+  }
+
+  &__page-exit {
+    opacity: 1;
+  }
+
+  &__page-exit-active {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    width: 100%;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,19 @@
+@use "sass:map";
+@use "variables" as vars;
+
+$font-sizes: (
+  "xs": 0.75rem,
+  "sm": 0.875rem,
+  "base": 1rem,
+  "lg": 1.125rem,
+  "xl": 1.25rem,
+  "2xl": 1.5rem,
+  "3xl": 2rem,
+);
+
+$font-weights: (
+  "regular": vars.$font-weight-regular,
+  "medium": vars.$font-weight-medium,
+  "semibold": vars.$font-weight-semi-bold,
+  "bold": vars.$font-weight-bold,
+);

@@ -1,0 +1,93 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+
+.dashboard {
+  @include mix.flex(column, flex-start, stretch);
+  background-color: #eac4ce;
+  min-height: 100vh;
+  padding-bottom: map.get(vars.$spacing, "xl");
+
+  &__loading {
+    @include mix.flex(row, center, center);
+    min-height: 100vh;
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "primary-dark");
+  }
+
+  &__actions {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: map.get(vars.$spacing, "xl") map.get(vars.$spacing, "md");
+  }
+
+  &__content {
+    padding: 0 map.get(vars.$spacing, "md");
+    flex: 1;
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "sm")
+    );
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__section {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    border-radius: map.get(vars.$border-radius, "2xl");
+    padding: map.get(vars.$spacing, "xl");
+    transition: all 0.3s ease;
+    border: 1px solid rgba(142, 46, 86, 0.1);
+    margin-bottom: map.get(vars.$spacing, "lg");
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(142, 46, 86, 0.08);
+    }
+  }
+
+  &__section-title {
+    font-size: map.get(type.$font-sizes, "xl");
+    color: map.get(vars.$colors, "primary-dark");
+    font-weight: map.get(type.$font-weights, "bold");
+  }
+
+  &__empty-message {
+    text-align: center;
+    @include mix.flex(column, center, center);
+    padding: map.get(vars.$spacing, "xl");
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "lg");
+
+    button {
+      margin-top: map.get(vars.$spacing, "lg");
+      background-color: map.get(vars.$colors, "primary-dark");
+      color: white;
+      padding: map.get(vars.$spacing, "md") map.get(vars.$spacing, "xl");
+      border-radius: map.get(vars.$border-radius, "xl");
+      font-weight: map.get(type.$font-weights, "medium");
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: darken(#8e2e56, 5%);
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  &__error {
+    margin: map.get(vars.$spacing, "md");
+    padding: map.get(vars.$spacing, "lg");
+    background-color: rgba(map.get(vars.$colors, "danger-light"), 0.1);
+    color: map.get(vars.$colors, "danger");
+    border-radius: map.get(vars.$border-radius, "xl");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+}

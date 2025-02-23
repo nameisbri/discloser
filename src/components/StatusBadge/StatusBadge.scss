@@ -1,0 +1,54 @@
+@use "sass:map";
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+
+.status-badge {
+  @include mix.status-badge(
+    map.get(vars.$colors, "primary-light"),
+    map.get(vars.$colors, "primary")
+  );
+  text-transform: capitalize;
+  letter-spacing: -0.025em;
+  transition: all 0.3s ease;
+
+  &--verified {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+  }
+
+  &--positive {
+    @include mix.status-badge(
+      map.get(vars.$colors, "danger-light"),
+      map.get(vars.$colors, "danger")
+    );
+  }
+
+  &--negative {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+  }
+
+  &--indeterminate {
+    @include mix.status-badge(
+      map.get(vars.$colors, "secondary-light"),
+      map.get(vars.$colors, "secondary-dark")
+    );
+  }
+
+  &--numeric {
+    @include mix.status-badge(
+      map.get(vars.$colors, "secondary-light"),
+      map.get(vars.$colors, "secondary-dark")
+    );
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}

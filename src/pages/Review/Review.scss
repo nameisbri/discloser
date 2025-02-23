@@ -1,0 +1,269 @@
+@use "../../styles/partials/variables" as vars;
+@use "../../styles/partials/mixins" as mix;
+@use "../../styles/partials/typography" as type;
+@use "sass:map";
+
+.review {
+  min-height: 100vh;
+  background-color: map.get(vars.$colors, "primary-light");
+  padding: map.get(vars.$spacing, "lg");
+
+  &__container {
+    @include mix.card;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: map.get(vars.$spacing, "lg");
+  }
+
+  &__header {
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+    padding-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__back-button {
+    @include mix.flex(row, flex-start, center, map.get(vars.$spacing, "xs"));
+    color: map.get(vars.$colors, "primary");
+    font-weight: map.get(type.$font-weights, "medium");
+
+    &:hover {
+      color: map.get(vars.$colors, "primary-dark");
+    }
+  }
+
+  &__content {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "xl")
+    );
+  }
+
+  &__file-status {
+    @include mix.card(map.get(vars.$spacing, "md"));
+    @include mix.flex(row, space-between, center);
+  }
+
+  &__file-info {
+    @include mix.flex(
+      column,
+      flex-start,
+      flex-start,
+      map.get(vars.$spacing, "xxs")
+    );
+  }
+
+  &__upload-date {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+  }
+
+  &__filename {
+    font-size: map.get(type.$font-sizes, "base");
+    font-weight: map.get(type.$font-weights, "medium");
+    color: map.get(vars.$colors, "text");
+  }
+
+  &__status {
+    @include mix.status-badge(
+      map.get(vars.$colors, "info-light"),
+      map.get(vars.$colors, "info")
+    );
+
+    &--processing {
+      @include mix.status-badge(
+        map.get(vars.$colors, "info-light"),
+        map.get(vars.$colors, "info")
+      );
+    }
+
+    &--verified {
+      @include mix.status-badge(
+        map.get(vars.$colors, "success-light"),
+        map.get(vars.$colors, "success")
+      );
+    }
+  }
+
+  &__results {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__result-card {
+    @include mix.card(map.get(vars.$spacing, "lg"));
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "md")
+    );
+  }
+
+  &__result-header {
+    @include mix.flex(row, space-between, center);
+    margin-bottom: map.get(vars.$spacing, "md");
+  }
+
+  &__test-name {
+    font-size: map.get(type.$font-sizes, "lg");
+    font-weight: map.get(type.$font-weights, "semibold");
+    color: map.get(vars.$colors, "primary");
+  }
+
+  &__verification-badge {
+    @include mix.status-badge(
+      map.get(vars.$colors, "success-light"),
+      map.get(vars.$colors, "success")
+    );
+  }
+
+  &__result-details {
+    @include mix.flex(
+      column,
+      flex-start,
+      stretch,
+      map.get(vars.$spacing, "sm")
+    );
+  }
+
+  &__detail-row {
+    @include mix.flex(row, space-between, center);
+    padding: map.get(vars.$spacing, "xs") 0;
+    border-bottom: 1px solid map.get(vars.$colors, "border");
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__detail-label {
+    color: map.get(vars.$colors, "text-light");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__detail-value {
+    font-weight: map.get(type.$font-weights, "medium");
+
+    &--status {
+      color: map.get(vars.$colors, "success");
+    }
+
+    &--notes {
+      color: map.get(vars.$colors, "text-light");
+      font-size: map.get(type.$font-sizes, "sm");
+      line-height: 1.4;
+      max-width: 60%;
+      text-align: right;
+    }
+  }
+
+  &__actions {
+    @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "md"));
+    border-top: 1px solid map.get(vars.$colors, "border");
+    padding-top: map.get(vars.$spacing, "lg");
+  }
+
+  &__button {
+    padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "lg");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-weight: map.get(type.$font-weights, "medium");
+    transition: all 0.2s ease;
+
+    &--primary {
+      background-color: map.get(vars.$colors, "primary");
+      color: white;
+
+      &:hover {
+        background-color: map.get(vars.$colors, "primary-dark");
+      }
+    }
+
+    &--secondary {
+      border: 1px solid map.get(vars.$colors, "primary");
+      color: map.get(vars.$colors, "primary");
+      background-color: transparent;
+
+      &:hover {
+        background-color: map.get(vars.$colors, "primary-light");
+      }
+    }
+  }
+
+  &__message {
+    padding: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "lg");
+    background-color: map.get(vars.$colors, "info-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    color: map.get(vars.$colors, "info");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__file-section {
+    margin-bottom: map.get(vars.$spacing, "xl");
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__no-results {
+    padding: map.get(vars.$spacing, "lg");
+    text-align: center;
+    color: map.get(vars.$colors, "text-light");
+    background-color: map.get(vars.$colors, "secondary-light");
+    border-radius: map.get(vars.$border-radius, "md");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__header-actions {
+    @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "sm"));
+  }
+
+  &__delete-button {
+    @include mix.flex(row, center, center);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: map.get(vars.$colors, "danger");
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: map.get(vars.$colors, "danger-light");
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__error {
+    margin-top: map.get(vars.$spacing, "sm");
+    padding: map.get(vars.$spacing, "xs") map.get(vars.$spacing, "sm");
+    background-color: map.get(vars.$colors, "danger-light");
+    color: map.get(vars.$colors, "danger");
+    border-radius: map.get(vars.$border-radius, "sm");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__save-error {
+    flex: 1;
+    padding: map.get(vars.$spacing, "sm");
+    background-color: map.get(vars.$colors, "danger-light");
+    color: map.get(vars.$colors, "danger");
+    border-radius: map.get(vars.$border-radius, "sm");
+    margin-right: map.get(vars.$spacing, "md");
+    font-size: map.get(type.$font-sizes, "sm");
+  }
+
+  &__buttons {
+    @include mix.flex(row, flex-end, center, map.get(vars.$spacing, "md"));
+  }
+}

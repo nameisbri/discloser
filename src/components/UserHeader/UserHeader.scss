@@ -1,0 +1,48 @@
+@use "sass:map";
+@use "/src/styles/partials/variables" as *;
+@use "/src/styles/partials/mixins" as *;
+@use "/src/styles/partials/typography" as *;
+
+.user-header {
+  background-color: white;
+  @include flex(row, space-between, center);
+  padding: map.get($spacing, "xl") map.get($spacing, "lg");
+  border-bottom: 1px solid rgba(142, 46, 86, 0.1);
+
+  &__profile {
+    @include flex(row, flex-start, center, map.get($spacing, "md"));
+  }
+
+  &__avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(142, 46, 86, 0.15);
+  }
+
+  &__info {
+    @include flex(column, flex-start, flex-start, map.get($spacing, "xs"));
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: map.get($spacing, "xs");
+    color: map.get($colors, "primary-dark");
+    font-size: map.get($font-sizes, "xl");
+    font-weight: map.get($font-weights, "bold");
+    letter-spacing: -0.02em;
+  }
+
+  &__last-update {
+    color: map.get($colors, "text-light");
+    font-size: map.get($font-sizes, "sm");
+    font-weight: map.get($font-weights, "medium");
+  }
+
+  &__notifications {
+    @include flex(row, flex-end, center, map.get($spacing, "sm"));
+  }
+}
