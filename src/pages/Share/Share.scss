@@ -92,7 +92,7 @@
     &:hover .share__tooltip {
       opacity: 1;
       visibility: visible;
-      transform: translateY(-4px);
+      transform: translateY(-20px);
     }
   }
 
@@ -110,8 +110,17 @@
   }
 
   &__tooltip {
+    @include mix.flex(
+      column,
+      space-between,
+      flex-start,
+      map.get(vars.$spacing, "xs")
+    );
+    flex-wrap: wrap;
     position: absolute;
-    bottom: 100%;
+    left: -8rem;
+    bottom: 120%;
+    max-width: 23.75rem;
     padding: map.get(vars.$spacing, "sm") map.get(vars.$spacing, "md");
     background-color: map.get(vars.$colors, "secondary-dark");
     color: white;
@@ -128,7 +137,7 @@
       content: "";
       position: absolute;
       top: 100%;
-      left: map.get(vars.$spacing, "sm");
+      left: 40%;
       border: 6px solid transparent;
       border-top-color: map.get(vars.$colors, "text");
     }
