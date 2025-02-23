@@ -22,8 +22,6 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 **Primary users include:**
 
-**Primary users include:**
-
 - Sexually active adults seeking to manage their sexual health information.
 - People wanting to share test results with potential partners.
 - Users needing reminders for regular STI testing.
@@ -58,7 +56,8 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 - react-hook-form
 - axios
-- html2canvas
+- lucide-react
+- sass
 
 ---
 
@@ -72,11 +71,12 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 #### **Key Libraries**
 
 - Knex.js
+- minio
 - multer
-- pdf-parse
-- node-cro
-- nodemailer
-- helmet
+- pdf-lib
+- pdf2pic
+- sharp
+- tesseract.js
 
 ### APIs
 
@@ -112,7 +112,9 @@ No external APIs will be used for this MVP
 ### Data
 
 #### **Entities**
-1. **User**:
+
+1. # **User**:
+
    - `id` (PK)
    - `name`
    - `screen_name` (unique)
@@ -124,35 +126,36 @@ No external APIs will be used for this MVP
    - `updated_at`
 
 2. **TestRecord**:
-   - `id` (PK)
-   - `user_id` (FK)
-   - `test_date`
-   - `file_path` (MinIO file URL or key)
-   - `is_active`
-   - `created_at`
-   - `updated_at`
 
-3. **TestResult**:
-   - `id` (PK)
-   - `test_record_id` (FK)
-   - `test_type`
-   - `result`
-   - `notes`
-   - `is_active`
-   - `created_at`
-   - `updated_at`
+- `id` (PK)
+- `user_id` (FK)
+- `test_date`
+- `file_path` (MinIO file URL or key)
+- `is_active`
+- `created_at`
+- `updated_at`
 
-4. **TestingReminders**:
-   - `id` (PK)
-   - `user_id` (FK)
-   - `frequency`
-   - `next_test_date`
-   - `last_notified_date`
-   - `is_active`
-   - `created_at`
-   - `updated_at`
+======= 3. **TestResult**:
+
+- `id` (PK)
+- `test_record_id` (FK)
+- `test_type`
+- `result`
+- `notes`
+- `is_active`
+- `created_at`
+- `updated_at`
+- `id` (PK)
+- `user_id` (FK)
+- `frequency`
+- `next_test_date`
+- `last_notified_date`
+- `is_active`
+- `created_at`
+- `updated_at`
 
 #### **Relationships**
+
 - **User** → **TestRecord** (One-to-Many)
   - One user can have multiple test records
 - **TestRecord** → **TestResult** (One-to-Many)
@@ -226,6 +229,7 @@ No external APIs will be used for this MVP
 ## Future Implementations
 
 ### User Management:
+
 - User authentication
 - Manage sharing preferences and permissions
 
@@ -247,4 +251,3 @@ No external APIs will be used for this MVP
 - Sexual health resource library
 - Evidence-based health information
 - Consent education resources
-```
