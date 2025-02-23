@@ -22,8 +22,6 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 **Primary users include:**
 
-**Primary users include:**
-
 - Sexually active adults seeking to manage their sexual health information.
 - People wanting to share test results with potential partners.
 - Users needing reminders for regular STI testing.
@@ -58,7 +56,8 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 
 - react-hook-form
 - axios
-- html2canvas
+- lucide-react
+- sass
 
 ---
 
@@ -72,11 +71,12 @@ Sexual health conversations and STI status sharing can be awkward, inconsistent,
 #### **Key Libraries**
 
 - Knex.js
+- minio
 - multer
-- pdf-parse
-- node-cro
-- nodemailer
-- helmet
+- pdf-lib
+- pdf2pic
+- sharp
+- tesseract.js
 
 ### APIs
 
@@ -113,11 +113,8 @@ No external APIs will be used for this MVP
 
 #### **Entities**
 
-<<<<<<< HEAD
-
 1. # **User**:
-1. **User**:
-   > > > > > > > c16baee (Update README.md)
+
    - `id` (PK)
    - `name`
    - `screen_name` (unique)
@@ -128,10 +125,7 @@ No external APIs will be used for this MVP
    - `created_at`
    - `updated_at`
 
-<<<<<<< HEAD 2. **TestRecord**:
-======= 2. **TestRecord**:
-
-> > > > > > > c16baee (Update README.md)
+2. **TestRecord**:
 
 - `id` (PK)
 - `user_id` (FK)
@@ -141,10 +135,7 @@ No external APIs will be used for this MVP
 - `created_at`
 - `updated_at`
 
-<<<<<<< HEAD 3. **TestResult**:
 ======= 3. **TestResult**:
-
-> > > > > > > c16baee (Update README.md)
 
 - `id` (PK)
 - `test_record_id` (FK)
@@ -154,12 +145,6 @@ No external APIs will be used for this MVP
 - `is_active`
 - `created_at`
 - `updated_at`
-
-<<<<<<< HEAD 4. **TestingReminders**:
-======= 4. **TestingReminders**:
-
-> > > > > > > c16baee (Update README.md)
-
 - `id` (PK)
 - `user_id` (FK)
 - `frequency`
@@ -266,7 +251,3 @@ No external APIs will be used for this MVP
 - Sexual health resource library
 - Evidence-based health information
 - Consent education resources
-
-```
-
-```
