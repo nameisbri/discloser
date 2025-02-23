@@ -4,8 +4,6 @@
 > • [Technical Documentation](./DOCUMENTATION.md) - Detailed project implementation, installation guide, and technical specifications  
 > • [Sample Test Files](./sample-files/) - Example files for testing the upload functionality
 
-```
-
 ## Overview
 
 **_discloser_** is a web application designed to help users manage and share their sexual health information securely. It enables users to track STI test results, set automated testing reminders, and access basic educational resources, all while maintaining privacy and promoting informed consent.
