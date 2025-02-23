@@ -1,5 +1,11 @@
 # ✓ _discloser_
 
+> **Additional Resources:**  
+> • [Technical Documentation](./DOCUMENTATION.md) - Detailed project implementation, installation guide, and technical specifications  
+> • [Sample Test Files](./sample-files/) - Example files for testing the upload functionality
+
+```
+
 ## Overview
 
 **_discloser_** is a web application designed to help users manage and share their sexual health information securely. It enables users to track STI test results, set automated testing reminders, and access basic educational resources, all while maintaining privacy and promoting informed consent.
@@ -108,7 +114,7 @@ No external APIs will be used for this MVP
 ### Data
 
 #### **Entities**
-1. **User**:  
+1. **User**:
    - `id` (PK)
    - `name`
    - `screen_name` (unique)
@@ -119,7 +125,7 @@ No external APIs will be used for this MVP
    - `created_at`
    - `updated_at`
 
-2. **TestRecord**:  
+2. **TestRecord**:
    - `id` (PK)
    - `user_id` (FK)
    - `test_date`
@@ -128,7 +134,7 @@ No external APIs will be used for this MVP
    - `created_at`
    - `updated_at`
 
-3. **TestResult**:  
+3. **TestResult**:
    - `id` (PK)
    - `test_record_id` (FK)
    - `test_type`
@@ -138,7 +144,7 @@ No external APIs will be used for this MVP
    - `created_at`
    - `updated_at`
 
-4. **TestingReminders**:  
+4. **TestingReminders**:
    - `id` (PK)
    - `user_id` (FK)
    - `frequency`
@@ -243,3 +249,4 @@ No external APIs will be used for this MVP
 - Sexual health resource library
 - Evidence-based health information
 - Consent education resources
+```
