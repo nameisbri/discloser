@@ -36,8 +36,6 @@ const UserHeader = ({ user, records }) => {
           src={getAvatarUrl(user?.avatar_file_path)}
           alt={`${user?.name}'s avatar`}
           onError={(e) => {
-            console.log(getAvatarUrl(user?.avatar_file_path));
-            console.log("Image load error, using default avatar");
             e.target.src = defaultAvatar;
           }}
         />
