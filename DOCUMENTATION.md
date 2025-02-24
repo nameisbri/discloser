@@ -6,7 +6,7 @@ Discloser is a web application designed to help users manage and share their sex
 
 ## Live Demo
 
-Check out the live demo: [Discloser App](https://discloser-1f219.web.app/)
+Check out the live demo: [Discloser App](https://discloser-1f219.web.app/landing)
 
 ## Table of Contents
 

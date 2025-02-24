@@ -51,17 +51,25 @@
   &__title {
     font-size: map.get(type.$font-sizes, "3xl");
     color: map.get(vars.$colors, "secondary-dark");
-    margin-bottom: map.get(vars.$spacing, "md");
+    margin-bottom: map.get(vars.$spacing, "xs");
     font-weight: map.get(type.$font-weights, "bold");
   }
 
   &__title-highlight {
-    color: map.get(vars.$colors, "primary");
+    color: map.get(vars.$colors, "secondary-highlight");
   }
 
   &__subtitle {
     font-size: map.get(type.$font-sizes, "lg");
-    color: map.get(vars.$colors, "text-light");
+    color: map.get(vars.$colors, "secondary-dark");
+    margin-bottom: map.get(vars.$spacing, "xl");
+    line-height: 1.2;
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
+  &__copy {
+    font-size: map.get(type.$font-sizes, "md");
+    color: map.get(vars.$colors, "text");
     margin-bottom: map.get(vars.$spacing, "xl");
     line-height: 1.6;
   }
@@ -75,7 +83,6 @@
     border-radius: map.get(vars.$border-radius, "xl");
     font-weight: map.get(type.$font-weights, "semibold");
     transition: all 0.3s ease;
-    text-transform: uppercase;
     letter-spacing: 1px;
 
     &--primary {
