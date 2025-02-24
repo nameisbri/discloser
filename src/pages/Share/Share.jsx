@@ -130,7 +130,7 @@ const Share = () => {
           <h2 className="share__username">
             <img
               className="user-header__avatar"
-              src={getAvatarUrl(user?.avatar_file_path)}
+              src={defaultAvatar}
               alt={`${user?.name}'s avatar`}
             />
             <div className="share__user-details">
@@ -138,16 +138,12 @@ const Share = () => {
               <span className="share__user-wrapper">
                 <ShieldCheck className="share__secure-icon" />
                 <span className="share__secure-label">Secure</span>
-                <span className="share__tooltip">
-                  <p>
-                    {" "}
-                    These results were extracted from user-uploaded lab
-                    documents.
-                  </p>
+                <div className="share__tooltip">
+                  <p>Results extracted from user-uploaded lab documents.</p>
                   <p>
                     Please note that they may be subject to processing errors.
                   </p>
-                </span>
+                </div>
               </span>
             </div>
           </h2>
