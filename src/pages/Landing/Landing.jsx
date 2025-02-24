@@ -33,10 +33,6 @@ const Landing = () => {
     setActiveFeature(index);
   };
 
-  const handleMouseLeave = () => {
-    setActiveFeature(null);
-  };
-
   const handleQuickStart = () => {
     navigate("/");
   };
