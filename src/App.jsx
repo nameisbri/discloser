@@ -18,9 +18,12 @@ function App() {
         <main className="app__main">
           <Routes>
             <Route path="/landing" element={<Landing />} />
+            {/*
             <Route path="/" element={<Dashboard />} />
             <Route path="/upload" element={<Upload />} />
 
+            <Route path="/landing" element={<Landing />} />
+            <Route path="/upload" element={<Upload />} /> */}
             <Route path="/landing" element={<Landing />} />
             <Route path="/" element={<h1>Dashboard</h1>} />
             <Route path="/upload" element={<Upload />} />
