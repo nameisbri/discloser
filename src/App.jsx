@@ -26,6 +26,13 @@ function App() {
             <Route path="/upload" element={<Upload />} /> */}
             <Route path="/landing" element={<Landing />} />
             <Route path="/" element={<h1>Dashboard</h1>} />
+            <Route path="/upload" element={<h1>Upload</h1>} />
+            {/*
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/upload" element={<Upload />} /> */}
+            <Route path="/landing" element={<Landing />} />
+            <Route path="/" element={<h1>Dashboard</h1>} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/review" element={<Review />} />
             <Route path="/reminders" element={<Reminders />} />
