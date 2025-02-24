@@ -21,6 +21,9 @@ function Dashboard() {
   const baseUrl = import.meta.env.VITE_API_URL;
   const userID = import.meta.env.VITE_USER_ID;
 
+  console.log(baseUrl);
+  console.log(import.meta.env.VITE_MINIO_API_URL);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
