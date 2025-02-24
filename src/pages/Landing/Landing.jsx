@@ -47,16 +47,17 @@ const Landing = () => {
         <div className="landing__hero-content">
           <img className="landing__hero-logo" src={logo} alt="discloser logo" />
           <h1 className="landing__title">
-            <span className="landing__title-highlight">Discloser</span>
+            <span className="landing__title-highlight">discloser</span>
           </h1>
           <p className="landing__subtitle">
-            better health. honest connections.
+            Share sexual health information mindfully
           </p>
-          <p className="landing__copy">
+          <p className="landing__subtitle">
             Take control of your sexual health journey with a secure, discreet
-            way to manage and share your test results.
+            way to manage and share your test results. Focus on what matters -
+            having informed, confident conversations about sexual health.
           </p>
-          <p className="landing__copy">
+          <p className="landing__subtitle">
             Focus on what matters - having informed, confident conversations
             about sexual health.
           </p>

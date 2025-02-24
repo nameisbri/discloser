@@ -51,29 +51,19 @@
   &__title {
     font-size: map.get(type.$font-sizes, "3xl");
     color: map.get(vars.$colors, "secondary-dark");
-    margin-bottom: map.get(vars.$spacing, "xs");
+    margin-bottom: map.get(vars.$spacing, "md");
     font-weight: map.get(type.$font-weights, "bold");
   }
 
   &__title-highlight {
-    color: map.get(vars.$colors, "secondary-highlight");
+    color: map.get(vars.$colors, "primary");
   }
 
   &__subtitle {
-    font-size: map.get(type.$font-sizes, "md");
-    color: map.get(vars.$colors, "text");
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "text-light");
     margin-bottom: map.get(vars.$spacing, "xl");
     line-height: 1.6;
-    font-weight: map.get(type.$font-weights, "semibold");
-    color: map.get(vars.$colors, "secondary-dark");
-  }
-
-  &__copy {
-    font-size: map.get(type.$font-sizes, "sm");
-    color: map.get(vars.$colors, "text");
-    margin-bottom: map.get(vars.$spacing, "xl");
-    line-height: 1.4;
-    color: map.get(vars.$colors, "secondary-dark");
   }
 
   &__cta-group {
@@ -85,7 +75,7 @@
     border-radius: map.get(vars.$border-radius, "xl");
     font-weight: map.get(type.$font-weights, "semibold");
     transition: all 0.3s ease;
-    // text-transform: uppercase;
+    text-transform: uppercase;
     letter-spacing: 1px;
 
     &--primary {
@@ -111,5 +101,55 @@
         transform: translateY(-3px);
       }
     }
+  }
+
+  &__features {
+    @include mix.flex(
+      row,
+      space-between,
+      stretch,
+      map.get(vars.$spacing, "lg")
+    );
+    position: relative;
+    z-index: 2;
+    margin-top: map.get(vars.$spacing, "2xl");
+  }
+
+  &__feature {
+    flex: 1;
+    background-color: white;
+    border-radius: map.get(vars.$border-radius, "xl");
+    padding: map.get(vars.$spacing, "xl");
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    margin: 0 map.get(vars.$spacing, "sm");
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    &:hover,
+    &--active {
+      border-color: map.get(vars.$colors, "primary-dark");
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(142, 46, 86, 0.1);
+    }
+  }
+
+  &__feature-icon {
+    color: map.get(vars.$colors, "primary-dark");
+    margin-bottom: map.get(vars.$spacing, "md");
+    @include mix.flex(row, center, center);
+  }
+
+  &__feature-title {
+    font-size: map.get(type.$font-sizes, "lg");
+    color: map.get(vars.$colors, "secondary-dark");
+    margin-bottom: map.get(vars.$spacing, "sm");
+    font-weight: map.get(type.$font-weights, "semibold");
+  }
+
+  &__feature-description {
+    font-size: map.get(type.$font-sizes, "sm");
+    color: map.get(vars.$colors, "text-light");
+    line-height: 1.6;
   }
 }
