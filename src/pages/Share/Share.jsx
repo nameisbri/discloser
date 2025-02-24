@@ -130,7 +130,7 @@ const Share = () => {
           <h2 className="share__username">
             <img
               className="user-header__avatar"
-              src={getAvatarUrl(user?.avatar_file_path)}
+              src={defaultAvatar}
               alt={`${user?.name}'s avatar`}
             />
             <div className="share__user-details">
