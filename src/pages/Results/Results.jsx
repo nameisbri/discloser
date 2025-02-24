@@ -69,23 +69,17 @@ const Results = () => {
     fetchResults();
   }, [baseUrl, userID]);
 
-  const handleDelete = async (testId) => {
-    try {
-      await axios.delete(`${baseUrl}/results/${testId}`);
+  const handleDelete = (testId) => {
+    setGroupedResults((prevGrouped) => {
+      const newGrouped = prevGrouped
+        .map((dateGroup) => ({
+          ...dateGroup,
+          results: dateGroup.results.filter((result) => result.id !== testId),
+        }))
+        .filter((dateGroup) => dateGroup.results.length > 0);
 
-      setGroupedResults((prevGrouped) => {
-        const newGrouped = prevGrouped
-          .map((dateGroup) => ({
-            ...dateGroup,
-            results: dateGroup.results.filter((result) => result.id !== testId),
-          }))
-          .filter((dateGroup) => dateGroup.results.length > 0);
-
-        return newGrouped;
-      });
-    } catch (error) {
-      console.error("Error deleting result:", error);
-    }
+      return newGrouped;
+    });
   };
 
   const totalPages = Math.ceil(groupedResults.length / resultsPerPage);
