@@ -46,14 +46,13 @@ const Landing = () => {
             <span className="landing__title-highlight">discloser</span>
           </h1>
           <p className="landing__subtitle">
-            Share sexual health information mindfully
+            better health. honest connections.
           </p>
-          <p className="landing__subtitle">
+          <p className="landing__copy">
             Take control of your sexual health journey with a secure, discreet
-            way to manage and share your test results. Focus on what matters -
-            having informed, confident conversations about sexual health.
+            way to manage and share your test results.
           </p>
-          <p className="landing__subtitle">
+          <p className="landing__copy">
             Focus on what matters - having informed, confident conversations
             about sexual health.
           </p>
