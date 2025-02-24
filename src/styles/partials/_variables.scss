@@ -7,6 +7,7 @@ $colors: (
   "secondary": #757575,
   "secondary-dark": #43344f,
   "secondary-light": rgba(234, 196, 206, 0.3),
+  "secondary-highlight": color.scale(#d50f53, $lightness: -30%),
   "success": #28a745,
   "success-light": #e8f5e9,
   "danger": #dc3545,
