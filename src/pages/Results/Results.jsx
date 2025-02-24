@@ -69,23 +69,17 @@ const Results = () => {
     fetchResults();
   }, [baseUrl, userID]);
 
-  const handleDelete = async (testId) => {
-    try {
-      await axios.delete(`${baseUrl}/results/${testId}`);
+  const handleDelete = (testId) => {
+    setGroupedResults((prevGrouped) => {
+      const newGrouped = prevGrouped
+        .map((dateGroup) => ({
+          ...dateGroup,
+          results: dateGroup.results.filter((result) => result.id !== testId),
+        }))
+        .filter((dateGroup) => dateGroup.results.length > 0);
 
-      setGroupedResults((prevGrouped) => {
-        const newGrouped = prevGrouped
-          .map((dateGroup) => ({
-            ...dateGroup,
-            results: dateGroup.results.filter((result) => result.id !== testId),
-          }))
-          .filter((dateGroup) => dateGroup.results.length > 0);
-
-        return newGrouped;
-      });
-    } catch (error) {
-      console.error("Error deleting result:", error);
-    }
+      return newGrouped;
+    });
   };
 
   const totalPages = Math.ceil(groupedResults.length / resultsPerPage);
@@ -113,19 +107,6 @@ const Results = () => {
             <span className="results-page__nav-title">Testing History</span>
           </button>
         </nav>
-        <h2 className="results-page__header-title">
-          Ontario Sexual Health Resources
-        </h2>
-        <p className="results-page__header-subtitle">
-          {groupedResults.length > 0 ? (
-            <>
-              Showing results from {formatDate(groupedResults[0].date)} to{" "}
-              {formatDate(groupedResults[groupedResults.length - 1].date)}
-            </>
-          ) : (
-            "No test results found"
-          )}
-        </p>
       </header>
 
       <div className="results-page__content">

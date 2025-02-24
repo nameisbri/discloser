@@ -24,7 +24,7 @@
   background-color: $background;
   color: $color;
   border-radius: map.get(vars.$border-radius, "pill");
-  font-size: map.get(type.$font-sizes, "md");
+  font-size: map.get(type.$font-sizes, "sm");
   font-weight: map.get(type.$font-weights, "medium");
 }
 

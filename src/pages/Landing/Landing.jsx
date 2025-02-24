@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TestTubeDiagonal, Heart, ShieldCheck } from "lucide-react";
 import "./Landing.scss";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/emblem_discloser_darkpink.svg";
 
 const Landing = () => {
   const [activeFeature, setActiveFeature] = useState(null);
@@ -44,45 +45,30 @@ const Landing = () => {
     <div className="landing">
       <div className="landing__hero">
         <div className="landing__hero-content">
+          <img className="landing__hero-logo" src={logo} alt="discloser logo" />
           <h1 className="landing__title">
-            Own Your{" "}
-            <span className="landing__title-highlight">Sexual Health</span>
+            <span className="landing__title-highlight">Discloser</span>
           </h1>
           <p className="landing__subtitle">
-            Empowering you to track, share, and understand your sexual wellness
-            with confidence and privacy.
+            better health. honest connections.
+          </p>
+          <p className="landing__copy">
+            Take control of your sexual health journey with a secure, discreet
+            way to manage and share your test results.
+          </p>
+          <p className="landing__copy">
+            Focus on what matters - having informed, confident conversations
+            about sexual health.
           </p>
           <div className="landing__cta-group">
             <button
               className="landing__cta-button landing__cta-button--primary"
               onClick={handleQuickStart}
             >
-              Quick Start
-            </button>
-            <button className="landing__cta-button landing__cta-button--secondary">
-              Learn More
+              Get started
             </button>
           </div>
         </div>
-      </div>
-
-      <div className="landing__features">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className={`landing__feature ${
-              activeFeature === index ? "landing__feature--active" : ""
-            }`}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="landing__feature-icon">{feature.icon}</div>
-            <h3 className="landing__feature-title">{feature.title}</h3>
-            <p className="landing__feature-description">
-              {feature.description}
-            </p>
-          </div>
-        ))}
       </div>
     </div>
   );

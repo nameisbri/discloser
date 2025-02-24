@@ -104,9 +104,8 @@
     font-weight: $font-weight-medium;
     font-size: map.get($font-sizes, "base");
     transition: all 0.3s ease;
-
-    &:hover {
-      background-color: darken(#8e2e56, 5%);
+    primary-dark &:hover {
+      background-color: map.get($colors, "primary-dark");
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(142, 46, 86, 0.15);
     }
