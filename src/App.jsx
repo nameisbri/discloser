@@ -17,16 +17,19 @@ function App() {
         <Navigation />
         <main className="app__main">
           <Routes>
-            <Route path="/landing" element={<Landing />} />
+            {/* <Route path="/landing" element={<Landing />} />
             <Route path="/" element={<Dashboard />} />
-            <Route path="/upload" element={<Upload />} />
+            <Route path="/upload" element={<Upload />} /> */}
+            <Route path="/landing" element={<h1>Landing</h1>} />
+            <Route path="/" element={<h1>Dashboard</h1>} />
+            <Route path="/upload" element={<h1>Upload</h1>} />
             <Route path="/review" element={<Review />} />
             <Route path="/reminders" element={<Reminders />} />
             <Route path="/results" element={<Results />} />
             <Route path="/share" element={<Share />} />
             <Route path="/share/:userId" element={<Share />} />
             <Route path="/learn" element={<Learn />} />
-            <Route path="*" element={<h3>404 page not found</h3>} />
+            <Route path="*" element={<h1>404 error</h1>} />
           </Routes>
         </main>
       </div>
