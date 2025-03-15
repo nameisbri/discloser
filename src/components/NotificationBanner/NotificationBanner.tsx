@@ -1,8 +1,17 @@
+import React from "react";
 import { Bell } from "lucide-react";
 import "./NotificationBanner.scss";
 
-const NotificationBanner = ({ dueDate, onDismiss }) => {
-  const formatDate = (date) => {
+interface NotificationBannerProps {
+  dueDate: Date;
+  onDismiss: () => void;
+}
+
+const NotificationBanner: React.FC<NotificationBannerProps> = ({
+  dueDate,
+  onDismiss,
+}) => {
+  const formatDate = (date: Date): string => {
     return new Date(date).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
