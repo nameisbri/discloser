@@ -1,8 +1,16 @@
 import React from "react";
 import "./StatusBadge.scss";
 
-const StatusBadge = ({ status, type = "result" }) => {
-  const getStatusType = (status, type) => {
+interface StatusBadgeProps {
+  status: string;
+  type?: "result" | "validity";
+}
+
+const StatusBadge: React.FC<StatusBadgeProps> = ({
+  status,
+  type = "result",
+}) => {
+  const getStatusType = (status: string, type: string): string => {
     if (status === "Verified") {
       return "verified";
     }
